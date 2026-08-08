@@ -16,9 +16,9 @@ Recorded answers:
 2. **RPI Agent** visible
 3. **Python 3.8.10** — too old for a smooth modern FastAPI/Pydantic setup. Before Module 6, install **Python 3.11+** (or 3.12) and confirm with `python3.11 --version` / `python3.12 --version`. Setup can continue; do not block Module 1 on the upgrade.
 
-### 1.2 Accept product framing
+### 1.2 Accept product framing ✅
 
-Confirm you accept this MVP framing (or propose a one-line change):
+Accepted MVP framing:
 
 > PulseBoard is a local-first team status board. People post doing / blocked / next. A board view shows today’s updates. No SSO, no notifications, no mobile app in MVP.
 
