@@ -291,7 +291,7 @@ Turn “we need a board” into features and locked choices.
 | | |
 | --- | --- |
 | **Input** | Finished `docs/lifecycle/02-discovery/output/brd.md` |
-| **Output** | `prd.md`; ADRs (SQLite, simple identity); optional architecture diagram |
+| **Output** | `docs/lifecycle/03-product-definition/output/prd.md`; ADRs under `.../output/adr/`; optional architecture diagram in the same `output/` folder |
 | **Helper** | **`prd-builder`**, then **`adr-creation`**, optional `architecture-diagrams` |
 
 **Example prompt** (`prd-builder`):
