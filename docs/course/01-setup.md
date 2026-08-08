@@ -8,13 +8,13 @@ HVE fails quietly when Copilot cannot see agents/skills, or when the repo has no
 
 ## Steps
 
-### 1.1 Confirm tooling
+### 1.1 Confirm tooling ✅
 
-Reply to the coach with answers to:
+Recorded answers:
 
-1. Are you using **VS Code + Copilot + hve-core-all**, **Cursor only**, or **both**?
-2. Can you see any of: `RPI Agent`, `/rpi-research`, `/rpi-plan`, `/rpi-implement`?
-3. Do you have Python 3.11+ available? (`python3 --version`)
+1. **VS Code + Copilot + hve-core-all**
+2. **RPI Agent** visible
+3. **Python 3.8.10** — too old for a smooth modern FastAPI/Pydantic setup. Before Module 6, install **Python 3.11+** (or 3.12) and confirm with `python3.11 --version` / `python3.12 --version`. Setup can continue; do not block Module 1 on the upgrade.
 
 ### 1.2 Accept product framing
 
