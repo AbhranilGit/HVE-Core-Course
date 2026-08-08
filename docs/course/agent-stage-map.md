@@ -294,3 +294,177 @@ For each stage below:
 ```
 
 **Next action:** In VS Code, pick **`brd-builder`** (not RPI Agent), generate the PulseBoard BRD, save it under `docs/project-planning/`, then tell the coach `BRD DRAFTED`.
+
+---
+
+## Architecture of HVE Core (where things live)
+
+If the stages above answer **when** to use which helper, this section answers **where those helpers physically live** and how they reach your Copilot chat.
+
+Think of HVE Core as three layers:
+
+1. **Source kit** — the `microsoft/hve-core` repository (the recipe book)  
+2. **Delivery** — VS Code extension / plugins / clone into your workspace (how the recipe book is installed)  
+3. **Runtime** — GitHub Copilot Chat reading those files and acting in *your* project  
+
+```mermaid
+flowchart TB
+    subgraph SOURCE["microsoft/hve-core repository"]
+        COL["collections/<br/>shopping lists of artifacts"]
+        GH[".github/<br/>agents · prompts · instructions · skills"]
+        EXT["extension/<br/>VS Code extension code"]
+        SCR["scripts/<br/>lint, security, plugin build"]
+        DOC["docs/<br/>how-to guides"]
+        COL --> GH
+        EXT --> GH
+        SCR --> EXT
+    end
+
+    subgraph DELIVERY["How you get it"]
+        MKT["Marketplace<br/>hve-core-all extension"]
+        PLG["Generated plugins/"]
+        CLN["Clone / installer<br/>into your workspace"]
+    end
+
+    subgraph RUNTIME["Your machine while working"]
+        VSC["VS Code + GitHub Copilot Chat"]
+        WS["Your project<br/>e.g. HVE-Core-Course / PulseBoard"]
+        TRACK[".copilot-tracking/<br/>research · plans · changes · reviews"]
+        PLANDOCS["docs/project-planning/<br/>BRD · PRD · ADRs"]
+    end
+
+    SOURCE --> DELIVERY
+    DELIVERY --> VSC
+    VSC --> WS
+    VSC --> TRACK
+    VSC --> PLANDOCS
+```
+
+### Folder map inside `hve-core` (the important part)
+
+Almost every AI helper you pick in the agent dropdown is just a **markdown file** (sometimes with scripts next to it), grouped by **collection** (bundle id like `hve-core`, `project-planning`, `coding-standards`).
+
+```text
+microsoft/hve-core/
+├── collections/                         ← "menus" that say which files belong in hve-core-all, etc.
+│   ├── hve-core-all.collection.yml
+│   ├── project-planning.collection.yml
+│   └── ...
+│
+├── .github/
+│   ├── agents/
+│   │   └── {collection-id}/             ← AGENTS LIVE HERE
+│   │       ├── brd-builder.agent.md
+│   │       ├── prd-builder.agent.md
+│   │       ├── RPI / code-review / ...
+│   │       └── subagents/               ← helper agents a parent can call
+│   │
+│   ├── prompts/
+│   │   └── {collection-id}/             ← PROMPTS LIVE HERE (slash-style starters)
+│   │       └── something.prompt.md
+│   │
+│   ├── instructions/
+│   │   └── {collection-id}/             ← INSTRUCTIONS LIVE HERE (auto coding rules)
+│   │       └── python.instructions.md
+│   │
+│   ├── skills/
+│   │   └── {collection-id}/             ← SKILLS LIVE HERE
+│   │       └── rpi-research/
+│   │           ├── SKILL.md             ← required entry point
+│   │           ├── scripts/             ← optional real scripts (.sh / .ps1)
+│   │           ├── references/
+│   │           └── assets/
+│   │
+│   ├── hooks/                           ← optional lifecycle hooks
+│   ├── workflows/                       ← CI for the hve-core repo itself
+│   └── plugin/marketplace.json          ← recipes used to generate installable plugins
+│
+├── extension/                           ← VS Code extension that registers artifacts with Copilot
+├── plugins/                             ← generated install packages (usually not hand-edited)
+├── scripts/                             ← validation + plugin generation tooling
+└── docs/                                ← human documentation (lifecycle, RPI, contributing)
+```
+
+| Artifact | Lives under | File shape | What a fresher should remember |
+| --- | --- | --- | --- |
+| **Agent** | `.github/agents/{collection}/` | `*.agent.md` | A named teammate in the Copilot **agent picker** (`brd-builder`, `RPI Agent`, …) |
+| **Prompt** | `.github/prompts/{collection}/` | `*.prompt.md` | A reusable starter (“do this workflow”); often starts with `/…` |
+| **Instruction** | `.github/instructions/{collection}/` | `*.instructions.md` | Quiet rules that auto-apply (e.g. when you edit `*.py`) |
+| **Skill** | `.github/skills/{collection}/{skill-name}/` | folder + `SKILL.md` (+ optional scripts) | A packaged capability an agent/prompt can run (e.g. `/rpi-research`) |
+| **Collection** | `collections/*.collection.yml` | YAML manifest | A bundle definition — **hve-core-all** is the “give me everything stable” list |
+| **Extension** | `extension/` | VS Code extension project | The installer that makes Copilot *see* those files |
+| **Your work evidence** | *your* repo: `.copilot-tracking/`, `docs/project-planning/` | markdown produced while you work | Not part of shipping HVE itself — created when *you* use HVE on a product |
+
+> Root-level files directly under `.github/agents/` (or prompts/instructions/skills) **without** a collection folder are usually **repo-private to hve-core** and are not what gets shipped in collections.
+
+### The four artifact types (how they differ)
+
+```mermaid
+flowchart LR
+    U[You type a request] --> P[Prompt<br/>entry point]
+    U --> A[Agent<br/>specialist mode]
+    P -->|may hand off| A
+    A --> I[Instructions<br/>auto standards]
+    A --> S[Skill<br/>executable package]
+    P --> S
+    S --> OUT[Files in your workspace]
+    A --> OUT
+```
+
+| Type | Everyday analogy | Active or quiet? |
+| --- | --- | --- |
+| **Prompt** | A form you fill: “Create a PR for …” | You start it |
+| **Agent** | A specialist on a phone call for many turns | You select it |
+| **Instruction** | Team standards poster on the wall | Automatic when file patterns match |
+| **Skill** | A toolbox with a manual (`SKILL.md`) and tools (`scripts/`) | Invoked by you (`/skill`) or by an agent |
+
+### How `hve-core-all` fits
+
+```text
+collections/hve-core-all.collection.yml
+        │
+        │  lists paths like:
+        │   - .github/agents/project-planning/brd-builder.agent.md
+        │   - .github/skills/hve-core/rpi-research/...
+        │   - .github/instructions/coding-standards/...
+        ▼
+Marketplace extension / plugin package
+        │
+        ▼
+Copilot Chat agent picker + /skills in YOUR VS Code
+```
+
+So when you select **`brd-builder`**, Copilot is not inventing that persona from nothing — it is loading the agent markdown that lives under `.github/agents/…` inside the HVE package you installed.
+
+### Runtime path for this course (PulseBoard)
+
+```mermaid
+sequenceDiagram
+    participant You
+    participant Copilot as VS Code Copilot Chat
+    participant Artifacts as HVE artifacts<br/>agents/prompts/skills/instructions
+    participant Repo as Your course repo
+
+    You->>Copilot: Pick brd-builder + seed prompt
+    Copilot->>Artifacts: Load brd-builder.agent.md
+    Artifacts-->>Copilot: Behavior + tools allowed
+    Copilot->>Repo: Write docs/project-planning/brd.md
+
+    You->>Copilot: Later: RPI Agent / /rpi-plan
+    Copilot->>Artifacts: Load RPI agent + rpi-* skills
+    Copilot->>Repo: Update apps/pulseboard + .copilot-tracking/
+    Note over Repo: Instructions auto-apply<br/>when editing matching files
+```
+
+### One-line mental model
+
+```text
+Collections choose the files →
+  files live under .github/agents|prompts|instructions|skills →
+    extension/plugin exposes them to Copilot →
+      Copilot writes durable results into YOUR repo
+      (docs/project-planning, .copilot-tracking, apps/...)
+```
+
+You do **not** need to memorize every path to use HVE.  
+You **do** need this map so “agent vs skill vs instruction” stops feeling magical.
