@@ -13,24 +13,38 @@ Built with **Python**, **FastAPI**, **SQLite**, and **HTMX**, using [HVE Core Al
 | Simple local identity | Mobile app |
 | SQLite on a developer machine | Multi-tenant SaaS |
 
-See [docs/project-planning/mvp-framing.md](docs/project-planning/mvp-framing.md).
+See [docs/lifecycle/02-discovery/input/mvp-framing.md](docs/lifecycle/02-discovery/input/mvp-framing.md).
 
 ## Repository layout
 
 ```text
 .
-├── src/pulseboard/           # Application package
-├── tests/                    # Automated tests
-├── scripts/                  # Utility scripts
+├── src/pulseboard/              # Application package
+├── tests/
+├── scripts/
 ├── docs/
-│   ├── project-planning/     # BRD, PRD, MVP framing, ADRs
-│   ├── architecture/         # Diagrams and design notes
-│   ├── operations/           # Runbooks
-│   └── guides/               # How we work (incl. HVE lifecycle)
-├── .copilot-tracking/        # Durable RPI artifacts from HVE
+│   ├── lifecycle/               # One folder per stage (input/ + output/)
+│   │   ├── 01-setup/
+│   │   ├── 02-discovery/        # → output/brd.md
+│   │   ├── 03-product-definition/  # → output/prd.md, output/adr/
+│   │   ├── 04-decomposition/
+│   │   ├── 05-sprint-planning/
+│   │   ├── 06-implementation/
+│   │   ├── 07-review/
+│   │   ├── 08-delivery/
+│   │   └── 09-operations/       # → output/runbook.md
+│   └── guides/                  # How we work (HVE lifecycle guide)
+├── .copilot-tracking/           # Durable RPI artifacts from HVE
 ├── pyproject.toml
 └── README.md
 ```
+
+Each lifecycle stage folder contains:
+
+- `input/` — what that stage consumes  
+- `output/` — what that stage produces  
+
+Details: [docs/lifecycle/README.md](docs/lifecycle/README.md).
 
 ## Prerequisites
 
@@ -48,9 +62,8 @@ python --version   # expect 3.12.x
 | Doc | Purpose |
 | --- | --- |
 | [HVE lifecycle guide](docs/guides/hve-lifecycle.md) | How we use HVE stage-by-stage on PulseBoard |
-| [MVP framing](docs/project-planning/mvp-framing.md) | Accepted product boundaries |
-| `docs/project-planning/` | BRD, PRD, ADRs (as they are created) |
-| `docs/operations/` | Runbooks after the MVP ships |
+| [Lifecycle folders](docs/lifecycle/README.md) | Input/output locations per stage |
+| [MVP framing](docs/lifecycle/02-discovery/input/mvp-framing.md) | Accepted product boundaries |
 
 ## Status
 
