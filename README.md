@@ -24,8 +24,8 @@ Do **not** jump ahead and build the whole app. The point is to practice the HVE 
 | Module | Stage | Guide | Status |
 | --- | --- | --- | --- |
 | 0 | Warm-up | [docs/course/00-warmup.md](docs/course/00-warmup.md) | optional |
-| 1 | Setup | [docs/course/01-setup.md](docs/course/01-setup.md) | **current** |
-| 2 | Discovery | [docs/course/02-discovery.md](docs/course/02-discovery.md) | locked |
+| 1 | Setup | [docs/course/01-setup.md](docs/course/01-setup.md) | done |
+| 2 | Discovery | [docs/course/02-discovery.md](docs/course/02-discovery.md) | **current** |
 | 3 | Product definition | [docs/course/03-product-definition.md](docs/course/03-product-definition.md) | locked |
 | 4 | Decomposition | [docs/course/04-decomposition.md](docs/course/04-decomposition.md) | locked |
 | 5 | Sprint planning | [docs/course/05-sprint-planning.md](docs/course/05-sprint-planning.md) | locked |

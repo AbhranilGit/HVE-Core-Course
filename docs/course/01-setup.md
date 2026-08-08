@@ -22,23 +22,15 @@ Accepted MVP framing:
 
 > PulseBoard is a local-first team status board. People post doing / blocked / next. A board view shows today’s updates. No SSO, no notifications, no mobile app in MVP.
 
-### 1.3 Repo readiness
+### 1.3 Repo readiness ✅
 
-Confirm these folders exist (already scaffolded in this branch):
+Learner confirmed `READY`. Folders present; conda `hve-env` (Python 3.12) created.
 
-- `docs/course/`
-- `docs/project-planning/`
-- `docs/ops/`
-- `apps/pulseboard/`
-- `.copilot-tracking/`
+### 1.4 Module 1 exit ✅
 
-### 1.4 Module 1 exit
-
-You are done with Setup when:
-
-- [ ] Tooling path chosen (VS Code HVE and/or Cursor coach)
-- [ ] MVP one-liner accepted
-- [ ] Folder layout present
-- [ ] `docs/course/PROGRESS.md` still points at Module 1 until coach advances you
+- [x] Tooling path chosen (VS Code + Copilot + hve-core-all)
+- [x] MVP one-liner accepted
+- [x] Folder layout present
+- [x] Advanced to Module 2 Discovery
 
 **Do not start writing FastAPI code in this module.**
