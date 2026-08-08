@@ -1,56 +1,57 @@
-# HVE Core Course — PulseBoard
+# PulseBoard
 
-Hands-on coaching track: build **PulseBoard** (a lightweight team status board) using [HVE Core All](https://marketplace.visualstudio.com/items?itemName=ise-hve-essentials.hve-core-all) and the Research → Plan → Implement → Review (RPI) methodology.
+Local-first team status board. People post short daily updates (**doing / blocked / next**); the team views **today’s** board in one place.
 
-## Defaults for this track
+Built with **Python**, **FastAPI**, **SQLite**, and **HTMX**, using [HVE Core All](https://marketplace.visualstudio.com/items?itemName=ise-hve-essentials.hve-core-all) workflows (Research → Plan → Implement → Review) with GitHub Copilot in VS Code.
 
-| Choice | Value |
+## MVP scope
+
+| In scope | Out of scope |
 | --- | --- |
-| Product | PulseBoard |
-| Stack | Python, FastAPI, SQLite, HTMX |
-| Mode | Guided prompts, one step at a time |
-| Bundle | `hve-core-all` |
+| Post doing / blocked / next | SSO / OAuth |
+| Today’s board view | Notifications / Slack |
+| Simple local identity | Mobile app |
+| SQLite on a developer machine | Multi-tenant SaaS |
 
-## How coaching works
+See [docs/project-planning/mvp-framing.md](docs/project-planning/mvp-framing.md).
 
-1. You complete **one step** at a time.
-2. You reply with what you did / pasted / saw (or blockers).
-3. We only advance when that step’s exit criteria are met.
+## Repository layout
 
-Do **not** jump ahead and build the whole app. The point is to practice the HVE lifecycle, not to race to code.
+```text
+.
+├── src/pulseboard/           # Application package
+├── tests/                    # Automated tests
+├── scripts/                  # Utility scripts
+├── docs/
+│   ├── project-planning/     # BRD, PRD, MVP framing, ADRs
+│   ├── architecture/         # Diagrams and design notes
+│   ├── operations/           # Runbooks
+│   └── guides/               # How we work (incl. HVE lifecycle)
+├── .copilot-tracking/        # Durable RPI artifacts from HVE
+├── pyproject.toml
+└── README.md
+```
 
-## Course map
+## Prerequisites
 
-| Module | Stage | Guide | Status |
-| --- | --- | --- | --- |
-| 0 | Warm-up | [docs/course/00-warmup.md](docs/course/00-warmup.md) | optional |
-| 1 | Setup | [docs/course/01-setup.md](docs/course/01-setup.md) | done |
-| 2 | Discovery | [docs/course/02-discovery.md](docs/course/02-discovery.md) | **current** |
-| 3 | Product definition | [docs/course/03-product-definition.md](docs/course/03-product-definition.md) | locked |
-| 4 | Decomposition | [docs/course/04-decomposition.md](docs/course/04-decomposition.md) | locked |
-| 5 | Sprint planning | [docs/course/05-sprint-planning.md](docs/course/05-sprint-planning.md) | locked |
-| 6 | Implementation | [docs/course/06-implementation.md](docs/course/06-implementation.md) | locked |
-| 7 | Review | [docs/course/07-review.md](docs/course/07-review.md) | locked |
-| 8 | Delivery | [docs/course/08-delivery.md](docs/course/08-delivery.md) | locked |
-| 9 | Operations | [docs/course/09-operations.md](docs/course/09-operations.md) | locked |
+- VS Code with GitHub Copilot Chat
+- [HVE Core - All](https://marketplace.visualstudio.com/items?itemName=ise-hve-essentials.hve-core-all)
+- Python 3.12+ (recommended: conda env `hve-env`)
 
-## Progress
+```bash
+conda activate hve-env
+python --version   # expect 3.12.x
+```
 
-See [docs/course/PROGRESS.md](docs/course/PROGRESS.md).
+## Documentation
 
-## Agent cheat sheet
+| Doc | Purpose |
+| --- | --- |
+| [HVE lifecycle guide](docs/guides/hve-lifecycle.md) | How we use HVE stage-by-stage on PulseBoard |
+| [MVP framing](docs/project-planning/mvp-framing.md) | Accepted product boundaries |
+| `docs/project-planning/` | BRD, PRD, ADRs (as they are created) |
+| `docs/operations/` | Runbooks after the MVP ships |
 
-See [docs/course/agent-stage-map.md](docs/course/agent-stage-map.md) for agents mapped by job and lifecycle stage.
+## Status
 
-## Install HVE Core All (local VS Code / Copilot)
-
-1. Install [VS Code](https://code.visualstudio.com/) ≥ 1.106.1
-2. Install GitHub Copilot Chat
-3. Install [HVE Core - All](https://marketplace.visualstudio.com/items?itemName=ise-hve-essentials.hve-core-all)
-4. Reload the window and confirm agents/skills like `RPI Agent`, `/rpi-research`, `/rpi-plan` appear
-
-If you are working primarily in **Cursor** with this coach, we will mirror RPI manually (research → plan → implement → review) and still produce the same durable artifacts under `.copilot-tracking/`.
-
-## Product one-liner
-
-PulseBoard lets a team post short daily status updates (doing / blocked / next) and view them on a shared board by day.
+Discovery in progress. Application code under `src/pulseboard/` will follow product definition and backlog breakdown.

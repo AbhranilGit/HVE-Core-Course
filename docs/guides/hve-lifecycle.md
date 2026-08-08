@@ -205,13 +205,13 @@ flowchart TB
 
     ST -->|Break work into tickets / plan sprint| F45["Use: github-backlog-manager<br/>Why: turns the PRD into issues<br/>Result: GitHub issues / sprint order"]
 
-    ST -->|Write the actual code| F6["Use: RPI Agent or /rpi-…<br/>Why: research → plan → code carefully<br/>Result: apps/pulseboard + .copilot-tracking/"]
+    ST -->|Write the actual code| F6["Use: RPI Agent or /rpi-…<br/>Why: research → plan → code carefully<br/>Result: src/pulseboard + .copilot-tracking/"]
 
     ST -->|Check if the work is good| F7["Use: /rpi-review or code-review<br/>Why: compare result to the plan<br/>Result: review notes"]
 
     ST -->|Ship it| F8["Use: git / pull-request helper<br/>Why: commit and open the PR<br/>Result: PR merged"]
 
-    ST -->|Keep it runnable later| F9["Use: documentation<br/>Why: how to start/fix/run it<br/>Result: docs/ops/runbook.md"]
+    ST -->|Keep it runnable later| F9["Use: documentation<br/>Why: how to start/fix/run it<br/>Result: docs/operations/runbook.md"]
 ```
 
 That’s the magic trick: **the stage picks the teammate**, and the teammate picks what gets written.
@@ -232,7 +232,7 @@ Get the crew into the room before anyone talks features.
 | | |
 | --- | --- |
 | **Input** | VS Code, GitHub Copilot, this repo; install **hve-core-all** |
-| **Output** | Agent picker shows helpers (`brd-builder`, `RPI Agent`, …); folders `docs/`, `apps/pulseboard/` exist; conda `hve-env` (Python 3.12) works |
+| **Output** | Agent picker shows helpers (`brd-builder`, `RPI Agent`, …); folders `docs/`, `src/pulseboard/`, `tests/` exist; conda `hve-env` (Python 3.12) works |
 | **Helper** | Marketplace **HVE Core - All** |
 
 **Example checks:**
@@ -386,7 +386,7 @@ Now we code — still with Research → Plan → Implement.
 | | |
 | --- | --- |
 | **Input** | One GitHub issue + PRD acceptance criteria |
-| **Output** | Code in `apps/pulseboard/` + evidence in `.copilot-tracking/` |
+| **Output** | Code in `src/pulseboard/` + evidence in `.copilot-tracking/` |
 | **Helper** | **`RPI Agent`** or `/rpi-research` → `/rpi-plan` → `/rpi-implement` |
 
 **Example prompts:**
@@ -395,7 +395,7 @@ Now we code — still with Research → Plan → Implement.
 /rpi-research
 
 Research how to add a FastAPI endpoint to create a PulseBoard status
-(doing, blocked, next) with SQLite in apps/pulseboard/.
+(doing, blocked, next) with SQLite in src/pulseboard/.
 Note existing repo patterns. Do not write production code yet.
 ```
 
@@ -411,7 +411,7 @@ from the PRD. Do not implement yet.
 /rpi-implement
 
 Implement approved plan for issue #<N> (create status).
-Put code under apps/pulseboard/. Record changes in .copilot-tracking/.
+Put code under src/pulseboard/. Record changes in .copilot-tracking/.
 ```
 
 Or with **RPI Agent**:
@@ -485,14 +485,14 @@ Be kind to future you.
 
 | | |
 | --- | --- |
-| **Input** | Merged app under `apps/pulseboard/` + how you start it |
-| **Output** | `docs/ops/runbook.md` |
+| **Input** | Merged app under `src/pulseboard/` + how you start it |
+| **Output** | `docs/operations/runbook.md` |
 | **Helper** | **`documentation`** |
 
 **Example prompt:**
 
 ```text
-Author a runbook for PulseBoard at docs/ops/runbook.md.
+Author a runbook for PulseBoard at docs/operations/runbook.md.
 
 Include:
 - How to create/activate hve-env and start the app

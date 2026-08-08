@@ -1,6 +1,6 @@
 # PulseBoard MVP framing
 
-**Status:** Accepted (Module 1.2)
+**Status:** Accepted
 
 PulseBoard is a local-first team status board. People post **doing / blocked / next**. A board view shows today’s updates.
 
