@@ -446,24 +446,6 @@ Include:
 
 ---
 
-## Where we are right now
-
-```text
-[x] 1 Setup
-[>] 2 Discovery   ← you are here → agent: brd-builder
-[ ] 3 Product definition
-[ ] 4 Decomposition
-[ ] 5 Sprint planning
-[ ] 6 Implementation   ← RPI Agent shows up here
-[ ] 7 Review
-[ ] 8 Delivery
-[ ] 9 Operations
-```
-
-**Next action:** In VS Code, pick **`brd-builder`** (not RPI Agent), generate the PulseBoard BRD, save it under `docs/project-planning/`, then tell the coach `BRD DRAFTED`.
-
----
-
 ## Architecture of HVE Core (what happens when you type a prompt)
 
 HVE is a box of **specialized helpers**.  
