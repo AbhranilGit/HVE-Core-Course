@@ -297,334 +297,42 @@ For each stage below:
 
 ---
 
-## Architecture of HVE Core (what happens when you enter a prompt)
+## Architecture of HVE Core (what happens when you type a prompt)
 
-This section is not “memorize folders.”  
-It answers: **when I type something in Copilot at a lifecycle stage, which HVE files get loaded, why those files, and what gets written into my repo.**
+HVE is a box of **specialized helpers** for Copilot.  
+Each helper is basically a recipe file. When you pick an agent (or type `/something`), Copilot opens **that** recipe — not the whole box.
 
-### 60-second map: where the recipe files live
-
-HVE helpers are ordinary files shipped by **hve-core-all**. Copilot loads them when you pick an agent or type `/something`.
-
-| Kind | Lives in hve-core under | You meet it as… |
-| --- | --- | --- |
-| **Agent** | `.github/agents/{collection}/*.agent.md` | Name in the **agent picker** |
-| **Prompt** | `.github/prompts/{collection}/*.prompt.md` | Often a `/slash` starter |
-| **Skill** | `.github/skills/{collection}/{name}/SKILL.md` (+ optional `scripts/`) | `/rpi-research`, `/rpi-plan`, … |
-| **Instruction** | `.github/instructions/{collection}/*.instructions.md` | Silent rules when file types match |
-| **Collection** | `collections/*.collection.yml` | The shopping list (e.g. `hve-core-all`) |
+Simple flow:
 
 ```text
-collections/hve-core-all.collection.yml  →  picks which of those files ship
-        ↓
-VS Code extension / plugin
-        ↓
-Copilot Chat can see them
-        ↓
-Your repo receives OUTPUTS (BRD, code, .copilot-tracking, …)
+You type a prompt
+    → you also pick (or imply) one helper
+    → Copilot loads that helper’s recipe
+    → it writes a result into your project
 ```
 
-Paths below use the usual collection folders (`project-planning`, `hve-core`, `coding-standards`, …). Exact filenames can vary slightly by HVE version; the **roles** stay the same.
-
----
-
-### Universal runtime: every prompt follows this pipe
-
-No matter the stage, Copilot roughly does this:
-
-```mermaid
-flowchart TD
-    A["1. You enter a prompt<br/>plain text and/or /skill<br/>+ optional agent selected"] --> B["2. Entry file chosen<br/>agent.md OR prompt.md OR SKILL.md"]
-    B --> C["3. Why that file?<br/>You picked the agent, or<br/>slash matched a skill/prompt, or<br/>prompt frontmatter points to an agent"]
-    C --> D["4. Behavior loaded<br/>tools allowed, handoffs,<br/>what NOT to do"]
-    D --> E["5. Instructions may auto-attach<br/>if you touch matching files<br/>e.g. **/*.py → python instructions"]
-    E --> F["6. Skills may run<br/>for specialized steps<br/>e.g. RPI phases"]
-    F --> G["7. Outputs written to YOUR repo<br/>docs/ or apps/ or .copilot-tracking/"]
-```
-
-**Why not every file loads every time?**  
-HVE is huge on purpose. Loading `brd-builder` + `security-planner` + `RPI Agent` for one chat would mix jobs. You (or the slash command) pick **one entry door**; that door decides the rest.
-
----
-
-### Stage 1 — Setup
-
-**Example you type:**  
-`Install HVE Core All for this workspace` (or you click the Marketplace extension / run the installer skill)
-
-**What should happen:** Make agents/skills visible. No product BRD, no app code.
-
-```mermaid
-flowchart LR
-    U["You: install / configure HVE"] --> E["Marketplace extension<br/>ise-hve-essentials.hve-core-all"]
-    U --> S["Skill: hve-core-installer<br/>.github/skills/.../hve-core-installer/SKILL.md"]
-    E --> C["collections/hve-core-all.collection.yml<br/>WHY: shopping list of stable artifacts"]
-    S --> C
-    C --> REG["Registers agents/prompts/skills/instructions<br/>into Copilot Chat"]
-    REG --> OUT["Output: agent picker populated<br/>RPI Agent, brd-builder, … appear"]
-```
-
-| File chosen | Why |
-| --- | --- |
-| `collections/hve-core-all.collection.yml` | Defines the full stable bundle |
-| Extension package / installer skill | Delivers and registers those files |
-| Not chosen: `brd-builder`, RPI skills | Wrong job — nothing to specify or code yet |
-
-**Repo output:** tooling ready (maybe workspace settings). Not `apps/pulseboard` features.
-
----
-
-### Stage 2 — Discovery
-
-**Example you type (agent = `brd-builder`):**  
-`Create a BRD for PulseBoard…` (seed with users, goal, out-of-scope)
-
-**What should happen:** Business requirements document. Solution-light. No FastAPI yet.
-
-```mermaid
-flowchart TD
-    U["You select agent: brd-builder<br/>+ paste seed prompt"] --> A["LOAD<br/>.github/agents/project-planning/brd-builder.agent.md"]
-    A --> W["WHY this file?<br/>Job = business requirements<br/>Stage = Discovery<br/>Not a coding lifecycle"]
-    W --> X["Explicitly NOT loaded as entry<br/>RPI Agent, prd-builder, /rpi-implement"]
-    A --> R["May read your seed + mvp-framing.md<br/>for constraints"]
-    R --> O["WRITE<br/>docs/project-planning/*brd.md"]
-
-    opt["Optional other Discovery doors"]
-    opt --> DT["dt-coach.agent.md<br/>WHY: problem still fuzzy / need DT"]
-    opt --> RS["skills/.../rpi-research/SKILL.md<br/>WHY: one technical unknown blocks decisions"]
-    opt --> SP["security-planner.agent.md<br/>WHY: security must shape requirements early"]
-```
-
-| File chosen | Why |
-| --- | --- |
-| `…/agents/project-planning/brd-builder.agent.md` | Owns BRD structure, stays solution-agnostic |
-| Optional `dt-coach.agent.md` | User/problem discovery before a crisp BRD |
-| Optional `…/skills/…/rpi-research/SKILL.md` | Read-only evidence for a named unknown |
-| **Not** RPI implement / coding instructions as the driver | You are defining the problem, not shipping code |
-
-**Repo output:** `docs/project-planning/brd.md` (and maybe `.copilot-tracking/research/…` if you ran research).
-
----
-
-### Stage 3 — Product definition
-
-**Example you type (agent = `prd-builder`):**  
-`Create a PRD for PulseBoard MVP from docs/project-planning/brd.md`
-
-**What should happen:** Features, stories, acceptance criteria. Then lock big tech choices with ADRs.
-
-```mermaid
-flowchart TD
-    U["Prompt: build PRD from BRD"] --> P["LOAD<br/>prd-builder.agent.md<br/>WHY: product/feature altitude<br/>BRD is not detailed enough to build"]
-    P --> BRD["READ<br/>docs/project-planning/brd.md"]
-    P --> OUT1["WRITE<br/>docs/project-planning/*prd.md"]
-
-    U2["Later prompt: decide SQLite vs Postgres"] --> ADR["LOAD<br/>adr-creation.agent.md<br/>WHY: durable architecture decision"]
-    ADR --> OUT2["WRITE<br/>docs/project-planning/adr/0001-….md"]
-
-    U3["Prompt: draw system context"] --> DIAG["LOAD skill<br/>architecture-diagrams/SKILL.md<br/>WHY: pictures beat long prose"]
-    DIAG --> OUT3["WRITE diagram under docs/"]
-```
-
-| File chosen | Why |
-| --- | --- |
-| `prd-builder.agent.md` | Turns business needs into buildable product requirements |
-| `adr-creation.agent.md` | Records “we chose X over Y because…” |
-| `architecture-diagrams` skill | Shared mental model of components |
-| **Not** `github-backlog-manager` yet | Tickets come after the PRD exists |
-| **Not** `/rpi-implement` | Spec first; code later |
-
-**Repo output:** PRD, ADRs, diagram — still little or no product code.
-
----
-
-### Stage 4 — Decomposition
-
-**Example you type (agent = `github-backlog-manager`):**  
-`Create GitHub issues from the PulseBoard PRD with acceptance criteria`
-
-**What should happen:** Backlog items, not a giant PR of code.
-
-```mermaid
-flowchart TD
-    U["Prompt: PRD → issues"] --> A["LOAD<br/>github-backlog-manager.agent.md<br/>WHY: owns issue discovery/triage/creation"]
-    A --> PRD["READ<br/>docs/project-planning/*prd.md"]
-    A --> MCP["Uses GitHub MCP / gh tools<br/>WHY: issues live on GitHub, not only in markdown"]
-    A --> OUT["CREATE GitHub issues<br/>labels, AC, links back to PRD"]
-    A -.-> ALT["If team used ADO/Jira instead:<br/>ado-prd-to-wit / jira-prd-to-wit<br/>WHY: same job, different tracker"]
-```
-
-| File chosen | Why |
-| --- | --- |
-| `github-backlog-manager.agent.md` | This course uses GitHub; agent knows backlog workflows |
-| PRD file in your repo | Source of truth for what becomes tickets |
-| **Not** `brd-builder` | Business doc already done; now splitting work |
-| **Not** RPI Agent | You are creating work items, not implementing one |
-
-**Repo / GitHub output:** Issues (and maybe local planning notes). Still not the MVP feature code.
-
----
-
-### Stage 5 — Sprint planning
-
-**Example you type:**  
-`From open PulseBoard issues, propose Sprint 1 as a vertical slice: post status + today’s board`
-
-```mermaid
-flowchart TD
-    U["Prompt: plan Sprint 1"] --> A["LOAD<br/>github-backlog-manager.agent.md<br/>and/or product-manager-advisor.agent.md"]
-    A --> W["WHY?<br/>Order and cut scope — do not start with polish"]
-    A --> ISS["READ GitHub issues + PRD AC"]
-    A --> OUT["Milestone / sprint ordering<br/>Sprint 1 vs Sprint 2 list"]
-```
-
-| File chosen | Why |
-| --- | --- |
-| `github-backlog-manager.agent.md` | Can reshuffle/milestone issues |
-| `product-manager-advisor.agent.md` (optional) | Helps say no to scope creep |
-| **Not** `/rpi-implement` | Planning the sprint ≠ writing the board UI yet |
-
-**Output:** Ordered Sprint 1 slice. Implementation still next stage.
-
----
-
-### Stage 6 — Implementation (RPI is the star)
-
-**Example you type (agent = `RPI Agent` or skills):**  
-`Implement Sprint 1 issue #12: POST /statuses and list today’s board`  
-or phase-by-phase: `/rpi-research` → `/rpi-plan` → `/rpi-implement`
-
-**What should happen:** Code changes **plus** durable evidence under `.copilot-tracking/`.
-
-```mermaid
-flowchart TD
-    U["You enter coding task<br/>RPI Agent or /rpi-* "] --> ENTRY{"Entry door"}
-    ENTRY -->|agent picker| RA["LOAD agents/.../RPI*.agent.md<br/>WHY: lifecycle wrapper for complex code work"]
-    ENTRY -->|/rpi-research| S1["LOAD skills/.../rpi-research/SKILL.md<br/>WHY: evidence gap only"]
-    ENTRY -->|/rpi-plan| S2["LOAD skills/.../rpi-plan/SKILL.md<br/>WHY: turn evidence into Pxx tasks"]
-    ENTRY -->|/rpi-implement| S3["LOAD skills/.../rpi-implement/SKILL.md<br/>WHY: execute approved plan only"]
-
-    RA --> S1
-    RA --> S2
-    RA --> S3
-
-    S3 --> INST["AUTO-ATTACH instructions<br/>.github/instructions/coding-standards/*python*<br/>WHY: applyTo matches **/*.py you edit"]
-    S1 --> TR["WRITE .copilot-tracking/research/..."]
-    S2 --> TP["WRITE .copilot-tracking/plans/... + details + critique"]
-    S3 --> TC["WRITE apps/pulseboard/** + .copilot-tracking/changes/..."]
-
-    X["NOT chosen as entry<br/>brd-builder / prd-builder<br/>WHY: specs already exist; this stage changes the product"]
-```
-
-| File chosen | Why |
-| --- | --- |
-| RPI agent and/or `rpi-*` skills | Separates research/plan/implement so Copilot doesn’t “just vibe code” |
-| Coding-standards instructions | Auto quality/style when Python (or other) files are touched |
-| Prior plan/PRD/issues as inputs | Implementation must follow accepted AC |
-| **Not** `brd-builder` / `prd-builder` | Wrong altitude — you’d regenerate docs instead of shipping the slice |
-
-**Repo output:** `apps/pulseboard/…` + `.copilot-tracking/…` artifacts.
-
----
-
-### Stage 7 — Review
-
-**Example you type:**  
-`/rpi-review` against the plan and issue AC  
-or select **`code-review`**: `Review my local branch for PulseBoard Sprint 1`
-
-```mermaid
-flowchart TD
-    U1["/rpi-review"] --> SR["LOAD rpi-review/SKILL.md<br/>WHY: reconcile evidence vs AC<br/>does not rewrite product code"]
-    SR --> IN["READ plans + changes + PRD/issue AC"]
-    SR --> OUT1["WRITE .copilot-tracking/reviews/logs/..."]
-
-    U2["agent: code-review"] --> CR["LOAD code-review.agent.md<br/>WHY: multi-perspective pre-PR review"]
-    CR --> SUB["May dispatch subagents/skills<br/>functional · standards · a11y · security · PR"]
-    CR --> OUT2["ONE deduplicated review report"]
-
-    U3["security on the diff"] --> SEC["LOAD security-reviewer.agent.md<br/>WHY: vuln lens on changes<br/>≠ full security-planner"]
-```
-
-| File chosen | Why |
-| --- | --- |
-| `rpi-review` skill | Acceptance vs plan/evidence |
-| `code-review.agent.md` (+ subagents) | Human-gated quality pass before merge |
-| `security-reviewer.agent.md` | Security on the diff |
-| **Not** `/rpi-implement` as the reviewer | Reviewers shouldn’t “fix by rewriting” unless you send work back |
-
-**Repo output:** review markdown / PR comments. Fixes go back to Stage 6.
-
----
-
-### Stage 8 — Delivery
-
-**Example you type:**  
-`/create-pull-request` (or the HVE git/PR prompt your pack exposes):  
-`Open a PR for Sprint 1 MVP with summary of validation`
-
-```mermaid
-flowchart TD
-    U["Prompt: commit / open PR / merge"] --> P["LOAD<br/>.github/prompts/.../*pull-request* or git-*.prompt.md<br/>WHY: delivery mechanics, not feature design"]
-    P --> A["May delegate to a small agent<br/>via prompt frontmatter agent: …"]
-    A --> G["Uses git + GitHub tools"]
-    G --> OUT["PR body, commits, merge, tag v0.1.0"]
-    X["NOT brd-builder / RPI full rebuild<br/>WHY: you are shipping existing work"]
-```
-
-| File chosen | Why |
-| --- | --- |
-| Git / PR **prompts** (and any linked agent) | Standardize commit/PR/merge quality |
-| Existing review + change logs | PR should cite how you validated |
-| **Not** Discovery/Product builders | Specs are done; this stage lands the change |
-
-**Output:** GitHub PR, merge, release tag.
-
----
-
-### Stage 9 — Operations
-
-**Example you type (agent = `documentation`):**  
-`Author a runbook for PulseBoard: start, stop, DB path, common failures`
-
-```mermaid
-flowchart TD
-    U["Prompt: write runbook / audit docs"] --> D["LOAD documentation.agent.md<br/>WHY: docs audit/author/validate modes"]
-    D --> APP["READ apps/pulseboard + README"]
-    D --> OUT["WRITE docs/ops/runbook.md"]
-    U2["Optional: incident tabletop"] --> IR["LOAD incident-response prompt/skill<br/>WHY: practice recovery without a real outage"]
-```
-
-| File chosen | Why |
-| --- | --- |
-| `documentation.agent.md` | Keeps ops docs aligned with the real app |
-| Incident-response prompt/skill | Ops readiness |
-| **Not** `prd-builder` | You are maintaining a shipped system, not redefining MVP |
-
-**Repo output:** `docs/ops/…`, updated README as needed.
-
----
+Same product topic (“PulseBoard”) can mean totally different helpers depending on **which job you’re doing right now**.
 
 ### Side-by-side: same product, different stage ⇒ different files
 
 ```mermaid
 flowchart TB
-    Q["User prompt about PulseBoard"] --> ST{"Which stage job?"}
-    ST -->|Discovery| F2["brd-builder.agent.md<br/>→ docs/project-planning/brd.md"]
-    ST -->|Product definition| F3["prd-builder.agent.md + adr-creation.agent.md<br/>→ prd.md + adr/*.md"]
-    ST -->|Decomposition / sprint| F45["github-backlog-manager.agent.md<br/>→ GitHub issues / milestone"]
-    ST -->|Implementation| F6["RPI agent + rpi-* SKILL.md<br/>+ python instructions on *.py<br/>→ apps/ + .copilot-tracking/"]
-    ST -->|Review| F7["rpi-review SKILL.md / code-review.agent.md<br/>→ review logs"]
-    ST -->|Delivery| F8["git/PR prompt.md<br/>→ PR + merge"]
-    ST -->|Operations| F9["documentation.agent.md<br/>→ docs/ops/runbook.md"]
+    Q["You type something about PulseBoard"] --> ST{"What job are you doing right now?"}
+
+    ST -->|Understand the business problem| F2["Use: brd-builder<br/>Why: writes the requirements story<br/>Result: docs/project-planning/brd.md"]
+
+    ST -->|Define the product features| F3["Use: prd-builder<br/>optional: adr-creation<br/>Why: features + big tech choices<br/>Result: prd.md and adr files"]
+
+    ST -->|Break work into tickets / plan sprint| F45["Use: github-backlog-manager<br/>Why: turns the PRD into issues<br/>Result: GitHub issues / sprint order"]
+
+    ST -->|Write the actual code| F6["Use: RPI Agent or /rpi-…<br/>Why: research → plan → code carefully<br/>Result: apps/pulseboard + .copilot-tracking/"]
+
+    ST -->|Check if the work is good| F7["Use: /rpi-review or code-review<br/>Why: compare result to the plan<br/>Result: review notes"]
+
+    ST -->|Ship it| F8["Use: git / pull-request helper<br/>Why: commit and open the PR<br/>Result: PR merged"]
+
+    ST -->|Keep it runnable later| F9["Use: documentation<br/>Why: how to start/fix/run it<br/>Result: docs/ops/runbook.md"]
 ```
 
-### Remember
-
-1. **You choose the entry door** (agent picker or `/skill`) — that choice selects the primary file.  
-2. **That file’s job** decides what else may load (skills, subagents, instructions).  
-3. **Instructions hitchhike** when matching files are edited; they are not a stage picker.  
-4. **Outputs land in your repo** (`docs/`, `apps/`, `.copilot-tracking/`) — HVE’s `.agent.md` / `SKILL.md` files stay in the HVE package unless you customize them.
-
-You do not need every path memorized.  
-You need this reflex: *“What stage am I in → which entry file → why → where does the answer get written?”*
+**That’s the whole architecture idea:**  
+your prompt alone is not enough — **the stage/job picks the helper**, and the helper picks what gets written.
