@@ -4,8 +4,8 @@ Each project stage has an **input** folder (what you feed the work) and an **out
 
 | Stage | Folder | Typical inputs | Typical outputs |
 | --- | --- | --- | --- |
-| 1 Setup | `01-setup/` | Tooling notes, env checklist | Confirmed setup notes (optional) |
-| 2 Discovery | `02-discovery/` | `input/mvp-framing.md` | `output/brd.md` |
+| 1 Setup | `01-setup/` | `input/setup-checklist.md` | `output/setup-confirmation.md` |
+| 2 Discovery | `02-discovery/` | `input/mvp-framing.md`; agent + prompt in `prompt/` | `output/brd.md` |
 | 3 Product definition | `03-product-definition/` | BRD from discovery | `output/prd.md`, `output/adr/`, optional architecture diagram |
 | 4 Decomposition | `04-decomposition/` | `input/prd-handoff.md` + PRD | GitHub issues + `output/backlog-snapshot.md` |
 | 5 Sprint planning | `05-sprint-planning/` | Backlog snapshot | `output/sprint-plan.md` |

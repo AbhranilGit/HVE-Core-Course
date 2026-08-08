@@ -199,9 +199,9 @@ Same topic (“PulseBoard”), different job ⇒ different helper:
 flowchart TB
     Q["You type something about PulseBoard"] --> ST{"What job are you doing right now?"}
 
-    ST -->|Understand the business problem| F2["Use: brd-builder<br/>Why: writes the requirements story<br/>Result: docs/lifecycle/02-discovery/output/brd.md"]
+    ST -->|Understand the business problem| F2["Use: brd-builder<br/>Why: writes the requirements story<br/>Result: lifecycle/02-discovery/output/brd.md"]
 
-    ST -->|Define the product features| F3["Use: prd-builder<br/>optional: adr-creation<br/>Why: features + big tech choices<br/>Result: docs/lifecycle/03-product-definition/output/prd.md and adr/"]
+    ST -->|Define the product features| F3["Use: prd-builder<br/>optional: adr-creation<br/>Why: features + big tech choices<br/>Result: lifecycle/03-product-definition/output/prd.md and adr/"]
 
     ST -->|Break work into tickets / plan sprint| F45["Use: github-backlog-manager<br/>Why: turns the PRD into issues<br/>Result: GitHub issues / sprint order"]
 
@@ -211,7 +211,7 @@ flowchart TB
 
     ST -->|Ship it| F8["Use: git / pull-request helper<br/>Why: commit and open the PR<br/>Result: PR merged"]
 
-    ST -->|Keep it runnable later| F9["Use: documentation<br/>Why: how to start/fix/run it<br/>Result: docs/lifecycle/09-operations/output/runbook.md"]
+    ST -->|Keep it runnable later| F9["Use: documentation<br/>Why: how to start/fix/run it<br/>Result: lifecycle/09-operations/output/runbook.md"]
 ```
 
 That’s the magic trick: **the stage picks the teammate**, and the teammate picks what gets written.
@@ -253,8 +253,8 @@ Write the *why* so we don’t accidentally build a Slack bot.
 
 | | |
 | --- | --- |
-| **Input** | MVP framing (problem + in/out of scope), e.g. `docs/lifecycle/02-discovery/input/mvp-framing.md` |
-| **Output** | `docs/lifecycle/02-discovery/output/brd.md` — problem, users, success, scope, open questions |
+| **Input** | MVP framing (problem + in/out of scope), e.g. `lifecycle/02-discovery/input/mvp-framing.md` |
+| **Output** | `lifecycle/02-discovery/output/brd.md` — problem, users, success, scope, open questions |
 | **Helper** | **`brd-builder`** |
 
 **Example prompt** (select `brd-builder`):
@@ -277,7 +277,7 @@ Constraints:
 
 Include problem statement, stakeholders, in/out of scope, success metrics,
 assumptions, risks, and open questions.
-Save to docs/lifecycle/02-discovery/output/brd.md
+Save to lifecycle/02-discovery/output/brd.md
 ```
 
 **Not yet:** Full PRD depth, code, tickets.
@@ -290,15 +290,15 @@ Turn “we need a board” into features and locked choices.
 
 | | |
 | --- | --- |
-| **Input** | Finished `docs/lifecycle/02-discovery/output/brd.md` |
-| **Output** | `docs/lifecycle/03-product-definition/output/prd.md`; ADRs under `.../output/adr/`; optional architecture diagram in the same `output/` folder |
+| **Input** | Finished `lifecycle/02-discovery/output/brd.md` |
+| **Output** | `lifecycle/03-product-definition/output/prd.md`; ADRs under `.../output/adr/`; optional architecture diagram in the same `output/` folder |
 | **Helper** | **`prd-builder`**, then **`adr-creation`**, optional `architecture-diagrams` |
 
 **Example prompt** (`prd-builder`):
 
 ```text
 Create a Product Requirements Document for PulseBoard MVP using
-docs/lifecycle/02-discovery/output/brd.md.
+lifecycle/02-discovery/output/brd.md.
 
 MVP must include:
 - Post a status with doing / blocked / next
@@ -307,7 +307,7 @@ MVP must include:
 
 Write user stories with clear acceptance criteria.
 Explicitly exclude SSO, notifications, and mobile.
-Save to docs/lifecycle/03-product-definition/output/prd.md
+Save to lifecycle/03-product-definition/output/prd.md
 ```
 
 **Example prompt** (`adr-creation`):
@@ -316,7 +316,7 @@ Save to docs/lifecycle/03-product-definition/output/prd.md
 Create an ADR: choose SQLite over Postgres for PulseBoard MVP.
 Context: local-first, single-machine, ~15 users.
 Record decision, consequences, and when we would revisit.
-Save under docs/lifecycle/03-product-definition/output/adr/
+Save under lifecycle/03-product-definition/output/adr/
 ```
 
 **Not yet:** Running app, GitHub issues.
@@ -329,14 +329,14 @@ Make the work small enough to finish.
 
 | | |
 | --- | --- |
-| **Input** | `docs/lifecycle/03-product-definition/output/prd.md` |
+| **Input** | `lifecycle/03-product-definition/output/prd.md` |
 | **Output** | GitHub issues with labels + acceptance criteria |
 | **Helper** | **`github-backlog-manager`** |
 
 **Example prompt:**
 
 ```text
-From docs/lifecycle/03-product-definition/output/prd.md, create GitHub issues for PulseBoard MVP.
+From lifecycle/03-product-definition/output/prd.md, create GitHub issues for PulseBoard MVP.
 
 Each issue needs:
 - Clear title
@@ -486,13 +486,13 @@ Be kind to future you.
 | | |
 | --- | --- |
 | **Input** | Merged app under `src/pulseboard/` + how you start it |
-| **Output** | `docs/lifecycle/09-operations/output/runbook.md` |
+| **Output** | `lifecycle/09-operations/output/runbook.md` |
 | **Helper** | **`documentation`** |
 
 **Example prompt:**
 
 ```text
-Author a runbook for PulseBoard at docs/lifecycle/09-operations/output/runbook.md.
+Author a runbook for PulseBoard at lifecycle/09-operations/output/runbook.md.
 
 Include:
 - How to create/activate hve-env and start the app
@@ -521,7 +521,7 @@ Include:
 1. Using **RPI Agent** to write the BRD → wrong teammate; use **`brd-builder`**.  
 2. Using **`brd-builder`** to write FastAPI → wrong chapter; finish Discovery/PRD first.  
 3. Building polish before “post status + today’s board” works.  
-4. Trusting chat history instead of files in `docs/lifecycle/` and `.copilot-tracking/`.
+4. Trusting chat history instead of files in `lifecycle/` and `.copilot-tracking/`.
 
 ---
 
