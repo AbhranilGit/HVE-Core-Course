@@ -5,7 +5,7 @@
 | Current module | **1 — Setup** |
 | Current step | **1.3 Repo readiness** |
 | Tooling | VS Code + Copilot + hve-core-all (RPI Agent visible) |
-| Python | 3.8.10 (upgrade to 3.11+ recommended before Module 6) |
+| Python | system 3.8.10; conda env `hve-env` with Python 3.12 (use this for Module 6+) |
 | Stack | FastAPI + SQLite + HTMX |
 | MVP framing | Accepted (local-first; doing/blocked/next; no SSO/notifications/mobile) |
 | Last completed | 1.2 Accept product framing |
