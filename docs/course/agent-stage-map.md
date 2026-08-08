@@ -297,174 +297,334 @@ For each stage below:
 
 ---
 
-## Architecture of HVE Core (where things live)
+## Architecture of HVE Core (what happens when you enter a prompt)
 
-If the stages above answer **when** to use which helper, this section answers **where those helpers physically live** and how they reach your Copilot chat.
+This section is not “memorize folders.”  
+It answers: **when I type something in Copilot at a lifecycle stage, which HVE files get loaded, why those files, and what gets written into my repo.**
 
-Think of HVE Core as three layers:
+### 60-second map: where the recipe files live
 
-1. **Source kit** — the `microsoft/hve-core` repository (the recipe book)  
-2. **Delivery** — VS Code extension / plugins / clone into your workspace (how the recipe book is installed)  
-3. **Runtime** — GitHub Copilot Chat reading those files and acting in *your* project  
+HVE helpers are ordinary files shipped by **hve-core-all**. Copilot loads them when you pick an agent or type `/something`.
 
-```mermaid
-flowchart TB
-    subgraph SOURCE["microsoft/hve-core repository"]
-        COL["collections/<br/>shopping lists of artifacts"]
-        GH[".github/<br/>agents · prompts · instructions · skills"]
-        EXT["extension/<br/>VS Code extension code"]
-        SCR["scripts/<br/>lint, security, plugin build"]
-        DOC["docs/<br/>how-to guides"]
-        COL --> GH
-        EXT --> GH
-        SCR --> EXT
-    end
-
-    subgraph DELIVERY["How you get it"]
-        MKT["Marketplace<br/>hve-core-all extension"]
-        PLG["Generated plugins/"]
-        CLN["Clone / installer<br/>into your workspace"]
-    end
-
-    subgraph RUNTIME["Your machine while working"]
-        VSC["VS Code + GitHub Copilot Chat"]
-        WS["Your project<br/>e.g. HVE-Core-Course / PulseBoard"]
-        TRACK[".copilot-tracking/<br/>research · plans · changes · reviews"]
-        PLANDOCS["docs/project-planning/<br/>BRD · PRD · ADRs"]
-    end
-
-    SOURCE --> DELIVERY
-    DELIVERY --> VSC
-    VSC --> WS
-    VSC --> TRACK
-    VSC --> PLANDOCS
-```
-
-### Folder map inside `hve-core` (the important part)
-
-Almost every AI helper you pick in the agent dropdown is just a **markdown file** (sometimes with scripts next to it), grouped by **collection** (bundle id like `hve-core`, `project-planning`, `coding-standards`).
+| Kind | Lives in hve-core under | You meet it as… |
+| --- | --- | --- |
+| **Agent** | `.github/agents/{collection}/*.agent.md` | Name in the **agent picker** |
+| **Prompt** | `.github/prompts/{collection}/*.prompt.md` | Often a `/slash` starter |
+| **Skill** | `.github/skills/{collection}/{name}/SKILL.md` (+ optional `scripts/`) | `/rpi-research`, `/rpi-plan`, … |
+| **Instruction** | `.github/instructions/{collection}/*.instructions.md` | Silent rules when file types match |
+| **Collection** | `collections/*.collection.yml` | The shopping list (e.g. `hve-core-all`) |
 
 ```text
-microsoft/hve-core/
-├── collections/                         ← "menus" that say which files belong in hve-core-all, etc.
-│   ├── hve-core-all.collection.yml
-│   ├── project-planning.collection.yml
-│   └── ...
-│
-├── .github/
-│   ├── agents/
-│   │   └── {collection-id}/             ← AGENTS LIVE HERE
-│   │       ├── brd-builder.agent.md
-│   │       ├── prd-builder.agent.md
-│   │       ├── RPI / code-review / ...
-│   │       └── subagents/               ← helper agents a parent can call
-│   │
-│   ├── prompts/
-│   │   └── {collection-id}/             ← PROMPTS LIVE HERE (slash-style starters)
-│   │       └── something.prompt.md
-│   │
-│   ├── instructions/
-│   │   └── {collection-id}/             ← INSTRUCTIONS LIVE HERE (auto coding rules)
-│   │       └── python.instructions.md
-│   │
-│   ├── skills/
-│   │   └── {collection-id}/             ← SKILLS LIVE HERE
-│   │       └── rpi-research/
-│   │           ├── SKILL.md             ← required entry point
-│   │           ├── scripts/             ← optional real scripts (.sh / .ps1)
-│   │           ├── references/
-│   │           └── assets/
-│   │
-│   ├── hooks/                           ← optional lifecycle hooks
-│   ├── workflows/                       ← CI for the hve-core repo itself
-│   └── plugin/marketplace.json          ← recipes used to generate installable plugins
-│
-├── extension/                           ← VS Code extension that registers artifacts with Copilot
-├── plugins/                             ← generated install packages (usually not hand-edited)
-├── scripts/                             ← validation + plugin generation tooling
-└── docs/                                ← human documentation (lifecycle, RPI, contributing)
+collections/hve-core-all.collection.yml  →  picks which of those files ship
+        ↓
+VS Code extension / plugin
+        ↓
+Copilot Chat can see them
+        ↓
+Your repo receives OUTPUTS (BRD, code, .copilot-tracking, …)
 ```
 
-| Artifact | Lives under | File shape | What a fresher should remember |
-| --- | --- | --- | --- |
-| **Agent** | `.github/agents/{collection}/` | `*.agent.md` | A named teammate in the Copilot **agent picker** (`brd-builder`, `RPI Agent`, …) |
-| **Prompt** | `.github/prompts/{collection}/` | `*.prompt.md` | A reusable starter (“do this workflow”); often starts with `/…` |
-| **Instruction** | `.github/instructions/{collection}/` | `*.instructions.md` | Quiet rules that auto-apply (e.g. when you edit `*.py`) |
-| **Skill** | `.github/skills/{collection}/{skill-name}/` | folder + `SKILL.md` (+ optional scripts) | A packaged capability an agent/prompt can run (e.g. `/rpi-research`) |
-| **Collection** | `collections/*.collection.yml` | YAML manifest | A bundle definition — **hve-core-all** is the “give me everything stable” list |
-| **Extension** | `extension/` | VS Code extension project | The installer that makes Copilot *see* those files |
-| **Your work evidence** | *your* repo: `.copilot-tracking/`, `docs/project-planning/` | markdown produced while you work | Not part of shipping HVE itself — created when *you* use HVE on a product |
+Paths below use the usual collection folders (`project-planning`, `hve-core`, `coding-standards`, …). Exact filenames can vary slightly by HVE version; the **roles** stay the same.
 
-> Root-level files directly under `.github/agents/` (or prompts/instructions/skills) **without** a collection folder are usually **repo-private to hve-core** and are not what gets shipped in collections.
+---
 
-### The four artifact types (how they differ)
+### Universal runtime: every prompt follows this pipe
+
+No matter the stage, Copilot roughly does this:
+
+```mermaid
+flowchart TD
+    A["1. You enter a prompt<br/>plain text and/or /skill<br/>+ optional agent selected"] --> B["2. Entry file chosen<br/>agent.md OR prompt.md OR SKILL.md"]
+    B --> C["3. Why that file?<br/>You picked the agent, or<br/>slash matched a skill/prompt, or<br/>prompt frontmatter points to an agent"]
+    C --> D["4. Behavior loaded<br/>tools allowed, handoffs,<br/>what NOT to do"]
+    D --> E["5. Instructions may auto-attach<br/>if you touch matching files<br/>e.g. **/*.py → python instructions"]
+    E --> F["6. Skills may run<br/>for specialized steps<br/>e.g. RPI phases"]
+    F --> G["7. Outputs written to YOUR repo<br/>docs/ or apps/ or .copilot-tracking/"]
+```
+
+**Why not every file loads every time?**  
+HVE is huge on purpose. Loading `brd-builder` + `security-planner` + `RPI Agent` for one chat would mix jobs. You (or the slash command) pick **one entry door**; that door decides the rest.
+
+---
+
+### Stage 1 — Setup
+
+**Example you type:**  
+`Install HVE Core All for this workspace` (or you click the Marketplace extension / run the installer skill)
+
+**What should happen:** Make agents/skills visible. No product BRD, no app code.
 
 ```mermaid
 flowchart LR
-    U[You type a request] --> P[Prompt<br/>entry point]
-    U --> A[Agent<br/>specialist mode]
-    P -->|may hand off| A
-    A --> I[Instructions<br/>auto standards]
-    A --> S[Skill<br/>executable package]
-    P --> S
-    S --> OUT[Files in your workspace]
-    A --> OUT
+    U["You: install / configure HVE"] --> E["Marketplace extension<br/>ise-hve-essentials.hve-core-all"]
+    U --> S["Skill: hve-core-installer<br/>.github/skills/.../hve-core-installer/SKILL.md"]
+    E --> C["collections/hve-core-all.collection.yml<br/>WHY: shopping list of stable artifacts"]
+    S --> C
+    C --> REG["Registers agents/prompts/skills/instructions<br/>into Copilot Chat"]
+    REG --> OUT["Output: agent picker populated<br/>RPI Agent, brd-builder, … appear"]
 ```
 
-| Type | Everyday analogy | Active or quiet? |
-| --- | --- | --- |
-| **Prompt** | A form you fill: “Create a PR for …” | You start it |
-| **Agent** | A specialist on a phone call for many turns | You select it |
-| **Instruction** | Team standards poster on the wall | Automatic when file patterns match |
-| **Skill** | A toolbox with a manual (`SKILL.md`) and tools (`scripts/`) | Invoked by you (`/skill`) or by an agent |
+| File chosen | Why |
+| --- | --- |
+| `collections/hve-core-all.collection.yml` | Defines the full stable bundle |
+| Extension package / installer skill | Delivers and registers those files |
+| Not chosen: `brd-builder`, RPI skills | Wrong job — nothing to specify or code yet |
 
-### How `hve-core-all` fits
+**Repo output:** tooling ready (maybe workspace settings). Not `apps/pulseboard` features.
 
-```text
-collections/hve-core-all.collection.yml
-        │
-        │  lists paths like:
-        │   - .github/agents/project-planning/brd-builder.agent.md
-        │   - .github/skills/hve-core/rpi-research/...
-        │   - .github/instructions/coding-standards/...
-        ▼
-Marketplace extension / plugin package
-        │
-        ▼
-Copilot Chat agent picker + /skills in YOUR VS Code
-```
+---
 
-So when you select **`brd-builder`**, Copilot is not inventing that persona from nothing — it is loading the agent markdown that lives under `.github/agents/…` inside the HVE package you installed.
+### Stage 2 — Discovery
 
-### Runtime path for this course (PulseBoard)
+**Example you type (agent = `brd-builder`):**  
+`Create a BRD for PulseBoard…` (seed with users, goal, out-of-scope)
+
+**What should happen:** Business requirements document. Solution-light. No FastAPI yet.
 
 ```mermaid
-sequenceDiagram
-    participant You
-    participant Copilot as VS Code Copilot Chat
-    participant Artifacts as HVE artifacts<br/>agents/prompts/skills/instructions
-    participant Repo as Your course repo
+flowchart TD
+    U["You select agent: brd-builder<br/>+ paste seed prompt"] --> A["LOAD<br/>.github/agents/project-planning/brd-builder.agent.md"]
+    A --> W["WHY this file?<br/>Job = business requirements<br/>Stage = Discovery<br/>Not a coding lifecycle"]
+    W --> X["Explicitly NOT loaded as entry<br/>RPI Agent, prd-builder, /rpi-implement"]
+    A --> R["May read your seed + mvp-framing.md<br/>for constraints"]
+    R --> O["WRITE<br/>docs/project-planning/*brd.md"]
 
-    You->>Copilot: Pick brd-builder + seed prompt
-    Copilot->>Artifacts: Load brd-builder.agent.md
-    Artifacts-->>Copilot: Behavior + tools allowed
-    Copilot->>Repo: Write docs/project-planning/brd.md
-
-    You->>Copilot: Later: RPI Agent / /rpi-plan
-    Copilot->>Artifacts: Load RPI agent + rpi-* skills
-    Copilot->>Repo: Update apps/pulseboard + .copilot-tracking/
-    Note over Repo: Instructions auto-apply<br/>when editing matching files
+    opt["Optional other Discovery doors"]
+    opt --> DT["dt-coach.agent.md<br/>WHY: problem still fuzzy / need DT"]
+    opt --> RS["skills/.../rpi-research/SKILL.md<br/>WHY: one technical unknown blocks decisions"]
+    opt --> SP["security-planner.agent.md<br/>WHY: security must shape requirements early"]
 ```
 
-### One-line mental model
+| File chosen | Why |
+| --- | --- |
+| `…/agents/project-planning/brd-builder.agent.md` | Owns BRD structure, stays solution-agnostic |
+| Optional `dt-coach.agent.md` | User/problem discovery before a crisp BRD |
+| Optional `…/skills/…/rpi-research/SKILL.md` | Read-only evidence for a named unknown |
+| **Not** RPI implement / coding instructions as the driver | You are defining the problem, not shipping code |
 
-```text
-Collections choose the files →
-  files live under .github/agents|prompts|instructions|skills →
-    extension/plugin exposes them to Copilot →
-      Copilot writes durable results into YOUR repo
-      (docs/project-planning, .copilot-tracking, apps/...)
+**Repo output:** `docs/project-planning/brd.md` (and maybe `.copilot-tracking/research/…` if you ran research).
+
+---
+
+### Stage 3 — Product definition
+
+**Example you type (agent = `prd-builder`):**  
+`Create a PRD for PulseBoard MVP from docs/project-planning/brd.md`
+
+**What should happen:** Features, stories, acceptance criteria. Then lock big tech choices with ADRs.
+
+```mermaid
+flowchart TD
+    U["Prompt: build PRD from BRD"] --> P["LOAD<br/>prd-builder.agent.md<br/>WHY: product/feature altitude<br/>BRD is not detailed enough to build"]
+    P --> BRD["READ<br/>docs/project-planning/brd.md"]
+    P --> OUT1["WRITE<br/>docs/project-planning/*prd.md"]
+
+    U2["Later prompt: decide SQLite vs Postgres"] --> ADR["LOAD<br/>adr-creation.agent.md<br/>WHY: durable architecture decision"]
+    ADR --> OUT2["WRITE<br/>docs/project-planning/adr/0001-….md"]
+
+    U3["Prompt: draw system context"] --> DIAG["LOAD skill<br/>architecture-diagrams/SKILL.md<br/>WHY: pictures beat long prose"]
+    DIAG --> OUT3["WRITE diagram under docs/"]
 ```
 
-You do **not** need to memorize every path to use HVE.  
-You **do** need this map so “agent vs skill vs instruction” stops feeling magical.
+| File chosen | Why |
+| --- | --- |
+| `prd-builder.agent.md` | Turns business needs into buildable product requirements |
+| `adr-creation.agent.md` | Records “we chose X over Y because…” |
+| `architecture-diagrams` skill | Shared mental model of components |
+| **Not** `github-backlog-manager` yet | Tickets come after the PRD exists |
+| **Not** `/rpi-implement` | Spec first; code later |
+
+**Repo output:** PRD, ADRs, diagram — still little or no product code.
+
+---
+
+### Stage 4 — Decomposition
+
+**Example you type (agent = `github-backlog-manager`):**  
+`Create GitHub issues from the PulseBoard PRD with acceptance criteria`
+
+**What should happen:** Backlog items, not a giant PR of code.
+
+```mermaid
+flowchart TD
+    U["Prompt: PRD → issues"] --> A["LOAD<br/>github-backlog-manager.agent.md<br/>WHY: owns issue discovery/triage/creation"]
+    A --> PRD["READ<br/>docs/project-planning/*prd.md"]
+    A --> MCP["Uses GitHub MCP / gh tools<br/>WHY: issues live on GitHub, not only in markdown"]
+    A --> OUT["CREATE GitHub issues<br/>labels, AC, links back to PRD"]
+    A -.-> ALT["If team used ADO/Jira instead:<br/>ado-prd-to-wit / jira-prd-to-wit<br/>WHY: same job, different tracker"]
+```
+
+| File chosen | Why |
+| --- | --- |
+| `github-backlog-manager.agent.md` | This course uses GitHub; agent knows backlog workflows |
+| PRD file in your repo | Source of truth for what becomes tickets |
+| **Not** `brd-builder` | Business doc already done; now splitting work |
+| **Not** RPI Agent | You are creating work items, not implementing one |
+
+**Repo / GitHub output:** Issues (and maybe local planning notes). Still not the MVP feature code.
+
+---
+
+### Stage 5 — Sprint planning
+
+**Example you type:**  
+`From open PulseBoard issues, propose Sprint 1 as a vertical slice: post status + today’s board`
+
+```mermaid
+flowchart TD
+    U["Prompt: plan Sprint 1"] --> A["LOAD<br/>github-backlog-manager.agent.md<br/>and/or product-manager-advisor.agent.md"]
+    A --> W["WHY?<br/>Order and cut scope — do not start with polish"]
+    A --> ISS["READ GitHub issues + PRD AC"]
+    A --> OUT["Milestone / sprint ordering<br/>Sprint 1 vs Sprint 2 list"]
+```
+
+| File chosen | Why |
+| --- | --- |
+| `github-backlog-manager.agent.md` | Can reshuffle/milestone issues |
+| `product-manager-advisor.agent.md` (optional) | Helps say no to scope creep |
+| **Not** `/rpi-implement` | Planning the sprint ≠ writing the board UI yet |
+
+**Output:** Ordered Sprint 1 slice. Implementation still next stage.
+
+---
+
+### Stage 6 — Implementation (RPI is the star)
+
+**Example you type (agent = `RPI Agent` or skills):**  
+`Implement Sprint 1 issue #12: POST /statuses and list today’s board`  
+or phase-by-phase: `/rpi-research` → `/rpi-plan` → `/rpi-implement`
+
+**What should happen:** Code changes **plus** durable evidence under `.copilot-tracking/`.
+
+```mermaid
+flowchart TD
+    U["You enter coding task<br/>RPI Agent or /rpi-* "] --> ENTRY{"Entry door"}
+    ENTRY -->|agent picker| RA["LOAD agents/.../RPI*.agent.md<br/>WHY: lifecycle wrapper for complex code work"]
+    ENTRY -->|/rpi-research| S1["LOAD skills/.../rpi-research/SKILL.md<br/>WHY: evidence gap only"]
+    ENTRY -->|/rpi-plan| S2["LOAD skills/.../rpi-plan/SKILL.md<br/>WHY: turn evidence into Pxx tasks"]
+    ENTRY -->|/rpi-implement| S3["LOAD skills/.../rpi-implement/SKILL.md<br/>WHY: execute approved plan only"]
+
+    RA --> S1
+    RA --> S2
+    RA --> S3
+
+    S3 --> INST["AUTO-ATTACH instructions<br/>.github/instructions/coding-standards/*python*<br/>WHY: applyTo matches **/*.py you edit"]
+    S1 --> TR["WRITE .copilot-tracking/research/..."]
+    S2 --> TP["WRITE .copilot-tracking/plans/... + details + critique"]
+    S3 --> TC["WRITE apps/pulseboard/** + .copilot-tracking/changes/..."]
+
+    X["NOT chosen as entry<br/>brd-builder / prd-builder<br/>WHY: specs already exist; this stage changes the product"]
+```
+
+| File chosen | Why |
+| --- | --- |
+| RPI agent and/or `rpi-*` skills | Separates research/plan/implement so Copilot doesn’t “just vibe code” |
+| Coding-standards instructions | Auto quality/style when Python (or other) files are touched |
+| Prior plan/PRD/issues as inputs | Implementation must follow accepted AC |
+| **Not** `brd-builder` / `prd-builder` | Wrong altitude — you’d regenerate docs instead of shipping the slice |
+
+**Repo output:** `apps/pulseboard/…` + `.copilot-tracking/…` artifacts.
+
+---
+
+### Stage 7 — Review
+
+**Example you type:**  
+`/rpi-review` against the plan and issue AC  
+or select **`code-review`**: `Review my local branch for PulseBoard Sprint 1`
+
+```mermaid
+flowchart TD
+    U1["/rpi-review"] --> SR["LOAD rpi-review/SKILL.md<br/>WHY: reconcile evidence vs AC<br/>does not rewrite product code"]
+    SR --> IN["READ plans + changes + PRD/issue AC"]
+    SR --> OUT1["WRITE .copilot-tracking/reviews/logs/..."]
+
+    U2["agent: code-review"] --> CR["LOAD code-review.agent.md<br/>WHY: multi-perspective pre-PR review"]
+    CR --> SUB["May dispatch subagents/skills<br/>functional · standards · a11y · security · PR"]
+    CR --> OUT2["ONE deduplicated review report"]
+
+    U3["security on the diff"] --> SEC["LOAD security-reviewer.agent.md<br/>WHY: vuln lens on changes<br/>≠ full security-planner"]
+```
+
+| File chosen | Why |
+| --- | --- |
+| `rpi-review` skill | Acceptance vs plan/evidence |
+| `code-review.agent.md` (+ subagents) | Human-gated quality pass before merge |
+| `security-reviewer.agent.md` | Security on the diff |
+| **Not** `/rpi-implement` as the reviewer | Reviewers shouldn’t “fix by rewriting” unless you send work back |
+
+**Repo output:** review markdown / PR comments. Fixes go back to Stage 6.
+
+---
+
+### Stage 8 — Delivery
+
+**Example you type:**  
+`/create-pull-request` (or the HVE git/PR prompt your pack exposes):  
+`Open a PR for Sprint 1 MVP with summary of validation`
+
+```mermaid
+flowchart TD
+    U["Prompt: commit / open PR / merge"] --> P["LOAD<br/>.github/prompts/.../*pull-request* or git-*.prompt.md<br/>WHY: delivery mechanics, not feature design"]
+    P --> A["May delegate to a small agent<br/>via prompt frontmatter agent: …"]
+    A --> G["Uses git + GitHub tools"]
+    G --> OUT["PR body, commits, merge, tag v0.1.0"]
+    X["NOT brd-builder / RPI full rebuild<br/>WHY: you are shipping existing work"]
+```
+
+| File chosen | Why |
+| --- | --- |
+| Git / PR **prompts** (and any linked agent) | Standardize commit/PR/merge quality |
+| Existing review + change logs | PR should cite how you validated |
+| **Not** Discovery/Product builders | Specs are done; this stage lands the change |
+
+**Output:** GitHub PR, merge, release tag.
+
+---
+
+### Stage 9 — Operations
+
+**Example you type (agent = `documentation`):**  
+`Author a runbook for PulseBoard: start, stop, DB path, common failures`
+
+```mermaid
+flowchart TD
+    U["Prompt: write runbook / audit docs"] --> D["LOAD documentation.agent.md<br/>WHY: docs audit/author/validate modes"]
+    D --> APP["READ apps/pulseboard + README"]
+    D --> OUT["WRITE docs/ops/runbook.md"]
+    U2["Optional: incident tabletop"] --> IR["LOAD incident-response prompt/skill<br/>WHY: practice recovery without a real outage"]
+```
+
+| File chosen | Why |
+| --- | --- |
+| `documentation.agent.md` | Keeps ops docs aligned with the real app |
+| Incident-response prompt/skill | Ops readiness |
+| **Not** `prd-builder` | You are maintaining a shipped system, not redefining MVP |
+
+**Repo output:** `docs/ops/…`, updated README as needed.
+
+---
+
+### Side-by-side: same product, different stage ⇒ different files
+
+```mermaid
+flowchart TB
+    Q["User prompt about PulseBoard"] --> ST{"Which stage job?"}
+    ST -->|Discovery| F2["brd-builder.agent.md<br/>→ docs/project-planning/brd.md"]
+    ST -->|Product definition| F3["prd-builder.agent.md + adr-creation.agent.md<br/>→ prd.md + adr/*.md"]
+    ST -->|Decomposition / sprint| F45["github-backlog-manager.agent.md<br/>→ GitHub issues / milestone"]
+    ST -->|Implementation| F6["RPI agent + rpi-* SKILL.md<br/>+ python instructions on *.py<br/>→ apps/ + .copilot-tracking/"]
+    ST -->|Review| F7["rpi-review SKILL.md / code-review.agent.md<br/>→ review logs"]
+    ST -->|Delivery| F8["git/PR prompt.md<br/>→ PR + merge"]
+    ST -->|Operations| F9["documentation.agent.md<br/>→ docs/ops/runbook.md"]
+```
+
+### Remember
+
+1. **You choose the entry door** (agent picker or `/skill`) — that choice selects the primary file.  
+2. **That file’s job** decides what else may load (skills, subagents, instructions).  
+3. **Instructions hitchhike** when matching files are edited; they are not a stage picker.  
+4. **Outputs land in your repo** (`docs/`, `apps/`, `.copilot-tracking/`) — HVE’s `.agent.md` / `SKILL.md` files stay in the HVE package unless you customize them.
+
+You do not need every path memorized.  
+You need this reflex: *“What stage am I in → which entry file → why → where does the answer get written?”*
