@@ -38,6 +38,10 @@ Do **not** jump ahead and build the whole app. The point is to practice the HVE 
 
 See [docs/course/PROGRESS.md](docs/course/PROGRESS.md).
 
+## Agent cheat sheet
+
+See [docs/course/agent-stage-map.md](docs/course/agent-stage-map.md) for agents mapped by job and lifecycle stage.
+
 ## Install HVE Core All (local VS Code / Copilot)
 
 1. Install [VS Code](https://code.visualstudio.com/) ≥ 1.106.1
