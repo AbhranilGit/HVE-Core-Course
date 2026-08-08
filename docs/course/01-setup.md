@@ -14,7 +14,7 @@ Recorded answers:
 
 1. **VS Code + Copilot + hve-core-all**
 2. **RPI Agent** visible
-3. **Python 3.8.10** — too old for a smooth modern FastAPI/Pydantic setup. Before Module 6, install **Python 3.11+** (or 3.12) and confirm with `python3.11 --version` / `python3.12 --version`. Setup can continue; do not block Module 1 on the upgrade.
+3. **Python 3.8.10** (system) — learner created conda env `hve-env` with **Python 3.12**. Use `conda activate hve-env` for all later implementation work.
 
 ### 1.2 Accept product framing ✅
 
