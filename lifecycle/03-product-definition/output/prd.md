@@ -12,7 +12,7 @@ Version 0.1.0 | Status Accepted | Owner Product / delivery owner | Team PulseBoa
 | Requirements | Yes | None | 2026-08-09 |
 | Metrics & Risks | Yes | None | 2026-08-09 |
 | Operationalization | Yes | Runbook path may land with delivery docs | 2026-08-09 |
-| Finalization | Yes | Awaiting PRD acceptance | 2026-08-09 |
+| Finalization | Yes | Accepted | 2026-08-09 |
 Unresolved Critical Questions: 1 (identity session mechanism → ADR) | TBDs: 0 blocking MVP stories
 
 ## 1. Executive Summary
