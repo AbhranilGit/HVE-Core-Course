@@ -1,6 +1,7 @@
 # Stage 6 — Implementation prompts
 
-Implement **one GitHub issue at a time**, in the order below.  
+Implement **one issue at a time**, in the order below.  
+**Authoritative scope (in-repo):** [`lifecycle/04-decomposition/output/backlog-snapshot.md`](../../04-decomposition/output/backlog-snapshot.md) (TEMP-N / issue #N section). GitHub links are for tracking only.  
 For **each** issue, run and **persist** Research → Plan → Implement, and **verify** the gate before the next phase.
 
 | Order | Issue | Prompt | RPI folder | Sprint |
@@ -17,7 +18,7 @@ For **each** issue, run and **persist** Research → Plan → Implement, and **v
 
 ## Per-issue RPI loop
 
-1. **Research** (`/rpi-research`) → save `output/issue-NN/research.md` → check Research in that folder’s `README.md`  
+1. **Research** (`/rpi-research`) → attach backlog snapshot → save `output/issue-NN/research.md` → check Research  
 2. **Plan** (`/rpi-plan`) → save `output/issue-NN/plan.md` → check Plan  
 3. **Implement** (`/rpi-implement`) → code + `output/issue-NN/implement.md` → check Implement  
 4. Only then open the **next** issue prompt
@@ -25,4 +26,4 @@ For **each** issue, run and **persist** Research → Plan → Implement, and **v
 Also keep agent session evidence under `.copilot-tracking/` when present.  
 Convention details: [`../output/README.md`](../output/README.md).
 
-**Rules:** do not skip phases; do not skip ahead in Sprint 1; do not widen MVP.
+**Rules:** do not skip phases; do not skip ahead in Sprint 1; do not widen MVP; prefer the local backlog snapshot over the live GitHub URL for AC.

@@ -3,6 +3,7 @@
 | | |
 | --- | --- |
 | **Issue** | [#8](https://github.com/AbhranilGit/HVE-Core-Course/issues/8) — docs: local-first runbook and start path |
+| **Local spec** | [`lifecycle/04-decomposition/output/backlog-snapshot.md`](../../04-decomposition/output/backlog-snapshot.md) — **TEMP-8** |
 | **Sprint order** | 2 of 3 (Sprint 2) |
 | **Depends on** | Runnable Sprint 1; #10 when present |
 | **RPI output** | [`../output/issue-08/`](../output/issue-08/) |
@@ -16,7 +17,7 @@ Persist and verify **each** phase before the next. Checklist: [`../output/issue-
 **`RPI Agent`**, or run the matching `/rpi-*` skill for each phase below.  
 Do **not** use `brd-builder`, `prd-builder`, or `github-backlog-manager` for implementation.
 
-Before each phase: attach / `#`-reference GitHub issue **#8**.
+Before each phase: attach / `#`-reference `lifecycle/04-decomposition/output/backlog-snapshot.md` (section **TEMP-8** / issue #8).
 
 ---
 
@@ -29,12 +30,14 @@ Before each phase: attach / `#`-reference GitHub issue **#8**.
 ```text
 /rpi-research
 
-Research only for PulseBoard GitHub issue #8.
+Research only for PulseBoard issue #8 (TEMP-8).
 Do not write production code. Do not plan or implement yet.
 
-Authoritative scope: https://github.com/AbhranilGit/HVE-Core-Course/issues/8
-(attach / #reference the issue).
-Use PRD/ADRs only where the issue requires them.
+Authoritative scope (in-repo):
+lifecycle/04-decomposition/output/backlog-snapshot.md
+— section TEMP-8 / GitHub issue #8
+(attach / #reference the backlog snapshot; use that section's acceptance criteria).
+Optional: lifecycle/03-product-definition/output/prd.md and adr/ only where the issue requires them.
 
 Capture: repo patterns, constraints, options, and open questions
 needed to plan this issue.
@@ -54,15 +57,18 @@ lifecycle/06-implementation/output/issue-08/research.md
 ```text
 /rpi-plan
 
-Plan implementation of PulseBoard GitHub issue #8 only.
+Plan implementation of PulseBoard issue #8 (TEMP-8) only.
 Do not implement yet.
 
-Authoritative scope: https://github.com/AbhranilGit/HVE-Core-Course/issues/8
-(attach / #reference the issue).
+Authoritative scope (in-repo):
+lifecycle/04-decomposition/output/backlog-snapshot.md
+— section TEMP-8 / GitHub issue #8
+(attach / #reference the backlog snapshot; use that section's acceptance criteria).
+Optional: lifecycle/03-product-definition/output/prd.md and adr/ only where the issue requires them.
 Base the plan on: lifecycle/06-implementation/output/issue-08/research.md
 
-Include steps, files to touch, acceptance checks from the issue/PRD,
-and risks. Stay inside this issue's scope.
+Include steps, files to touch, acceptance checks from the local issue
+spec, and risks. Stay inside this issue's scope.
 
 Save the plan to:
 lifecycle/06-implementation/output/issue-08/plan.md
@@ -79,10 +85,13 @@ lifecycle/06-implementation/output/issue-08/plan.md
 ```text
 /rpi-implement
 
-Implement the approved plan for PulseBoard GitHub issue #8 only.
+Implement the approved plan for PulseBoard issue #8 (TEMP-8) only.
 
-Authoritative scope: https://github.com/AbhranilGit/HVE-Core-Course/issues/8
-(attach / #reference the issue).
+Authoritative scope (in-repo):
+lifecycle/04-decomposition/output/backlog-snapshot.md
+— section TEMP-8 / GitHub issue #8
+(attach / #reference the backlog snapshot; use that section's acceptance criteria).
+Optional: lifecycle/03-product-definition/output/prd.md and adr/ only where the issue requires them.
 Follow: lifecycle/06-implementation/output/issue-08/plan.md
 
 Put application/test changes under src/pulseboard/ and tests/ as needed.
@@ -92,5 +101,5 @@ Write an implement summary (files changed, AC results, deviations) to:
 lifecycle/06-implementation/output/issue-08/implement.md
 
 Do not start issue #7 work in this session.
-Do not widen MVP beyond the issue and accepted PRD in-scope.
+Do not widen MVP beyond the local issue spec and accepted PRD in-scope.
 ```
