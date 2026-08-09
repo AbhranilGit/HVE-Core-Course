@@ -97,8 +97,8 @@ restarting costs days.
 
 **A specialist for each stage.** Instead of one assistant doing everything, each
 stage has a helper built for that job. `BRD Builder` will not start writing code.
-`RPI Agent` will not redesign your product. Picking the right helper matters more
-than the wording of your prompt.
+`Task Implementor` will not redesign your product. Picking the right helper
+matters more than the wording of your prompt.
 
 **Important thinking becomes files, not chat.** Every stage writes a document
 into the repository. Chat history disappears; those files do not. When the AI
@@ -132,10 +132,10 @@ decisions that explains the code.
 | You get | Where it lives |
 | --- | --- |
 | A working first version of your product | `src/` and `tests/` |
-| A written record of the problem you set out to solve | `docs/project-planning/<name>-brd.md` |
-| A list of features with clear "this is finished when…" rules | `docs/project-planning/<name>.md` |
-| The technical decisions, and why you made them | `docs/planning/adrs/` |
-| The work split into small tasks, in a sensible order | Your tracker, plus `docs/project-planning/sprint-plan.md` |
+| A written record of the problem you set out to solve | `docs/brds/<name>-brd.md` |
+| A list of features with clear "this is finished when…" rules | `docs/prds/<name>.md` |
+| The technical decisions, and why you made them | `docs/decisions/` |
+| The work split into small tasks, in a sensible order | Your tracker, plus `docs/planning/sprint-plan.md` |
 | Proof it was reviewed before you called it done | `docs/reviews/` |
 | What shipped and how it was checked | `docs/releases/` |
 | A page telling the next person how to run it | `docs/operations/runbook.md` |
@@ -151,6 +151,10 @@ building something nobody asked for.
 - **GitHub Copilot Chat** — signed in and working
 - **HVE Core - All** — the extension that provides the helpers. [Install it here](https://marketplace.visualstudio.com/items?itemName=ise-hve-essentials.hve-core-all)
 - **Git** — to copy this template and later save your work
+
+This kit is written against **HVE Core - All version 3.3.101**. Helper names and
+slash commands change between releases, so if a name on a stage page does not
+match what you see, check your version first — Stage 1 shows you where.
 
 You do **not** need to have chosen a programming language yet. You decide that in
 Stage 3, and Stage 6 will tell you what to install before any code is written.
@@ -181,24 +185,28 @@ Three kinds of thing appear in this kit:
 
 | Kind | What it is | Everyday equivalent |
 | --- | --- | --- |
-| **Helper** (agent, or mode) | A version of Copilot Chat set up for one job. Pick it from the dropdown. | Calling the right colleague |
+| **Helper** (agent, or mode) | A version of Copilot Chat set up for one job | Calling the right colleague |
 | **Slash command** | A focused routine you trigger by typing `/something` | Following a recipe card |
 | **Instructions** | Coding rules that apply quietly in the background | House style on the wall |
 
-When you pick a helper and send a prompt, Copilot loads that helper's
-instructions rather than trying to be everything at once. Same question,
-different helper, completely different answer:
+Helpers and slash commands are less separate than they look. Most commands carry
+a helper with them — typing `/task-plan` switches you to `Task Planner` without
+touching the dropdown. Only a handful of helpers need picking by hand:
+`BRD Builder`, `PRD Builder`, `ADR Creation`, and `PR Review`.
+
+Either way, Copilot loads that one helper's instructions rather than trying to be
+everything at once. Same question, different helper, completely different answer:
 
 ```mermaid
 flowchart TB
     Q["You have a question about your product"] --> ST{"What job are you doing right now?"}
     ST -->|Understand the problem| F2["BRD Builder<br/>produces the BRD"]
-    ST -->|Decide the features| F3["PRD Builder and ADR Creator<br/>produce the PRD and ADRs"]
+    ST -->|Decide the features| F3["PRD Builder and ADR Creation<br/>produce the PRD and decision records"]
     ST -->|Break work into tasks| F45["GitHub Backlog Manager<br/>produces issues and the sprint plan"]
-    ST -->|Write the code| F6["RPI Agent<br/>research, plan, implement, review"]
-    ST -->|Check the work| F7["rpi-review and Code Review<br/>produce review verdicts"]
-    ST -->|Ship it| F8["pull-request and git-merge<br/>produce the release"]
-    ST -->|Keep it runnable| F9["Documentation<br/>produces the runbook"]
+    ST -->|Write the code| F6["task-research, task-plan, task-implement<br/>investigate, plan, then build"]
+    ST -->|Check the work| F7["task-review and code-review-full<br/>produce review verdicts"]
+    ST -->|Ship it| F8["pull-request, PR Review, git-merge<br/>produce the release"]
+    ST -->|Keep it runnable| F9["Doc Ops<br/>checks the runbook"]
 ```
 
 The stage picks the helper, and the helper decides what gets written.
@@ -230,16 +238,17 @@ Two folders matter, and they do different jobs.
 helper to pick and what to paste. You read these; the helpers mostly do not.
 
 **`docs/` is the product.** Everything the helpers produce that is worth keeping
-lands here, at HVE Core's own default locations — which is why the helpers find
-each other's work without being told where to look.
+lands here. `docs/brds/`, `docs/prds/`, and `docs/decisions/` are HVE Core's own
+default locations, which is why the helpers find each other's work without being
+told where to look. The rest belongs to this template.
 
 | Stage | Reads | Writes |
 | --- | --- | --- |
 | 1 Setup | — | `.github/copilot-instructions.md` |
-| 2 Discovery | `lifecycle/02-discovery/mvp-framing.md` | `docs/project-planning/<name>-brd.md` |
-| 3 Product definition | the BRD | `docs/project-planning/<name>.md`, `docs/planning/adrs/` |
-| 4 Decomposition | the PRD and ADRs | issues in your tracker |
-| 5 Sprint planning | the backlog | `docs/project-planning/sprint-plan.md` |
+| 2 Discovery | `lifecycle/02-discovery/mvp-framing.md` | `docs/brds/<name>-brd.md` |
+| 3 Product definition | the BRD | `docs/prds/<name>.md`, `docs/decisions/` |
+| 4 Decomposition | the PRD and decision records | issues in your tracker |
+| 5 Sprint planning | the backlog | `docs/planning/sprint-plan.md` |
 | 6 Implementation | the sprint plan and issues | `src/`, `tests/`, evidence in `.copilot-tracking/` |
 | 7 Review | everything above | `docs/reviews/` |
 | 8 Delivery | the reviews | `docs/releases/`, the tag `v0.1.0` |
@@ -282,17 +291,17 @@ Work top to bottom. Do not skip ahead.
 
 ## The nine stages
 
-| # | Stage | In plain words | Helper | What you end up with |
+| # | Stage | In plain words | Helper or command | What you end up with |
 | --- | --- | --- | --- | --- |
 | 1 | [Setup](lifecycle/01-setup/README.md) | Install the helpers and check they appear | *(by hand, plus `/git-setup`)* | Helpers working, `.github/copilot-instructions.md` filled in |
-| 2 | [Discovery](lifecycle/02-discovery/README.md) | Turn your idea into a clear statement of the problem | `BRD Builder` | A BRD in `docs/project-planning/` |
-| 3 | [Product definition](lifecycle/03-product-definition/README.md) | Decide the features, and lock the big technical choices | `PRD Builder`, `ADR Creator` | A PRD in `docs/project-planning/`, ADRs in `docs/planning/adrs/` |
-| 4 | [Decomposition](lifecycle/04-decomposition/README.md) | Break the features into small tasks | `GitHub Backlog Manager` | Issues in your tracker |
-| 5 | [Sprint planning](lifecycle/05-sprint-planning/README.md) | Put the tasks in order; pick what to build first | `GitHub Backlog Manager` | `docs/project-planning/sprint-plan.md` |
-| 6 | [Implementation](lifecycle/06-implementation/README.md) | Build it, one task at a time | `RPI Agent` | Code in `src/` and `tests/`, one closed issue per task |
-| 7 | [Review](lifecycle/07-review/README.md) | Check the result against what you promised | `RPI Agent`, `Code Review` | Verdicts in `docs/reviews/` |
-| 8 | [Delivery](lifecycle/08-delivery/README.md) | Publish your first release | `/pull-request`, `/git-merge` | Tag `v0.1.0` and notes in `docs/releases/` |
-| 9 | [Operations](lifecycle/09-operations/README.md) | Write the page that tells people how to run it | `Documentation` | `docs/operations/runbook.md` |
+| 2 | [Discovery](lifecycle/02-discovery/README.md) | Turn your idea into a clear statement of the problem | `BRD Builder` | A BRD in `docs/brds/` |
+| 3 | [Product definition](lifecycle/03-product-definition/README.md) | Decide the features, and lock the big technical choices | `PRD Builder`, `ADR Creation` | A PRD in `docs/prds/`, decision records in `docs/decisions/` |
+| 4 | [Decomposition](lifecycle/04-decomposition/README.md) | Break the features into small tasks | `/github-discover-issues`, `/github-execute-backlog` | Issues in your tracker |
+| 5 | [Sprint planning](lifecycle/05-sprint-planning/README.md) | Put the tasks in order; pick what to build first | `/github-sprint-plan` | `docs/planning/sprint-plan.md` |
+| 6 | [Implementation](lifecycle/06-implementation/README.md) | Build it, one task at a time | `/task-research`, `/task-plan`, `/task-implement`, `/task-review` | Code in `src/` and `tests/`, one closed issue per task |
+| 7 | [Review](lifecycle/07-review/README.md) | Check the result against what you promised | `/task-review`, `/code-review-full` | Verdicts in `docs/reviews/` |
+| 8 | [Delivery](lifecycle/08-delivery/README.md) | Publish your first release | `/pull-request`, `PR Review`, `/git-merge` | Tag `v0.1.0` and notes in `docs/releases/` |
+| 9 | [Operations](lifecycle/09-operations/README.md) | Write the page that tells people how to run it | `/doc-ops-update` | `docs/operations/runbook.md` |
 
 ### Stage 1 — Setup
 
@@ -316,40 +325,44 @@ If your domain needs it, this is also where `Security Planner`, `RAI Planner`, o
 
 Two helpers, two jobs. `PRD Builder` writes the **PRD**: the list of features as
 user stories, each with acceptance criteria ("this is finished when…") and an id
-so later stages can point back at it. `ADR Creator` records the big technical
-choices as **ADRs** — short notes explaining what you chose, why, what it costs
-you, and when you would change your mind. This is where the programming language,
-the data storage, and the test command get decided, and where you copy them into
-`.github/copilot-instructions.md`.
+so later stages can point back at it. `ADR Creation` records the big technical
+choices as **decision records** — short notes explaining what you chose, why,
+what it costs you, and when you would change your mind. It gets there by asking
+you questions rather than filling in a form. This is where the programming
+language, the data storage, and the test command get decided, and where you copy
+them into `.github/copilot-instructions.md`.
 
 ### Stage 4 — Decomposition
 
-`GitHub Backlog Manager` breaks the features into small tasks, each carrying the
-PRD acceptance criterion ids it came from. That thread is what makes Stage 7
-possible. Azure DevOps and Jira have their own equivalents; the stage page covers
-all three, and a plain-file fallback if you use no tracker at all.
+`/github-discover-issues` reads the PRD and **proposes** a backlog of small
+tasks, each carrying the acceptance criterion ids it came from. You read that
+proposal, and only then does `/github-execute-backlog` create the issues. That
+thread from criterion to task is what makes Stage 7 possible. Azure DevOps and
+Jira have their own equivalents; the stage page covers all three, and a
+plain-file fallback if you use no tracker at all.
 
 ### Stage 5 — Sprint planning
 
-The same backlog helper orders those tasks and picks what to build first. This
-kit defaults to two sprints: Sprint 1 builds a **thin vertical slice** (the
-smallest end-to-end path a real person could actually use), and Sprint 2 hardens
-it. You leave with a sprint plan and a definition of done for each.
+`/github-sprint-plan` orders those tasks and picks what to build first. This kit
+defaults to two sprints: Sprint 1 builds a **thin vertical slice** (the smallest
+end-to-end path a real person could actually use), and Sprint 2 hardens it. You
+leave with a sprint plan and a definition of done for each.
 
 ### Stage 6 — Implementation
 
-This is the long stage. You build **one task at a time** with `RPI Agent`. Each
-task passes through four phases, and each phase is its own command:
+This is the long stage. You build **one task at a time**, and each task passes
+through four phases. Each phase is its own command, and each command brings its
+own specialist:
 
-1. **Research** — `/rpi-research`. The AI investigates and writes down what it found. No code yet.
-2. **Plan** — `/rpi-plan`. It writes a plan, phase details, and a critique of its own plan. Still no code.
-3. **Implement** — `/rpi-implement`. Only then does it write code, under `src/` and `tests/`.
-4. **Review** — `/rpi-review`. The tests are run and the work is checked against what the task promised.
+1. **Research** — `/task-research`. The AI investigates and writes down what it found. No code yet.
+2. **Plan** — `/task-plan`. It writes a plan and the phase details, then checks its own plan and logs the discrepancies. Still no code.
+3. **Implement** — `/task-implement`. Only then does it write code, under `src/` and `tests/`.
+4. **Review** — `/task-review`. The tests are run and the work is checked against what the task promised.
 
 Clear the chat between every phase. Each phase writes what it learned to a file
-under `.copilot-tracking/`, and the next phase reads that file — so nothing is
-lost, and a clean chat keeps the AI working from the evidence rather than from a
-long, drifting conversation.
+under `.copilot-tracking/`, and you hand that file's path to the next command —
+so nothing is lost, and a clean chat keeps the AI working from the evidence
+rather than from a long, drifting conversation.
 
 Do not start a task's Plan before its Research exists, and do not start the next
 task before the current one's review has passed and its issue is closed. You
@@ -358,25 +371,28 @@ track that in `lifecycle/06-implementation/task-log.md`.
 ### Stage 7 — Review
 
 "It runs on my machine" is not the same as "it does what we agreed." First
-`/rpi-review` asks whether each sprint as a whole matches the PRD and the
-definition of done. Then the `Code Review` helper asks whether the code itself is
-sound, dispatching functional, security, and standards perspectives over the
-change. Problems found here become written defects and follow-ups — not quiet
-fixes that nobody remembers.
+`/task-review` asks whether each sprint as a whole matches the PRD and the
+definition of done. Then `/code-review-full` asks whether the code itself is
+sound, running functional and standards reviews over the branch diff and merging
+them into one report. If your product touches anything sensitive,
+`/security-review` adds an OWASP assessment. Problems found here become written
+defects and follow-ups — not quiet fixes that nobody remembers.
 
 ### Stage 8 — Delivery
 
 You record the release evidence, open a pull request with `/pull-request`, review
-it with `/pr-review`, then merge and tag `v0.1.0` with `/git-merge`, and write
-release notes saying what shipped, what was checked, and what was deliberately
-left out.
+it with the `PR Review` helper, then merge and tag `v0.1.0` with `/git-merge`,
+and write release notes saying what shipped, what was checked, and what was
+deliberately left out.
 
 ### Stage 9 — Operations
 
-`Documentation` writes the **runbook**: how to start the app, where its data
-lives, and what to do when it breaks. Written last, appreciated forever by the
-next person (including future you). When something does break later,
-`/incident-response` works the incident and the fix goes back through Stage 6.
+You write the **runbook**: how to start the app, where its data lives, and what
+to do when it breaks. Then `/doc-ops-update` checks it against the repository,
+because the way a runbook fails is by quoting a command that no longer works.
+Written last, appreciated forever by the next person (including future you). When
+something does break later, `/incident-response` works the incident and the fix
+goes back through Stage 6.
 
 ---
 
@@ -390,9 +406,10 @@ and review.
 | Who | How they use it |
 | --- | --- |
 | **You** | Almost never by hand. You read the files the stage pages point you at, but you do not write here. |
-| **RPI Agent (Stage 6)** | Writes research, plans, phase details, change records, and review logs here — one dated file per phase, per task. |
+| **The task helpers (Stage 6)** | Write research, plans, phase details, change records, and review logs here — one dated file per phase, per task. |
 | **BRD and PRD Builder** | Keep session state here, which is how they resume a conversation you started yesterday. |
-| **Review helpers (Stage 7)** | Read it on purpose, to compare what was promised with what actually changed. |
+| **GitHub Backlog Manager** | Drafts the backlog and the sprint plan here before anything touches your tracker. |
+| **Review helpers (Stages 7 and 8)** | Read it on purpose, to compare what was promised with what actually changed. |
 
 Three rules:
 
@@ -417,8 +434,10 @@ In short: **you own `lifecycle/`, the helpers own `.copilot-tracking/`, and
 ├── lifecycle/                   # The nine stage pages. Start here.
 │   ├── 01-setup/ … 09-operations/
 ├── docs/                        # Everything the helpers produce that is worth keeping
-│   ├── project-planning/        # BRD, PRD, sprint plan
-│   ├── planning/adrs/           # Architecture decision records
+│   ├── brds/                    # The business requirements document
+│   ├── prds/                    # The product requirements document
+│   ├── decisions/               # Decision records (ADRs)
+│   ├── planning/                # The sprint plan
 │   ├── reviews/                 # Stage 7 verdicts
 │   ├── releases/                # Release evidence and notes
 │   └── operations/              # Runbook, and incidents if you have any
@@ -448,7 +467,7 @@ the previous question.
 - **Do not skip stages.** Each stage reads what the previous stage produced.
 - **The files are the truth, not the chat.** Chat history disappears. The documents in `docs/` are what you and the AI come back to.
 - **If it is not in your framing document, it is not in scope.** When you want to add something, edit the framing document first.
-- **Use the same task slug across all four RPI phases.** It is what ties a task's evidence together.
+- **Pass each phase the path the previous one gave you.** The four task commands chain by file path, and a typo there is the usual reason a phase says it cannot find anything.
 
 ---
 
@@ -457,7 +476,7 @@ the previous question.
 1. **Using the coding helper to write requirements.** Wrong specialist. It will produce something that looks like a requirements document and reads like a technical design.
 2. **Using a requirements helper to write code.** Same mistake, other direction. Finish the definition stages first.
 3. **Building polish before the core works.** Your first sprint should be one thin path that a person could actually use, end to end. Beautiful settings screens attached to nothing are the classic trap.
-4. **Running `/rpi-implement` without reading the plan.** The gate is the whole point. Skipping it costs you the thing the kit exists to give you.
+4. **Running `/task-implement` without reading the plan.** The gate is the whole point. Skipping it costs you the thing the kit exists to give you.
 5. **Letting scope grow quietly.** Every "while we're here, let's also…" costs you the release. If you want it, edit the framing document first and see how you feel about it in writing.
 6. **Ticking a review box you did not check.** The reviews only protect you if you are honest in them.
 
@@ -467,13 +486,15 @@ the previous question.
 
 | What you see | What to do |
 | --- | --- |
-| The helper name is not in the Copilot dropdown | The HVE Core - All extension is not installed or VS Code was not reloaded. Install it, then reload VS Code. Names shift slightly between extension versions, so pick the closest match and note it in your setup confirmation. |
-| A `/rpi-*` command is not offered | Same cause. If only some appear, you may have installed the smaller **HVE Core** package instead of **HVE Core - All**. |
+| The helper name is not in the Copilot dropdown | The HVE Core - All extension is not installed or VS Code was not reloaded. Install it, then reload VS Code. |
+| A `/task-*` command is not offered, but `/rpi-research` and `/rpi-plan` are | Your HVE Core is newer than the 3.3.101 this kit targets, and the four phases were renamed. The phases themselves are unchanged: read `/rpi-research` for `/task-research`, and so on. |
+| Some commands appear but many do not | You may have installed the smaller **HVE Core** package instead of **HVE Core - All**. |
 | The helper asks you a question you cannot answer | Look for the answer in your [framing document](lifecycle/02-discovery/mvp-framing.md). If it is not there, decide now, tell the helper, and add the answer to the framing document so it is not lost. |
 | The helper invents a feature you never asked for | Reply: "That is out of scope. Use only what is in `lifecycle/02-discovery/mvp-framing.md`." Scope creep is the most common way these projects fail. |
-| A phase says the previous phase's file is missing | You skipped a phase, or you used a different slug this time. Check your task log and rerun the previous phase with the same slug. |
-| The helper writes to a different path than the stage page predicted | Take the path it reports. HVE Core owns these locations and its newer versions may move them; the stage page tells you the shape to expect, not a promise. |
-| Stage 7 cannot find research or change evidence | Confirm `.copilot-tracking/` still has it from Stage 6. Do not empty that folder before review. |
+| A phase says the previous phase's file is missing | Check the path you passed in `research=` or `plan=`. The phases chain by explicit file path, so a typo there looks exactly like a skipped phase. |
+| Stage 4 says it cannot reach your repository | The GitHub MCP server is not connected in VS Code. The backlog helper works entirely through it. |
+| The helper writes to a different path than the stage page predicted | Take the path it reports and note it in your setup confirmation. HVE Core owns the `docs/brds/`, `docs/prds/`, and `docs/decisions/` locations and can move them between releases. |
+| Stage 7 cannot find research or change evidence | Confirm `.copilot-tracking/` still has it from Stage 6. `Task Reviewer` needs the plan and changes logs and will stop without them, so do not empty that folder before review. |
 
 Three ways people most often get stuck:
 

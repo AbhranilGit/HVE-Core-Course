@@ -5,7 +5,7 @@ Turn your idea into a clear written statement of the problem you are solving.
 | | |
 | --- | --- |
 | **Reads** | [`mvp-framing.md`](mvp-framing.md) |
-| **Produces** | `docs/project-planning/<name>-brd.md` |
+| **Produces** | `docs/brds/<name>-brd.md` |
 | **Helper** | `BRD Builder` |
 
 ---
@@ -32,8 +32,9 @@ from drifting.
 2. Click the mode dropdown at the bottom of the chat box — it usually says *Ask* or *Agent*.
 3. Choose **`BRD Builder`**.
 
-Do **not** use `RPI Agent` or `PRD Builder` here. `RPI Agent` writes code, and it
-will happily start building your app instead of thinking about the problem.
+Do **not** use `PRD Builder` or any of the task helpers here. `Task Implementor`
+writes code, and it will happily start building your app instead of thinking
+about the problem.
 
 Not in the list? See [If something goes wrong](../../README.md#if-something-goes-wrong).
 
@@ -61,18 +62,18 @@ success metrics, assumptions, risks, and open questions.
 Do not write a PRD, acceptance criteria, ADRs, tickets, or any application code.
 Do not widen the scope beyond the framing's in-scope list.
 
-Save the BRD to your default location under docs/project-planning/ and tell me
-the exact path you used.
+Save the BRD to your default location under docs/brds/ and tell me the exact
+path you used.
 ```
 
-`BRD Builder` already knows to write to `docs/project-planning/<name>-brd.md`,
-and it keeps its own session notes under `.copilot-tracking/brd-sessions/`. That
-is how it resumes if you come back tomorrow — leave both alone.
+`BRD Builder` already knows to write to `docs/brds/<name>-brd.md`, and it keeps
+its session state in `.copilot-tracking/brd-sessions/<name>.state.json`. That is
+how it resumes if you come back tomorrow — leave both alone.
 
 ## 5. What you should see afterwards
 
-A new file under **`docs/project-planning/`**, named after your product and
-ending in `-brd.md`. The helper tells you the exact path.
+A new file under **`docs/brds/`**, named after your product and ending in
+`-brd.md`. The helper tells you the exact path.
 
 Open it and skim. It should describe *your* problem in your terms. If it
 describes a different product, or lists features you never mentioned, say so in
@@ -89,7 +90,7 @@ next stage inherits it instead of asking again.
 
 ## 7. Done when
 
-- A `-brd.md` file exists under `docs/project-planning/`
+- A `-brd.md` file exists under `docs/brds/`
 - The problem it describes is recognisably yours
 - Its out-of-scope list matches what you wrote in the framing
 - Nothing in it surprised you — if something did, fix the framing and rerun
@@ -106,9 +107,9 @@ one; each produces its own plan document alongside the BRD.
 | `Security Planner` | The product handles credentials, personal data, or anything an attacker would want. Produces a STRIDE-based security model. |
 | `RAI Planner` | The product contains AI or makes automated decisions about people. Produces a Responsible AI assessment. |
 | `SSSC Planner` | You need supply-chain assurance — SBOM, SLSA, OpenSSF Scorecard. |
-| `rpi-research` (`/rpi-research`) | A genuine technical unknown blocks the BRD. Investigates and writes evidence before you commit. |
+| `/task-research topic=...` | A genuine technical unknown blocks the BRD. Investigates and writes evidence under `.copilot-tracking/research/` before you commit to anything. |
 
-Run them after the BRD exists, and tell each one to read the BRD path from
-`docs/project-planning/`.
+Run them after the BRD exists, and tell each one to read the BRD from
+`docs/brds/`.
 
 **Next:** [Stage 3 — Product definition](../03-product-definition/README.md)

@@ -23,24 +23,34 @@ Write short answers in the blank cells — `Pass`, `Fail`, `Yes`, `No`, or a not
 | Copilot Chat opens and replies | | |
 | **HVE Core - All** installed | | Extension id: `ise-hve-essentials.hve-core-all` |
 | VS Code reloaded after installing | | |
+| **Extension version** | | This kit targets `3.3.101` |
+
+If your version is not 3.3.101, expect some helper and command names to differ.
+Record each difference in the tables below as you hit it — that turns a
+frustrating stage into a two-second lookup.
 
 ## 2. The helpers
 
 Write `Yes` or `No` for each helper you can see in the mode dropdown. If your
-extension version names one differently, write down what you actually see.
+version names one differently, write down what you actually see.
 
 | Helper | Visible? | Used in | Name in your version, if different |
 | --- | --- | --- | --- |
 | **BRD Builder** | | Stage 2 | |
 | **PRD Builder** | | Stage 3 | |
-| **ADR Creator** | | Stage 3 | |
+| **ADR Creation** | | Stage 3 | |
 | **GitHub Backlog Manager** | | Stages 4, 5, 6 | |
-| **RPI Agent** | | Stage 6 | |
-| **Code Review** | | Stage 7 | |
-| **Documentation** | | Stage 9 | |
+| **Task Researcher** | | Stage 6 | |
+| **Task Planner** | | Stage 6 | |
+| **Task Implementor** | | Stage 6 | |
+| **Task Reviewer** | | Stages 6 and 7 | |
+| **Code Review Full** | | Stage 7 | |
+| **Security Reviewer** | | Stage 7, if it applies | |
+| **PR Review** | | Stage 8 | |
+| **Doc Ops** | | Stage 9 | |
 
-If `BRD Builder` or `RPI Agent` are missing, stop and fix that before going
-further. Those two are not optional.
+If `BRD Builder` or the four task helpers are missing, stop and fix that before
+going further. Those are not optional.
 
 ## 3. The slash commands
 
@@ -49,13 +59,17 @@ Type `/` in the chat and write `Yes` or `No`.
 | Command | There? | Used in |
 | --- | --- | --- |
 | `/git-setup` | | Stage 1 |
-| `/rpi-research` | | Stage 6 |
-| `/rpi-plan` | | Stage 6 |
-| `/rpi-implement` | | Stage 6 |
-| `/rpi-review` | | Stages 6 and 7 |
+| `/github-discover-issues` | | Stage 4 |
+| `/github-execute-backlog` | | Stage 4 |
+| `/github-sprint-plan` | | Stage 5 |
+| `/task-research` | | Stage 6 |
+| `/task-plan` | | Stage 6 |
+| `/task-implement` | | Stage 6 |
+| `/task-review` | | Stages 6 and 7 |
+| `/code-review-full` | | Stage 7 |
 | `/pull-request` | | Stage 8 |
-| `/pr-review` | | Stage 8 |
 | `/git-merge` | | Stage 8 |
+| `/doc-ops-update` | | Stage 9 |
 | `/incident-response` | | Stage 9 |
 
 ## 4. The folders
@@ -64,8 +78,10 @@ Type `/` in the chat and write `Yes` or `No`.
 | --- | --- |
 | `lifecycle/` | |
 | `lifecycle/02-discovery/mvp-framing.md` | |
-| `docs/project-planning/` | |
-| `docs/planning/adrs/` | |
+| `docs/brds/` | |
+| `docs/prds/` | |
+| `docs/decisions/` | |
+| `docs/planning/` | |
 | `src/` | |
 | `tests/` | |
 | `.copilot-tracking/` | |
@@ -78,6 +94,7 @@ Type `/` in the chat and write `Yes` or `No`.
 | `git status` runs without error | | |
 | You are on your own branch, not `template` | | Branch name: |
 | Repository exists on your tracker | | GitHub, Azure DevOps, or Jira; there is a fallback if none |
+| GitHub MCP server connected in VS Code | | Stage 4 needs it to create issues |
 | `.github/copilot-instructions.md` names your project | | |
 
 Paste what `git status` printed:
@@ -99,7 +116,7 @@ Write `Yes` only when each row is true.
 | Gate | Met? |
 | --- | --- |
 | The helpers needed for Stages 2 and 6 are visible | |
-| The `/rpi-*` commands are available | |
+| The `/task-*` commands are available | |
 | The folders are all present | |
 | Git works and you are on your own branch | |
 | `.github/copilot-instructions.md` names your project | |
@@ -114,7 +131,7 @@ Write `Yes` only when each row is true.
 | --- | --- |
 | **Now** | Write your idea into [`../02-discovery/mvp-framing.md`](../02-discovery/mvp-framing.md). This is the only document you write by hand. |
 | **Then** | Open [Stage 2 — Discovery](../02-discovery/README.md) |
-| **Helper for Stage 2** | `BRD Builder` — not `RPI Agent` |
-| **It will produce** | `docs/project-planning/<name>-brd.md` |
+| **Helper for Stage 2** | `BRD Builder` |
+| **It will produce** | `docs/brds/<name>-brd.md` |
 
 The map of all nine stages is in the [main README](../../README.md).

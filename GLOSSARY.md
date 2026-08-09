@@ -11,13 +11,13 @@ Start with the [main README](README.md) if you have not yet.
 | --- | --- |
 | **MVP** (minimum viable product) | The smallest version of your idea that is still genuinely useful to someone. Not a demo, not the full dream — the first thing worth using. |
 | **Framing document** | The one file you write by hand, describing your idea: the problem, who has it, and what is in and out of scope. Everything else is generated from it. Lives at `lifecycle/02-discovery/mvp-framing.md`. |
-| **BRD** (business requirements document) | A short write-up of *why* you are building this: the problem, who has it, what success looks like. It deliberately does not talk about features or technology yet. Lands in `docs/project-planning/`. |
-| **PRD** (product requirements document) | The *what*: the list of features, written as user stories, each with rules for when it counts as finished. Lands in `docs/project-planning/`. |
+| **BRD** (business requirements document) | A short write-up of *why* you are building this: the problem, who has it, what success looks like. It deliberately does not talk about features or technology yet. Lands in `docs/brds/`. |
+| **PRD** (product requirements document) | The *what*: the list of features, written as user stories, each with rules for when it counts as finished. Lands in `docs/prds/`. |
 | **User story** | One sentence describing something a person wants to do, in the form "As a *someone*, I want to *do something*, so that *benefit*." |
 | **Acceptance criteria** (often shortened to **AC**) | The checklist that decides whether a feature is done. Each one gets an id in the PRD so tasks and reviews can point back at it. "Done" means every criterion is met — not "it ran on my machine once". |
-| **ADR** (architecture decision record) | A one-page note recording a technical decision, why you made it, what it costs you, and when you would change your mind. Example: choosing one database over another. Written once, read for years. Lands in `docs/planning/adrs/`, numbered `0001`, `0002`, and so on. |
+| **ADR** (architecture decision record), also **decision record** | A one-page note recording a technical decision, why you made it, what it costs you, and when you would change your mind. Example: choosing one database over another. Written once, read for years. Lands in `docs/decisions/`, named by date: `2026-03-14-sqlite-for-local-storage-v01.md`. |
 | **Backlog** | The full list of tasks still to do, kept in your tracker. |
-| **Sprint plan** | The backlog put in order and split into sprints, with a definition of done for each. Lands at `docs/project-planning/sprint-plan.md`. |
+| **Sprint plan** | The backlog put in order and split into sprints, with a definition of done for each. Lands at `docs/planning/sprint-plan.md`. |
 | **Runbook** | The page that tells the next person how to start your app, where its data lives, and what to do when it breaks. Written last, appreciated forever. |
 
 ## How the work is organised
@@ -36,16 +36,18 @@ Start with the [main README](README.md) if you have not yet.
 
 | Term | What it actually means |
 | --- | --- |
-| **HVE** (Hyper Velocity Engineering) | Microsoft's framework for AI-assisted software delivery, and the nine-stage lifecycle this kit follows. **HVE Core** is the tooling; **HVE Core - All** is the full extension bundle. |
-| **Helper** (also called an **agent** or **mode**) | A version of Copilot Chat set up for one job. You choose one from the dropdown at the bottom of the chat box. `BRD Builder` writes requirements; `RPI Agent` writes code. Using the right one matters more than the words in your prompt. |
+| **HVE** (Hyper Velocity Engineering) | Microsoft's framework for AI-assisted software delivery, and the nine-stage lifecycle this kit follows. **HVE Core** is the tooling; **HVE Core - All** is the full extension bundle. This kit targets version `3.3.101`. |
+| **Helper** (also called an **agent** or **mode**) | A version of Copilot Chat set up for one job. `BRD Builder` writes requirements; `Task Implementor` writes code. Using the right one matters more than the words in your prompt. Some you pick from the dropdown at the bottom of the chat box; most arrive automatically with a slash command. |
 | **Prompt** | The instructions you paste into the chat. In this kit, every prompt is written for you — copy it exactly, and only change the values the page tells you to. |
-| **Slash command** | An instruction starting with `/`, typed into the chat, that runs a specific routine — for example `/rpi-research` or `/git-merge`. |
-| **Skill** | A reusable routine a helper can run. Most of the `/rpi-*` commands are skills you can invoke yourself. |
+| **Slash command** | An instruction starting with `/`, typed into the chat, that runs a specific routine — for example `/task-research` or `/git-merge`. Most commands also carry a helper: typing `/task-plan` switches you to `Task Planner` without touching the dropdown. |
+| **Argument** | A `name=value` pair after a slash command that tells it what to work on, as in `/task-plan research=<path>`. The chat shows you which ones a command accepts as you type. |
+| **Skill** | A packaged capability a helper loads when it needs it — the OWASP security checklists and the Jira and GitLab integrations are skills. You do not usually invoke these yourself. |
 | **Instructions** | Background rules that apply automatically based on what you are editing. `.github/copilot-instructions.md` is your project's own set, and every helper reads it on every request. |
-| **RPI** (research, plan, implement, review) | The four-phase routine for writing code: first the AI investigates and writes down what it found, then it writes a plan, then it writes the code, and finally it reviews the result and runs the tests. Each phase is its own command, saves its own file, and you check that file before allowing the next. This is what stops the AI from confidently building the wrong thing. |
-| **Slug** | The short lowercase name that ties a task's four RPI files together, for example `issue-01-user-can-log-in`. Use the same one across all four phases or they will not find each other. |
+| **RPI** (research, plan, implement, review) | The four-phase routine for writing code: first the AI investigates and writes down what it found, then it writes a plan, then it writes the code, and finally it reviews the result and runs the tests. Each phase is its own command — `/task-research`, `/task-plan`, `/task-implement`, `/task-review` — saves its own file, and you check that file before allowing the next. This is what stops the AI from confidently building the wrong thing. |
+| **Slug** | The short lowercase name that keeps a task's four evidence files recognisable, for example `issue-01-user-can-log-in`. The phases actually chain by file path, but a consistent slug is what makes the folders readable a month later. |
 | **Gate** | A checkpoint you confirm before moving on. If the previous step's file does not exist or you have not read it, you do not proceed. |
-| **Execution status vs outcome** | `/rpi-review` reports both, and they are different questions. Execution is whether the review could be completed (Complete, Partial, Blocked). Outcome is whether the work is acceptable (Conformant, Defects found, Residual work, Not accepted). |
+| **Planning log** | What `Task Planner` writes after checking its own plan, listing the discrepancies it found between the research and the plan. Reading its discrepancy section is the Plan gate. |
+| **Overall status** | What `Task Reviewer` reports at the end of a review: Complete, Needs Rework, or Blocked, with counts of critical and major findings. Only Complete means done. |
 
 ## Git and shipping
 
@@ -63,7 +65,7 @@ Start with the [main README](README.md) if you have not yet.
 | Folder | What it holds |
 | --- | --- |
 | `lifecycle/` | The nine stage pages — the instructions you read. Nothing the helpers produce lands here, except your framing document and your Stage 6 task log. |
-| `docs/` | Everything worth keeping: `project-planning/` for the BRD, PRD, and sprint plan; `planning/adrs/` for decisions; `reviews/`, `releases/`, and `operations/` for the rest. |
+| `docs/` | Everything worth keeping: `brds/`, `prds/`, and `decisions/` at HVE Core's own default locations, plus `planning/` for the sprint plan and `reviews/`, `releases/`, and `operations/` for the rest. |
 | `.github/` | `copilot-instructions.md`, your project's conventions, plus the issue template. |
 | `src/` | Your application code. Empty until Stage 6. |
 | `tests/` | Automated checks that your code does what it claims. Empty until Stage 6. |

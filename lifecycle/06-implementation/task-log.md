@@ -29,19 +29,20 @@ constraints, existing patterns, and open questions. No production code was
 written. It understood the task correctly. There is enough here to plan against
 the acceptance criteria.
 
-**Plan** — the plan, phase details, and plan critique exist. The plan follows the
-research, or explains where it deliberately differs. It respects your ADRs. It
-stays inside this one task. Reading it, you can picture what will change. You
-have read the critique and are satisfied with how its points were dispositioned.
+**Plan** — the plan, the phase details, and the planning log exist. The plan
+follows the research, or explains where it deliberately differs. It respects your
+decision records. It stays inside this one task. Reading it, you can picture what
+will change. You have read the planning log's discrepancy section and are
+satisfied with how each point was handled.
 
 **Implement** — the change record lists what changed and how each acceptance
 criterion was addressed. The code actually runs. Nothing was built that this
 task did not ask for. Work has not started on the next task.
 
 **Review** — the review log records the exact test command, the result, and the
-date. The tests passed, with no test weakened to get a pass. Execution status is
-Complete and the outcome is Conformant, or you have read and accepted the stated
-divergence. Every acceptance criterion is recorded as passing, with evidence.
+date. The tests passed, with no test weakened to get a pass. The overall status
+is Complete, or you have read a Needs Rework verdict and consciously accepted
+what it found. Every acceptance criterion is recorded as passing, with evidence.
 Follow-up work was routed rather than quietly fixed.
 
 **Closed** — the issue comment records how each acceptance criterion was met and

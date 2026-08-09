@@ -6,7 +6,7 @@ Publish your first release.
 | --- | --- |
 | **Reads** | Your Stage 7 reviews and the code on your branch |
 | **Produces** | Release evidence, a merged pull request, the tag `v0.1.0`, and release notes in `docs/releases/` |
-| **Helpers** | Default Copilot Chat, plus `/pull-request`, `/pr-review`, and `/git-merge` |
+| **Commands** | `/pull-request` and `/git-merge`, plus the `PR Review` helper |
 
 Do **A**, then **B**, then **C**, then **D**.
 
@@ -40,8 +40,8 @@ Use the default Copilot Chat.
 Create a release evidence record for version v0.1.0 of this product.
 
 Read from the workspace:
-- The PRD in docs/project-planning/
-- docs/project-planning/sprint-plan.md
+- The PRD in docs/prds/
+- docs/planning/sprint-plan.md
 - docs/reviews/ (every review file present)
 - lifecycle/06-implementation/task-log.md
 - .github/copilot-instructions.md, for the test command
@@ -74,14 +74,14 @@ Read it. Any unticked box is a decision you need to make before releasing.
 ## B. Open the pull request
 
 ```text
-/pull-request branch=origin/main
+/pull-request branch=origin/main createPullRequest=true
 
 Create the pull request for the v0.1.0 release of this product.
 
 Read from the workspace:
 - docs/reviews/ (every review file)
 - docs/releases/v0.1.0-release-evidence.md
-- docs/project-planning/sprint-plan.md
+- docs/planning/sprint-plan.md
 - lifecycle/02-discovery/mvp-framing.md
 
 The description must state:
@@ -96,7 +96,9 @@ pull request against this repository's default branch.
 Do not merge and do not tag in this step. Do not start new features.
 ```
 
-Change `origin/main` to whatever your default branch is called.
+Change `origin/main` to whatever your default branch is called. Leave
+`createPullRequest=true` off if you only want the description drafted and would
+rather open the pull request yourself.
 
 **You should see:** a pull request, and its URL in the chat. Note the URL down.
 
@@ -106,13 +108,29 @@ Not using a hosted tracker? Skip to part D and merge your branch locally.
 
 ## C. Review the pull request
 
+There is no slash command for this one. Clear the chat, then choose **`PR Review`**
+from the mode dropdown and describe the pull request you just opened.
+
 ```text
-/pr-review
+Review the open pull request for the v0.1.0 release on this branch.
+
+Read for context:
+- docs/releases/v0.1.0-release-evidence.md
+- docs/reviews/ (every review file)
+- docs/decisions/, for the technical decisions in force
+- .github/copilot-instructions.md, for this project's conventions
+
+Check the diff that is actually about to merge, not the repository as a whole.
+Flag anything that drifted in after the Stage 7 reviews were written.
+
+Do not merge, do not tag, and do not implement fixes unless I ask.
 ```
 
-This runs a multi-perspective review over the open pull request. It is the same
-family of checks as Stage 7 part C, but scoped to exactly the diff you are about
-to merge — which catches anything that drifted in after the Stage 7 review.
+`PR Review` builds a reference for the pull request, keeps a living review
+document under `.copilot-tracking/pr/review/<branch>/`, and finishes with a
+handoff file of the comments and decisions it recommends. It is the same family
+of checks as Stage 7 part C, but scoped to exactly the diff you are about to
+merge — which is why it catches late drift that the earlier review could not.
 
 Address anything it raises before merging, or record why you are not going to.
 
@@ -152,6 +170,9 @@ Save the release notes to:
 docs/releases/v0.1.0-release-notes.md
 ```
 
+`/git-merge` handles merge, rebase, and conflict workflows with standard stop
+points, so expect it to pause and ask rather than force anything through.
+
 **You should see:** `docs/releases/v0.1.0-release-notes.md`, and `git tag`
 listing `v0.1.0`.
 
@@ -176,6 +197,6 @@ reasoning into the evidence record so the decision survives.
 
 ## Starting the next sprint instead?
 
-Delivery loops back to implementation. If this release was not the final one,
-go to [Stage 6](../06-implementation/README.md) with the next sprint's tasks
-rather than continuing to Stage 9. Come back here when the sprint is done.
+Delivery loops back to implementation. If this release was not the final one, go
+to [Stage 6](../06-implementation/README.md) with the next sprint's tasks rather
+than continuing to Stage 9. Come back here when the sprint is done.

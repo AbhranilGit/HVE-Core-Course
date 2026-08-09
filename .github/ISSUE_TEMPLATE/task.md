@@ -12,7 +12,7 @@ One or two sentences. What should be true when this is done that is not true now
 ## Acceptance criteria
 
 Each line must be checkable by someone who did not write the code. Keep the PRD
-criterion id so the trail back to `docs/project-planning/` survives.
+criterion id so the trail back to `docs/prds/` survives.
 
 - [ ] `AC-xxx` —
 - [ ] `AC-xxx` —
