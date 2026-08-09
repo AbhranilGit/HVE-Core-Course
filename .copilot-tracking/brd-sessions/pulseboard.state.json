@@ -1,0 +1,48 @@
+{
+  "brdFile": "lifecycle/02-discovery/output/brd.md",
+  "lastAccessed": "2026-08-09T00:00:00Z",
+  "currentPhase": "finalize",
+  "questionsAsked": [
+    "business-objectives",
+    "primary-stakeholders",
+    "scope-boundaries",
+    "success-metrics",
+    "assumptions-risks",
+    "open-questions"
+  ],
+  "answeredQuestions": {
+    "business-objectives": "Glanceable today board; fast doing/blocked/next posting; blocker visibility; local operability; thin-slice scope discipline",
+    "primary-stakeholders": "IC poster; lead/facilitator reader; product/delivery owner; teammate operator; scale 5-15 on one local instance",
+    "scope-boundaries": "In: create status, today board, simple local identity, SQLite, runnable locally, thin first slice. Out: SSO, notifications, mobile, multi-tenant, websockets, analytics, RBAC, rich media, full tracker",
+    "success-metrics": "2-week window post v0.1.0; adoption 70%; facilitator 3 consecutive days; >=1 blocker; docs-only start; no SSO/notifications/mobile",
+    "assumptions-risks": "Derived only from mvp-framing.md; no invented scope",
+    "open-questions": "Carried framing OQ-01..OQ-06 unchanged; no new OQs required"
+  },
+  "referencesProcessed": [
+    {
+      "file": "lifecycle/02-discovery/input/mvp-framing.md",
+      "status": "analyzed",
+      "keyFindings": "Accepted MVP framing is sole authoritative source; output path lifecycle/02-discovery/output/brd.md"
+    }
+  ],
+  "nextActions": [
+    "User review and accept BRD",
+    "On acceptance: Stage 3 PRD + ADRs bound by BRD scope"
+  ],
+  "qualityChecks": [
+    "objectives-defined",
+    "scope-clarified",
+    "stakeholders-documented",
+    "metrics-with-targets",
+    "assumptions-from-framing",
+    "risks-from-framing",
+    "open-questions-preserved",
+    "no-prd-ac-adr-tickets-code",
+    "mvp-not-widened"
+  ],
+  "userPreferences": {
+    "detail-level": "comprehensive",
+    "question-style": "answer-from-framing-first",
+    "outputPath": "lifecycle/02-discovery/output/brd.md"
+  }
+}
