@@ -4,41 +4,47 @@ Turn your idea into a clear written statement of the problem you are solving.
 
 | | |
 | --- | --- |
-| **Reads** | [`input/mvp-framing.md`](input/mvp-framing.md) |
-| **Produces** | [`output/brd.md`](output/brd.md) |
-| **Helper** | `brd-builder` |
+| **Reads** | [`mvp-framing.md`](mvp-framing.md) |
+| **Produces** | `docs/project-planning/<name>-brd.md` |
+| **Helper** | `BRD Builder` |
 
 ---
 
 ## 1. What this stage is for
 
-You are about to produce a **BRD** — a business requirements document. It is a short write-up of *why* this product should exist: the problem, who has it, what success looks like, and what you are deliberately not building.
+You are about to produce a **BRD** — a business requirements document. It is a
+short write-up of *why* this product should exist: the problem, who has it, what
+success looks like, and what you are deliberately not building.
 
-It deliberately says nothing about features or technology. That comes in Stage 3. Getting the "why" written down first is what stops the next six stages from drifting.
+It deliberately says nothing about features or technology. That comes in
+Stage 3. Getting the "why" written down first is what stops the next six stages
+from drifting.
 
 ## 2. Prerequisites
 
 - Stage 1 is finished and the helpers appear in Copilot Chat
-- [`input/mvp-framing.md`](input/mvp-framing.md) is filled in with your idea — no `<placeholders>` left
+- [`mvp-framing.md`](mvp-framing.md) is filled in with your idea — no `<placeholders>` left
 - You have this repository open as the folder in VS Code
 
 ## 3. Pick the helper
 
 1. Open Copilot Chat in VS Code (the chat icon in the left Activity Bar, or `Ctrl+Alt+I` / `Cmd+Alt+I`).
 2. Click the mode dropdown at the bottom of the chat box — it usually says *Ask* or *Agent*.
-3. Choose **`brd-builder`**.
+3. Choose **`BRD Builder`**.
 
-Do **not** use `RPI Agent` or `prd-builder` here. `RPI Agent` writes code, and it will happily start building your app instead of thinking about the problem.
+Do **not** use `RPI Agent` or `PRD Builder` here. `RPI Agent` writes code, and it
+will happily start building your app instead of thinking about the problem.
 
 Not in the list? See [If something goes wrong](../../README.md#if-something-goes-wrong).
 
 ## 4. Paste this prompt
 
-Copy the whole block below and paste it into the chat. Change nothing — it already knows where to find your idea.
+Copy the whole block below and paste it into the chat. Change nothing — it
+already knows where to find your idea.
 
 ```text
 Create a business requirements document (BRD) for the product described in
-lifecycle/02-discovery/input/mvp-framing.md.
+lifecycle/02-discovery/mvp-framing.md.
 
 Read that file from the workspace. Do not ask me to attach it.
 
@@ -49,31 +55,60 @@ Workflow:
 - Carry forward the open questions the framing already lists; add new ones only
   if something important is missing.
 
-Produce a BRD containing: problem statement, stakeholders, in and out of scope,
+Produce a BRD covering: problem statement, stakeholders, in and out of scope,
 success metrics, assumptions, risks, and open questions.
 
 Do not write a PRD, acceptance criteria, ADRs, tickets, or any application code.
 Do not widen the scope beyond the framing's in-scope list.
 
-Save the finished BRD to:
-lifecycle/02-discovery/output/brd.md
+Save the BRD to your default location under docs/project-planning/ and tell me
+the exact path you used.
 ```
+
+`BRD Builder` already knows to write to `docs/project-planning/<name>-brd.md`,
+and it keeps its own session notes under `.copilot-tracking/brd-sessions/`. That
+is how it resumes if you come back tomorrow — leave both alone.
 
 ## 5. What you should see afterwards
 
-A new file at **`lifecycle/02-discovery/output/brd.md`**.
+A new file under **`docs/project-planning/`**, named after your product and
+ending in `-brd.md`. The helper tells you the exact path.
 
-Open it and skim. It should describe *your* problem in your terms. If it describes a different product, or lists features you never mentioned, say so in the chat and ask it to work only from the framing file.
+Open it and skim. It should describe *your* problem in your terms. If it
+describes a different product, or lists features you never mentioned, say so in
+the chat and ask it to work only from the framing file.
+
+Write the path down — Stage 3 asks for it.
 
 ## 6. If the helper asks you a question
 
-Answer from your [framing document](input/mvp-framing.md). If the answer is not there, decide now, tell the helper — and then **add that answer to the framing document**, so the next stage inherits it instead of asking again.
+`BRD Builder` works by guided question-and-answer, so expect a few. Answer from
+your [framing document](mvp-framing.md). If the answer is not there, decide now,
+tell the helper — and then **add that answer to the framing document**, so the
+next stage inherits it instead of asking again.
 
 ## 7. Done when
 
-- `lifecycle/02-discovery/output/brd.md` exists
+- A `-brd.md` file exists under `docs/project-planning/`
 - The problem it describes is recognisably yours
 - Its out-of-scope list matches what you wrote in the framing
 - Nothing in it surprised you — if something did, fix the framing and rerun
+
+---
+
+## Optional — if your domain needs it
+
+HVE Core ships extra Discovery planners. Skip these unless your domain calls for
+one; each produces its own plan document alongside the BRD.
+
+| Helper | Use it when |
+| --- | --- |
+| `Security Planner` | The product handles credentials, personal data, or anything an attacker would want. Produces a STRIDE-based security model. |
+| `RAI Planner` | The product contains AI or makes automated decisions about people. Produces a Responsible AI assessment. |
+| `SSSC Planner` | You need supply-chain assurance — SBOM, SLSA, OpenSSF Scorecard. |
+| `rpi-research` (`/rpi-research`) | A genuine technical unknown blocks the BRD. Investigates and writes evidence before you commit. |
+
+Run them after the BRD exists, and tell each one to read the BRD path from
+`docs/project-planning/`.
 
 **Next:** [Stage 3 — Product definition](../03-product-definition/README.md)

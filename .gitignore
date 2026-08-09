@@ -1,6 +1,12 @@
-# This file lists things git should never save.
 # Add entries for your own language once you decide it in Stage 3
 # (for example __pycache__/ for Python, node_modules/ for JavaScript).
+
+# HVE Core session evidence.
+# The helpers write research, plans, changes and review logs here while they
+# work. HVE Core treats this as scratch space and ignores it by default.
+# If your team wants the evidence trail committed, delete the two lines below.
+.copilot-tracking/*
+!.copilot-tracking/.gitkeep
 
 # Secrets — never commit these
 .env

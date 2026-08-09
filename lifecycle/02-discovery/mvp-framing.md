@@ -20,7 +20,7 @@ The examples below are from a made-up habit tracker, purely to show the shape of
 | **Product** | `<name — and one line on what it does>` |
 | **Status** | Draft |
 | **HVE stage** | Stage 2 — Discovery input |
-| **Next artifact** | `lifecycle/02-discovery/output/brd.md` via **`brd-builder`** |
+| **Next artifact** | `docs/project-planning/<name>-brd.md` via **`BRD Builder`** |
 | **Stack intent** | `<optional: any technology you already know you want, or "undecided">` |
 
 ---
@@ -129,9 +129,9 @@ You do not need to change anything in this table. It tells the next stage what t
 
 | Step | Action |
 | --- | --- |
-| **Helper to pick** | **`brd-builder`** — not RPI Agent |
+| **Helper to pick** | **`BRD Builder`** — not RPI Agent |
 | **Reads** | This file |
-| **Produces** | `lifecycle/02-discovery/output/brd.md` |
+| **Produces** | `docs/project-planning/<name>-brd.md` |
 | **Not yet** | Features, technology choices, tasks, or any code |
 
-When this file is filled in, open **[Stage 2 — Discovery](../README.md)**.
+When this file is filled in, open **[Stage 2 — Discovery](README.md)**.
