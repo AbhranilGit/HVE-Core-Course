@@ -4,8 +4,8 @@ Put the tasks in order, and decide what you build first.
 
 | | |
 | --- | --- |
-| **Reads** | [`../../04-decomposition/output/backlog-snapshot.md`](../../04-decomposition/output/backlog-snapshot.md) |
-| **Produces** | [`../output/sprint-plan.md`](../output/sprint-plan.md) |
+| **Reads** | [`../04-decomposition/output/backlog-snapshot.md`](../04-decomposition/output/backlog-snapshot.md) |
+| **Produces** | [`output/sprint-plan.md`](output/sprint-plan.md) |
 | **Helper** | `github-backlog-manager` |
 
 ---
@@ -19,10 +19,10 @@ You have a pile of tasks. This stage sorts them into two batches:
 
 Building the thin slice first is the single most useful habit here. It means that when you run out of time or patience, you have something real rather than a pile of unfinished parts.
 
-## 2. Before you start
+## 2. Prerequisites
 
-- [ ] `lifecycle/04-decomposition/output/backlog-snapshot.md` exists
-- [ ] Every item in it has acceptance criteria
+- `lifecycle/04-decomposition/output/backlog-snapshot.md` exists
+- Every item in it has acceptance criteria
 
 ## 3. Pick the helper
 
@@ -80,11 +80,9 @@ Answer from the backlog snapshot or the PRD. Questions about what matters most t
 
 ## 7. Done when
 
-- [ ] `lifecycle/05-sprint-planning/output/sprint-plan.md` exists
-- [ ] Sprint 1 describes something a person could genuinely use
-- [ ] Both sprints have a definition of done
-- [ ] Every item comes from the backlog — nothing new appeared
+- `lifecycle/05-sprint-planning/output/sprint-plan.md` exists
+- Sprint 1 describes something a person could genuinely use
+- Both sprints have a definition of done
+- Every item comes from the backlog — nothing new appeared
 
-Tick Stage 5 in [CHECKLIST.md](../../CHECKLIST.md).
-
-**Next:** [Stage 6 — Implementation](../../06-implementation/prompt/README.md) — the long one. Read its first section before you start.
+**Next:** [Stage 6 — Implementation](../06-implementation/README.md) — the long one. Read its first section before you start.

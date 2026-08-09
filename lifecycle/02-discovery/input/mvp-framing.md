@@ -134,4 +134,4 @@ You do not need to change anything in this table. It tells the next stage what t
 | **Produces** | `lifecycle/02-discovery/output/brd.md` |
 | **Not yet** | Features, technology choices, tasks, or any code |
 
-When this file is filled in, open **[Stage 2 — Discovery](../prompt/README.md)**.
+When this file is filled in, open **[Stage 2 — Discovery](../README.md)**.

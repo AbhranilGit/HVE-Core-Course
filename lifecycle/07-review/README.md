@@ -4,9 +4,9 @@ Check what you built against what you promised.
 
 | | |
 | --- | --- |
-| **Reads** | Your sprint plan, your PRD, the notes under [`../../06-implementation/output/`](../../06-implementation/output/), and the code in `src/` |
-| **Produces** | Review files under [`../output/`](../output/) |
-| **Helpers** | `RPI Agent` with `/task-review`, then `code-review` |
+| **Reads** | Your sprint plan, your PRD, the notes under [`../06-implementation/output/`](../06-implementation/output/), and the code in `src/` |
+| **Produces** | Review files under [`output/`](output/) |
+| **Helpers** | `Task Reviewer` with `/task-review`, then `Functional code-review` |
 
 Do part **A**, then **B**, then **C**.
 
@@ -16,6 +16,8 @@ Do part **A**, then **B**, then **C**.
 
 "It runs on my machine" is not the same as "it does what we agreed". This stage compares the finished work to the acceptance criteria you wrote in Stage 3 and the definition of done from Stage 5, and writes down the verdict.
 
+Each task was already reviewed on its own in Stage 6, one at a time. This stage is different: it asks whether the sprint **as a whole** delivered what was promised, and whether the codebase that resulted is sound. A pile of individually passing tasks can still add up to a product that does not work end to end.
+
 Two different checks happen here:
 
 - An **acceptance review** asks: does it do what was promised?
@@ -23,11 +25,11 @@ Two different checks happen here:
 
 Expect to find problems. That is the point. Anything found here gets written down as a defect or a follow-up rather than quietly fixed and forgotten.
 
-## 2. Before you start
+## 2. Prerequisites
 
-- [ ] Every Sprint 1 task has `implement.md` in its folder under `../../06-implementation/output/`
-- [ ] The code runs
-- [ ] `lifecycle/05-sprint-planning/output/sprint-plan.md` and `lifecycle/03-product-definition/output/prd.md` exist
+- Every Sprint 1 task has `implement.md` and `review.md` in its folder under `../06-implementation/output/`
+- The code runs, and every task's own review recorded a passing test run
+- `lifecycle/05-sprint-planning/output/sprint-plan.md` and `lifecycle/03-product-definition/output/prd.md` exist
 
 ---
 
@@ -35,7 +37,7 @@ Expect to find problems. That is the point. Anything found here gets written dow
 
 This one works a little differently from the other prompts, so read this before pasting.
 
-1. Open Copilot Chat and choose **`RPI Agent`** from the mode dropdown (or **Task Reviewer**, if your version lists it).
+1. Open Copilot Chat and choose **`Task Reviewer`** from the mode dropdown. Staying in `RPI Agent` also works.
 2. Type **`/task-review`**. Placeholders appear in the box, looking like `[plan=...] [changes=...] [research=...] [scope=...]`.
 3. **Replace those placeholders** with the values from the prompt below. Do not leave any `...` in the text.
 4. Paste the rest of the prompt after them, and send.
@@ -121,8 +123,8 @@ lifecycle/07-review/output/sprint-2-rpi-review.md
 
 ## C. Is the code itself sound?
 
-1. Open the mode dropdown and choose **`code-review`**.
-2. If your version does not list it, use the default Copilot Chat with the same prompt.
+1. Open the mode dropdown and choose **`Functional code-review`** — the reviewer that looks at correctness, error handling, edge cases, and test gaps.
+2. If your version lists neither that nor `PR Review`, use the default Copilot Chat with the same prompt.
 
 ```text
 Review this codebase for first-release readiness, after Sprint 1 and Sprint 2.
@@ -160,7 +162,7 @@ Point it at the sprint plan for the definition of done and the PRD for acceptanc
 
 Findings are not orders. For each one, decide:
 
-- **Fix now** — go back to [Stage 6](../../06-implementation/prompt/README.md) and run the RPI loop on it
+- **Fix now** — go back to [Stage 6](../06-implementation/README.md) and run the RPI loop on it
 - **Fix later** — leave it recorded in the review as a follow-up
 - **Will not fix** — say so in the review, with your reason
 
@@ -168,12 +170,10 @@ Do not fix things ad hoc in the review chat. It leaves your files describing som
 
 ## 5. Done when
 
-- [ ] `sprint-1-rpi-review.md` exists, and clearly states what passes and what fails
-- [ ] `sprint-2-rpi-review.md` exists
-- [ ] `code-review.md` exists
-- [ ] Every defect has a decision: fix now, fix later, or will not fix
-- [ ] Anything you chose to fix now has been through Stage 6 again
+- `sprint-1-rpi-review.md` exists, and clearly states what passes and what fails
+- `sprint-2-rpi-review.md` exists
+- `code-review.md` exists
+- Every defect has a decision: fix now, fix later, or will not fix
+- Anything you chose to fix now has been through Stage 6 again
 
-Tick Stage 7 in [CHECKLIST.md](../../CHECKLIST.md).
-
-**Next:** [Stage 8 — Delivery](../../08-delivery/prompt/README.md)
+**Next:** [Stage 8 — Delivery](../08-delivery/README.md)

@@ -4,8 +4,8 @@ Break your features into small tasks that can each be finished in one sitting.
 
 | | |
 | --- | --- |
-| **Reads** | [`../../03-product-definition/output/prd.md`](../../03-product-definition/output/prd.md) and [`../../03-product-definition/output/adr/`](../../03-product-definition/output/adr/) |
-| **Produces** | GitHub issues, plus [`../output/backlog-snapshot.md`](../output/backlog-snapshot.md) |
+| **Reads** | [`../03-product-definition/output/prd.md`](../03-product-definition/output/prd.md) and [`../03-product-definition/output/adr/`](../03-product-definition/output/adr/) |
+| **Produces** | GitHub issues, plus [`output/backlog-snapshot.md`](output/backlog-snapshot.md) |
 | **Helper** | `github-backlog-manager` |
 
 ---
@@ -16,11 +16,11 @@ A feature like "users can save their work" is too big to build in one go. This s
 
 It also saves a **backlog snapshot**: the same list written into a file in this repository. That matters, because later stages read the snapshot from your workspace rather than needing access to GitHub.
 
-## 2. Before you start
+## 2. Prerequisites
 
-- [ ] `lifecycle/03-product-definition/output/prd.md` exists, with acceptance criteria
-- [ ] Your ADRs exist under `lifecycle/03-product-definition/output/adr/`
-- [ ] **This repository exists on GitHub and you are signed in.** The helper creates issues there. If your project is only on your laptop, either push it to GitHub now, or read the fallback in section 6.
+- `lifecycle/03-product-definition/output/prd.md` exists, with acceptance criteria
+- Your ADRs exist under `lifecycle/03-product-definition/output/adr/`
+- **This repository exists on GitHub and you are signed in.** The helper creates issues there. If your project is only on your laptop, either push it to GitHub now, or read the fallback in section 6.
 
 ## 3. Pick the helper
 
@@ -70,6 +70,8 @@ lifecycle/04-decomposition/output/backlog-snapshot.md
 
 Skim the snapshot. Somewhere between five and fifteen issues is normal for a first version. If you see forty, the issues are too small or scope has crept — say so and ask it to consolidate.
 
+Leave the issues open for now. Stage 6 closes each one as its task is built and tested, recording the evidence in the comment.
+
 ## 6. If the helper asks you a question
 
 Answer from the PRD. If it cannot reach GitHub, or you are not using GitHub, reply:
@@ -84,11 +86,9 @@ The rest of the kit works fine from the snapshot alone.
 
 ## 7. Done when
 
-- [ ] `lifecycle/04-decomposition/output/backlog-snapshot.md` exists
-- [ ] Every item has acceptance criteria, not just a title
-- [ ] You can see how the items add up to your PRD, with nothing extra
-- [ ] Each item looks like something that could be finished in a day or less
+- `lifecycle/04-decomposition/output/backlog-snapshot.md` exists
+- Every item has acceptance criteria, not just a title
+- You can see how the items add up to your PRD, with nothing extra
+- Each item looks like something that could be finished in a day or less
 
-Tick Stage 4 in [CHECKLIST.md](../../CHECKLIST.md).
-
-**Next:** [Stage 5 — Sprint planning](../../05-sprint-planning/prompt/README.md)
+**Next:** [Stage 5 — Sprint planning](../05-sprint-planning/README.md)

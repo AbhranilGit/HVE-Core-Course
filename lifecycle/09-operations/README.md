@@ -5,7 +5,7 @@ Write the page that tells the next person how to run this.
 | | |
 | --- | --- |
 | **Reads** | Your code, your ADRs, and the Stage 8 release notes |
-| **Produces** | [`../output/runbook.md`](../output/runbook.md), and optionally [`../output/ops-confirmation.md`](../output/ops-confirmation.md) |
+| **Produces** | [`output/runbook.md`](output/runbook.md), and optionally [`output/ops-confirmation.md`](output/ops-confirmation.md) |
 | **Helper** | `Doc Ops` |
 
 ---
@@ -18,10 +18,10 @@ This is the stage people skip, and it is the reason projects become unusable wit
 
 A runbook may already exist if one of your Sprint 2 tasks produced one. If so, this stage checks and updates it rather than starting again.
 
-## 2. Before you start
+## 2. Prerequisites
 
-- [ ] The app runs, and you know the commands that start it
-- [ ] Stage 8 is finished, so `v0.1.0` exists
+- The app runs, and you know the commands that start it
+- Stage 8 is finished, so `v0.1.0` exists
 
 ---
 
@@ -110,12 +110,10 @@ Anything about how the app starts should come from the code — say "read it fro
 
 ## 4. Done when
 
-- [ ] `lifecycle/09-operations/output/runbook.md` exists
-- [ ] Its commands match how the app really starts — you have tried them
-- [ ] Someone who has never seen this project could follow it
-- [ ] No new features appeared under the heading of "operations"
-
-Tick Stage 9 in [CHECKLIST.md](../../CHECKLIST.md).
+- `lifecycle/09-operations/output/runbook.md` exists
+- Its commands match how the app really starts — you have tried them
+- Someone who has never seen this project could follow it
+- No new features appeared under the heading of "operations"
 
 ---
 
@@ -125,6 +123,6 @@ You have a working release, and the documents explaining what it does, why it ex
 
 What next:
 
-- **Building more?** Go back to [Stage 2](../../02-discovery/prompt/README.md), update your [framing document](../../02-discovery/input/mvp-framing.md) with what you learned, and run the lifecycle again for the next version.
-- **Found a bug?** Add it to your backlog and take it through [Stage 6](../../06-implementation/prompt/README.md), so the record stays honest.
+- **Building more?** Go back to [Stage 2](../02-discovery/README.md), update your [framing document](../02-discovery/input/mvp-framing.md) with what you learned, and run the lifecycle again for the next version.
+- **Found a bug?** Add it to your backlog and take it through [Stage 6](../06-implementation/README.md), so the record stays honest.
 - **Handing it over?** The runbook and the release notes are what you send.

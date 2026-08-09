@@ -16,7 +16,7 @@ Everything else in this kit depends on a set of specialist AI helpers being avai
 
 Nothing about your product happens here. No requirements, no code — just tools.
 
-## 2. What you need
+## 2. Prerequisites
 
 | Thing | Why |
 | --- | --- |
@@ -36,39 +36,41 @@ Work top to bottom. Record what happened in [`../output/setup-confirmation.md`](
 
 ### 3.1 The editor and Copilot
 
-- [ ] Open this repository as the folder in VS Code — **File → Open Folder**, and choose the project's top-level folder, not a subfolder
-- [ ] Open Copilot Chat: click the chat icon in the left Activity Bar, or press `Ctrl+Alt+I` (`Cmd+Alt+I` on a Mac)
-- [ ] Type "hello" in the chat and confirm you get a reply — if not, you are not signed in to Copilot
+- Open this repository as the folder in VS Code — **File → Open Folder**, and choose the project's top-level folder, not a subfolder
+- Open Copilot Chat: click the chat icon in the left Activity Bar, or press `Ctrl+Alt+I` (`Cmd+Alt+I` on a Mac)
+- Type "hello" in the chat and confirm you get a reply — if not, you are not signed in to Copilot
 
 ### 3.2 Install the helpers
 
-- [ ] Open the Extensions panel: the squares icon in the left Activity Bar, or `Ctrl+Shift+X`
-- [ ] Search for **HVE Core - All**, or [install it from the marketplace](https://marketplace.visualstudio.com/items?itemName=ise-hve-essentials.hve-core-all)
-- [ ] Click **Install**
-- [ ] **Reload VS Code afterwards** — the helpers do not appear until you do. Open the Command Palette with `Ctrl+Shift+P` and run *Developer: Reload Window*
+- Open the Extensions panel: the squares icon in the left Activity Bar, or `Ctrl+Shift+X`
+- Search for **HVE Core - All**, or [install it from the marketplace](https://marketplace.visualstudio.com/items?itemName=ise-hve-essentials.hve-core-all)
+- Click **Install**
+- **Reload VS Code afterwards** — the helpers do not appear until you do. Open the Command Palette with `Ctrl+Shift+P` and run *Developer: Reload Window*
 
 ### 3.3 Confirm the helpers appear
 
 In Copilot Chat, click the mode dropdown at the bottom of the chat box. You should see a longer list than before. Look for:
 
-- [ ] `brd-builder` — used in Stage 2
-- [ ] `prd-builder` — used in Stage 3
-- [ ] `adr-creation` — used in Stage 3
-- [ ] `github-backlog-manager` — used in Stages 4 and 5
-- [ ] `RPI Agent` — used in Stage 6
-- [ ] Review and documentation helpers of some kind — used in Stages 7 and 9
+- `BRD Builder` — used in Stage 2
+- `PRD Builder` — used in Stage 3
+- `ADR Creation` — used in Stage 3
+- `GitHub Backlog Manager` — used in Stages 4, 5, and 6
+- `RPI Agent` — used in Stage 6
+- `Task Reviewer` — used in Stages 6 and 7
+- `Functional code-review` — used in Stage 7
+- `Doc Ops` — used in Stage 9
 
-Names vary slightly between versions of the extension. If one is missing but something obviously equivalent is there, use that and note it in the confirmation file. If the list did not change at all, the extension is not installed or VS Code was not reloaded.
+Names vary slightly between versions of the extension, and the dropdown may show them in Title Case where this kit writes them in lowercase. If one is missing but something obviously equivalent is there, use that and note it in the confirmation file. If the list did not change at all, the extension is not installed or VS Code was not reloaded.
 
 ### 3.4 Check the folders are in place
 
 These should already exist. You are just confirming nothing is missing:
 
-- [ ] `lifecycle/` — the nine stages
-- [ ] `lifecycle/02-discovery/input/mvp-framing.md` — the file you fill in next
-- [ ] `src/` and `tests/` — empty for now; Stage 6 fills them
-- [ ] `docs/guides/` — the glossary and background reading
-- [ ] `.copilot-tracking/` — where the helpers keep their working notes
+- `lifecycle/` — the nine stages
+- `lifecycle/02-discovery/input/mvp-framing.md` — the file you fill in next
+- `src/` and `tests/` — empty for now; Stage 6 fills them
+- `GLOSSARY.md` — plain-English definitions of every term
+- `.copilot-tracking/` — where the helpers keep their working notes (you rarely open it; Stage 7 review reads it)
 
 ### 3.5 Check Git works
 
@@ -78,8 +80,8 @@ Open a terminal in VS Code (**Terminal → New Terminal**) and run:
 git status
 ```
 
-- [ ] It runs without an error and tells you which branch you are on
-- [ ] You are on your own branch, not `template` — if you are still on `template`, run `git checkout -b my-project-main` first
+- It runs without an error and tells you which branch you are on
+- You are on your own branch, not `template` — if you are still on `template`, run `git checkout -b my-project-main` first
 
 ### 3.6 Your language and tools — later, not now
 
@@ -104,6 +106,6 @@ If you already know what you will use, note it in section 4 of your [framing doc
 | --- | --- |
 | **Now** | Fill in [`../output/setup-confirmation.md`](../output/setup-confirmation.md) |
 | **Then** | Write your idea into [`../../02-discovery/input/mvp-framing.md`](../../02-discovery/input/mvp-framing.md) — the only document you write by hand |
-| **Then** | Open [Stage 2 — Discovery](../../02-discovery/prompt/README.md) and pick `brd-builder` |
+| **Then** | Open [Stage 2 — Discovery](../../02-discovery/README.md) and pick `brd-builder` |
 
-Track your progress in [CHECKLIST.md](../../CHECKLIST.md). Background reading, if you want it: [why this process exists](../../../docs/guides/README.md).
+The full story of the kit, including why the process exists and the map of all nine stages, is in the [main README](../../../README.md).

@@ -4,8 +4,8 @@ Turn your idea into a clear written statement of the problem you are solving.
 
 | | |
 | --- | --- |
-| **Reads** | [`../input/mvp-framing.md`](../input/mvp-framing.md) |
-| **Produces** | [`../output/brd.md`](../output/brd.md) |
+| **Reads** | [`input/mvp-framing.md`](input/mvp-framing.md) |
+| **Produces** | [`output/brd.md`](output/brd.md) |
 | **Helper** | `brd-builder` |
 
 ---
@@ -16,11 +16,11 @@ You are about to produce a **BRD** — a business requirements document. It is a
 
 It deliberately says nothing about features or technology. That comes in Stage 3. Getting the "why" written down first is what stops the next six stages from drifting.
 
-## 2. Before you start
+## 2. Prerequisites
 
-- [ ] Stage 1 is finished and the helpers appear in Copilot Chat
-- [ ] [`../input/mvp-framing.md`](../input/mvp-framing.md) is filled in with your idea — no `<placeholders>` left
-- [ ] You have this repository open as the folder in VS Code
+- Stage 1 is finished and the helpers appear in Copilot Chat
+- [`input/mvp-framing.md`](input/mvp-framing.md) is filled in with your idea — no `<placeholders>` left
+- You have this repository open as the folder in VS Code
 
 ## 3. Pick the helper
 
@@ -30,7 +30,7 @@ It deliberately says nothing about features or technology. That comes in Stage 3
 
 Do **not** use `RPI Agent` or `prd-builder` here. `RPI Agent` writes code, and it will happily start building your app instead of thinking about the problem.
 
-Not in the list? See [If something goes wrong](../../../README.md#if-something-goes-wrong).
+Not in the list? See [If something goes wrong](../../README.md#if-something-goes-wrong).
 
 ## 4. Paste this prompt
 
@@ -67,15 +67,13 @@ Open it and skim. It should describe *your* problem in your terms. If it describ
 
 ## 6. If the helper asks you a question
 
-Answer from your [framing document](../input/mvp-framing.md). If the answer is not there, decide now, tell the helper — and then **add that answer to the framing document**, so the next stage inherits it instead of asking again.
+Answer from your [framing document](input/mvp-framing.md). If the answer is not there, decide now, tell the helper — and then **add that answer to the framing document**, so the next stage inherits it instead of asking again.
 
 ## 7. Done when
 
-- [ ] `lifecycle/02-discovery/output/brd.md` exists
-- [ ] The problem it describes is recognisably yours
-- [ ] Its out-of-scope list matches what you wrote in the framing
-- [ ] Nothing in it surprised you — if something did, fix the framing and rerun
+- `lifecycle/02-discovery/output/brd.md` exists
+- The problem it describes is recognisably yours
+- Its out-of-scope list matches what you wrote in the framing
+- Nothing in it surprised you — if something did, fix the framing and rerun
 
-Tick Stage 2 in [CHECKLIST.md](../../CHECKLIST.md).
-
-**Next:** [Stage 3 — Product definition](../../03-product-definition/prompt/README.md)
+**Next:** [Stage 3 — Product definition](../03-product-definition/README.md)

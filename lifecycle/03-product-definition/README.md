@@ -4,8 +4,8 @@ Decide what you are building, and lock in the big technical choices.
 
 | | |
 | --- | --- |
-| **Reads** | [`../../02-discovery/output/brd.md`](../../02-discovery/output/brd.md) |
-| **Produces** | [`../output/prd.md`](../output/prd.md) and files under [`../output/adr/`](../output/adr/) |
+| **Reads** | [`../02-discovery/output/brd.md`](../02-discovery/output/brd.md) |
+| **Produces** | [`output/prd.md`](output/prd.md) and files under [`output/adr/`](output/adr/) |
 | **Helpers** | `prd-builder`, then `adr-creation` |
 
 This stage has two parts. Do **A** first, then **B**.
@@ -22,10 +22,10 @@ This stage has two parts. Do **A** first, then **B**.
 
 ## Part A — Features (the PRD)
 
-## 2. Before you start
+## 2. Prerequisites
 
-- [ ] `lifecycle/02-discovery/output/brd.md` exists and you have read it
-- [ ] You are happy with its scope — if not, fix the framing and redo Stage 2 first
+- `lifecycle/02-discovery/output/brd.md` exists and you have read it
+- You are happy with its scope — if not, fix the framing and redo Stage 2 first
 
 ## 3. Pick the helper
 
@@ -94,6 +94,12 @@ for example the programming language and framework, how and where data is stored
 and how users are identified. If the framing states a technology preference,
 record it as a decision with its reasoning rather than re-opening it.
 
+One of these decisions must cover testing. Record the test framework you have
+chosen and, explicitly, the exact command someone types to run the whole test
+suite — for example `pytest` or `npm test`. Stage 6 runs that command after every
+task and Stage 8 cites its result, so it must be written down here rather than
+guessed at later.
+
 For each decision record: context, the decision, the alternatives considered,
 the consequences, and when it would be worth revisiting.
 
@@ -110,25 +116,24 @@ lists every ADR you created.
 
 One file per decision under **`lifecycle/03-product-definition/output/adr/`**, and an updated index at `adr/README.md`.
 
-You should now be able to answer "what language is this written in, and where does the data live?" by pointing at a file.
+You should now be able to answer "what language is this written in, where does the data live, and what command runs the tests?" by pointing at a file. If the test command is missing, ask for it now — Stage 6 needs it after every single task.
 
 ---
 
 ## 9. If a helper asks you a question
 
-Answer from your [framing document](../../02-discovery/input/mvp-framing.md) or the BRD. If neither says, make the call yourself — this stage is exactly where those decisions belong. Technical questions you have no opinion on are fine to hand back: reply "you decide, and record why in the ADR."
+Answer from your [framing document](../02-discovery/input/mvp-framing.md) or the BRD. If neither says, make the call yourself — this stage is exactly where those decisions belong. Technical questions you have no opinion on are fine to hand back: reply "you decide, and record why in the ADR."
 
 ## 10. Done when
 
-- [ ] `lifecycle/03-product-definition/output/prd.md` exists
-- [ ] Every feature in it has acceptance criteria you could actually check
-- [ ] At least one ADR exists under `lifecycle/03-product-definition/output/adr/`
-- [ ] Your language and data storage choices are written down somewhere
-- [ ] Nothing appeared that was out of scope in the BRD
+- `lifecycle/03-product-definition/output/prd.md` exists
+- Every feature in it has acceptance criteria you could actually check
+- At least one ADR exists under `lifecycle/03-product-definition/output/adr/`
+- Your language and data storage choices are written down somewhere
+- One ADR names your test framework and the exact command that runs the tests
+- Nothing appeared that was out of scope in the BRD
 
-Tick Stage 3 in [CHECKLIST.md](../../CHECKLIST.md).
-
-**Next:** [Stage 4 — Decomposition](../../04-decomposition/prompt/README.md)
+**Next:** [Stage 4 — Decomposition](../04-decomposition/README.md)
 
 ---
 

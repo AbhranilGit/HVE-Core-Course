@@ -5,7 +5,7 @@ Publish your first release.
 | | |
 | --- | --- |
 | **Reads** | Your Stage 7 reviews and the code on your branch |
-| **Produces** | A release checklist, a merged pull request, the tag `v0.1.0`, and [`../output/v0.1.0-release-notes.md`](../output/v0.1.0-release-notes.md) |
+| **Produces** | A release checklist, a merged pull request, the tag `v0.1.0`, and [`output/v0.1.0-release-notes.md`](output/v0.1.0-release-notes.md) |
 | **Helpers** | Default Copilot Chat, and the `pull-request` helper if you have it |
 
 Do **A**, then **B**, then **C**.
@@ -23,11 +23,11 @@ You have working, reviewed code. This stage makes it an actual release:
 
 If you are working alone, the pull request may feel like a formality. Do it anyway — it is the record of what you shipped and why.
 
-## 2. Before you start
+## 2. Prerequisites
 
-- [ ] Your Stage 7 reviews exist and every defect has a decision
-- [ ] The code runs and your tests pass
-- [ ] Your work is committed to your branch
+- Your Stage 7 reviews exist and every defect has a decision
+- The code runs and your tests pass
+- Your work is committed to your branch
 
 ---
 
@@ -146,11 +146,9 @@ Anything about evidence comes from the reviews and test records. Anything about 
 
 ## 4. Done when
 
-- [ ] The release checklist is filled in, with any blockers written down
-- [ ] The pull request is created and merged, or your branch is merged
-- [ ] `git tag` lists `v0.1.0`
-- [ ] `lifecycle/08-delivery/output/v0.1.0-release-notes.md` exists
+- The release checklist is filled in, with any blockers written down
+- The pull request is created and merged, or your branch is merged
+- `git tag` lists `v0.1.0`
+- `lifecycle/08-delivery/output/v0.1.0-release-notes.md` exists
 
-Tick Stage 8 in [CHECKLIST.md](../../CHECKLIST.md).
-
-**Next:** [Stage 9 — Operations](../../09-operations/prompt/README.md) — the last one.
+**Next:** [Stage 9 — Operations](../09-operations/README.md) — the last one.
