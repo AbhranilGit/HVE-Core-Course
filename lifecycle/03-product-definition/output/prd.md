@@ -1,7 +1,7 @@
 <!-- markdownlint-disable-file -->
 <!-- markdown-table-prettify-ignore-start -->
 # PulseBoard MVP - Product Requirements Document (PRD)
-Version 0.1.0 | Status Draft | Owner Product / delivery owner | Team PulseBoard | Target v0.1.0 | Lifecycle Stage 3 — Product definition
+Version 0.1.0 | Status Accepted | Owner Product / delivery owner | Team PulseBoard | Target v0.1.0 | Lifecycle Stage 3 — Product definition
 
 ## Progress Tracker
 | Phase | Done | Gaps | Updated |
