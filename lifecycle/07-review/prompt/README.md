@@ -1,141 +1,179 @@
-# Stage 7 — Review prompts
+# Stage 7 — Review
+
+Check what you built against what you promised.
 
 | | |
 | --- | --- |
-| **Inputs** | [`../../05-sprint-planning/output/sprint-plan.md`](../../05-sprint-planning/output/sprint-plan.md); [`../../03-product-definition/output/prd.md`](../../03-product-definition/output/prd.md); [`../../06-implementation/output/`](../../06-implementation/output/); `.copilot-tracking/{plans,changes,research}/`; code under `src/pulseboard/` |
-| **Outputs** | [`../output/sprint-1-rpi-review.md`](../output/sprint-1-rpi-review.md); [`../output/sprint-2-rpi-review.md`](../output/sprint-2-rpi-review.md); [`../output/sprint-1-code-review.md`](../output/sprint-1-code-review.md) |
+| **Reads** | Your sprint plan, your PRD, the notes under [`../../06-implementation/output/`](../../06-implementation/output/), and the code in `src/` |
+| **Produces** | Review files under [`../output/`](../output/) |
+| **Helpers** | `RPI Agent` with `/task-review`, then `code-review` |
 
-Order: **A (Sprint 1)** → **B (Sprint 2)** → **C (code review)**. Do not rewrite features unless listing follow-ups.
+Do part **A**, then **B**, then **C**.
+
+---
+
+## 1. What this stage is for
+
+"It runs on my machine" is not the same as "it does what we agreed". This stage compares the finished work to the acceptance criteria you wrote in Stage 3 and the definition of done from Stage 5, and writes down the verdict.
+
+Two different checks happen here:
+
+- An **acceptance review** asks: does it do what was promised?
+- A **code review** asks: is the code itself sound — correct, safe, tested?
+
+Expect to find problems. That is the point. Anything found here gets written down as a defect or a follow-up rather than quietly fixed and forgotten.
+
+## 2. Before you start
+
+- [ ] Every Sprint 1 task has `implement.md` in its folder under `../../06-implementation/output/`
+- [ ] The code runs
+- [ ] `lifecycle/05-sprint-planning/output/sprint-plan.md` and `lifecycle/03-product-definition/output/prd.md` exist
 
 ---
 
 ## How to run `/task-review`
 
-1. Select **RPI Agent** (or Task Reviewer if listed).  
-2. Type **`/task-review`** — placeholders appear:  
-   `[plan=...] [changes=...] [research=...] [scope=...]`  
-3. Replace those placeholders with the paths in the prompt below (do not leave `...` literal).  
-4. Paste the rest of the prompt after the flags.  
-5. Send.
+This one works a little differently from the other prompts, so read this before pasting.
 
-You do **not** need `/rpi-review`.
+1. Open Copilot Chat and choose **`RPI Agent`** from the mode dropdown (or **Task Reviewer**, if your version lists it).
+2. Type **`/task-review`**. Placeholders appear in the box, looking like `[plan=...] [changes=...] [research=...] [scope=...]`.
+3. **Replace those placeholders** with the values from the prompt below. Do not leave any `...` in the text.
+4. Paste the rest of the prompt after them, and send.
+
+You do not need `/rpi-review`.
 
 ---
 
-## A. Sprint 1 acceptance review
-
-### 1. Agent
-
-**RPI Agent** + **`/task-review`** (or agent **Task Reviewer**)
-
-### 2. Prompt
+## A. Did Sprint 1 deliver what was promised?
 
 ```text
-/task-review plan=lifecycle/05-sprint-planning/output/sprint-plan.md changes=.copilot-tracking/changes/2026-08-09 research=.copilot-tracking/research/2026-08-09 scope=PulseBoard Sprint 1 only (#2 #6 #4 #5 #3 #9): display name + post doing/blocked/next + today's board; use lifecycle/06-implementation/output/issue-02 through issue-09 and lifecycle/03-product-definition/output/prd.md
+/task-review plan=lifecycle/05-sprint-planning/output/sprint-plan.md changes=.copilot-tracking/changes/ research=.copilot-tracking/research/ scope=Sprint 1 only, as listed in lifecycle/05-sprint-planning/output/sprint-plan.md
 
-Review PulseBoard Sprint 1 against the sprint-plan Sprint 1 definition of done and PRD AC.
+Review Sprint 1 against the Sprint 1 definition of done in the sprint plan and the
+acceptance criteria in the PRD.
 
-Also read from the workspace:
+Read from the workspace:
+- lifecycle/05-sprint-planning/output/sprint-plan.md (Sprint 1 section)
+- lifecycle/03-product-definition/output/prd.md
 - lifecycle/04-decomposition/output/backlog-snapshot.md
-- src/pulseboard/ and tests/
-- lifecycle/06-implementation/output/issue-02/ through issue-09/
+- lifecycle/06-implementation/output/ (every task folder belonging to Sprint 1)
+- src/ and tests/
 
-Must validate:
-1) User can set/use simple local identity (display name)
-2) User can post doing / blocked / next for today
-3) Today's board shows those updates
-4) Scope discipline: no SSO, notifications, or mobile added as MVP
+Take the list of things to validate from the Sprint 1 definition of done and the
+PRD acceptance criteria. Do not invent your own criteria.
+
+Also check:
+- That the thin vertical slice described in the sprint plan actually works
+  end to end
+- That nothing was built which the framing in
+  lifecycle/02-discovery/input/mvp-framing.md puts out of scope
 
 Workflow:
-- Compare implementation evidence to Sprint 1 DoD and PRD AC.
-- Separate execution status from acceptance outcome.
-- List defects and follow-ups; do not rewrite features unless listing follow-ups.
-- Do not expand scope into Sprint 2 (#10 #8 #7) except as deferred follow-ups.
+- Compare the implementation evidence to each criterion, one by one.
+- Say clearly which criteria pass, which fail, and which you could not verify.
+- Keep "the work was done" separate from "the work is acceptable".
+- List defects and follow-ups. Do not rewrite features; record what needs doing.
+- Do not review Sprint 2 work except to note anything deferred into it.
 
 Save the review to:
 lifecycle/07-review/output/sprint-1-rpi-review.md
 ```
 
+**You should see:** `lifecycle/07-review/output/sprint-1-rpi-review.md`
+
 ---
 
-## B. Sprint 2 acceptance review
+## B. Did Sprint 2 deliver what was promised?
 
-### 1. Agent
-
-**RPI Agent** + **`/task-review`** (or agent **Task Reviewer**)  
-Run after Sprint 1 review (or after Sprint 2 implementation is complete).
-
-### 2. Prompt
+Run this after Sprint 2 is built. Same helper, same `/task-review` steps.
 
 ```text
-/task-review plan=lifecycle/05-sprint-planning/output/sprint-plan.md changes=.copilot-tracking/changes/2026-08-09 research=.copilot-tracking/research/2026-08-09 scope=PulseBoard Sprint 2 only (#10 #8 #7): automated create/list tests, local-first runbook, v0.1.0 release evidence checklist; use lifecycle/06-implementation/output/issue-10 issue-08 issue-07 and lifecycle/03-product-definition/output/prd.md
+/task-review plan=lifecycle/05-sprint-planning/output/sprint-plan.md changes=.copilot-tracking/changes/ research=.copilot-tracking/research/ scope=Sprint 2 only, as listed in lifecycle/05-sprint-planning/output/sprint-plan.md
 
-Review PulseBoard Sprint 2 against the sprint-plan Sprint 2 definition of done and PRD AC.
+Review Sprint 2 against the Sprint 2 definition of done in the sprint plan and any
+related PRD acceptance criteria.
 
-Also read from the workspace:
+Read from the workspace:
 - lifecycle/05-sprint-planning/output/sprint-plan.md (Sprint 2 section)
-- lifecycle/04-decomposition/output/backlog-snapshot.md (TEMP-7 TEMP-8 TEMP-9)
-- lifecycle/06-implementation/output/issue-10/
-- lifecycle/06-implementation/output/issue-08/
-- lifecycle/06-implementation/output/issue-07/
+- lifecycle/03-product-definition/output/prd.md
+- lifecycle/04-decomposition/output/backlog-snapshot.md
+- lifecycle/06-implementation/output/ (every task folder belonging to Sprint 2)
 - tests/
-- lifecycle/09-operations/output/runbook.md (or path stated by #8)
-- lifecycle/08-delivery/output/v0.1.0-release-evidence-checklist.md (or path stated by #7)
-- lifecycle/07-review/output/sprint-1-rpi-review.md (if present)
+- lifecycle/07-review/output/sprint-1-rpi-review.md, if it exists
+- Any runbook or release checklist that Sprint 2 produced
 
-Must validate:
-1) Automated tests cover create/upsert status and list today's board (temp DB), including prior-day exclusion and no duplicate row on upsert (#10)
-2) Runbook documents prerequisites, start commands, URL, local-first model, DB path / TZ notes, and how to run tests (#8)
-3) v0.1.0 checklist maps PRD AC-008.*, requires out-of-scope absences, test evidence, and reviewer sign-off before tag (#7)
-4) No new product features beyond MVP; Sprint 2 is harden/package only
+Take the list of things to validate from the Sprint 2 definition of done. Also
+confirm that Sprint 2 hardened and packaged the product rather than adding new
+features.
 
 Workflow:
-- Compare evidence to Sprint 2 DoD and related PRD AC.
-- Separate execution status from acceptance outcome.
-- List defects and follow-ups; do not rewrite features unless listing follow-ups.
+- Compare the evidence to each criterion, one by one.
+- Keep "the work was done" separate from "the work is acceptable".
+- List defects and follow-ups; do not rewrite features.
 
 Save the review to:
 lifecycle/07-review/output/sprint-2-rpi-review.md
 ```
 
+**You should see:** `lifecycle/07-review/output/sprint-2-rpi-review.md`
+
 ---
 
-## C. Code review
+## C. Is the code itself sound?
 
-### 1. Agent
-
-**`code-review`** (agent picker). If missing, use default Copilot Chat with the prompt below.
-
-### 2. Prompt
+1. Open the mode dropdown and choose **`code-review`**.
+2. If your version does not list it, use the default Copilot Chat with the same prompt.
 
 ```text
-Review the local PulseBoard codebase for MVP readiness after Sprint 1 and Sprint 2 work.
+Review this codebase for first-release readiness, after Sprint 1 and Sprint 2.
 
 Read from the workspace:
-- src/pulseboard/
-- tests/
-- lifecycle/07-review/output/sprint-1-rpi-review.md (if present)
-- lifecycle/07-review/output/sprint-2-rpi-review.md (if present)
+- src/ and tests/
+- lifecycle/07-review/output/sprint-1-rpi-review.md, if it exists
+- lifecycle/07-review/output/sprint-2-rpi-review.md, if it exists
 - lifecycle/05-sprint-planning/output/sprint-plan.md
+- lifecycle/03-product-definition/output/adr/ for the technical decisions in force
 
 Focus on:
-- Correctness of create/list today status and display-name identity
-- Python / FastAPI basics
-- Obvious security issues around input validation and identity/cookies
-- Test gaps that block calling Sprint 2 done
-- Docs/runbook/checklist consistency with the running app
+- Whether the main paths actually do what they claim
+- Correct use of the language and framework recorded in the ADRs
+- Obvious security problems, especially around user input, stored data, and
+  how users are identified
+- Test gaps that would make it dishonest to call this done
+- Whether the documentation matches how the code really behaves
 
-Do not implement fixes in this step unless asked; report findings and severity.
+Do not implement fixes unless I ask. Report findings with a severity for each.
 
-Save the code review notes to:
-lifecycle/07-review/output/sprint-1-code-review.md
+Save the review notes to:
+lifecycle/07-review/output/code-review.md
 ```
+
+**You should see:** `lifecycle/07-review/output/code-review.md`
 
 ---
 
-## Done when
+## 3. If a helper asks you a question
 
-- [ ] `sprint-1-rpi-review.md` exists with clear Accept / Defects / Follow-ups  
-- [ ] `sprint-2-rpi-review.md` exists with clear Accept / Defects / Follow-ups  
-- [ ] `sprint-1-code-review.md` exists (or findings folded into the acceptance reviews with an explicit note)  
-- [ ] No silent scope expansion; follow-ups are listed, not coded ad hoc in review  
+Point it at the sprint plan for the definition of done and the PRD for acceptance criteria. If it asks whether a defect matters, that is your call — but write the decision into the review file rather than leaving it in the chat.
+
+## 4. What to do with what it found
+
+Findings are not orders. For each one, decide:
+
+- **Fix now** — go back to [Stage 6](../../06-implementation/prompt/README.md) and run the RPI loop on it
+- **Fix later** — leave it recorded in the review as a follow-up
+- **Will not fix** — say so in the review, with your reason
+
+Do not fix things ad hoc in the review chat. It leaves your files describing something other than the code you have.
+
+## 5. Done when
+
+- [ ] `sprint-1-rpi-review.md` exists, and clearly states what passes and what fails
+- [ ] `sprint-2-rpi-review.md` exists
+- [ ] `code-review.md` exists
+- [ ] Every defect has a decision: fix now, fix later, or will not fix
+- [ ] Anything you chose to fix now has been through Stage 6 again
+
+Tick Stage 7 in [CHECKLIST.md](../../CHECKLIST.md).
+
+**Next:** [Stage 8 — Delivery](../../08-delivery/prompt/README.md)

@@ -1,116 +1,92 @@
-# PulseBoard — Setup Confirmation
+# Stage 1 — Setup confirmation
+
+Fill this in as you work through [`../input/setup-checklist.md`](../input/setup-checklist.md). It is your proof that the tools work, so that when something misbehaves in Stage 6 you know it is not the setup.
 
 | Field | Value |
 | --- | --- |
-| **Product** | PulseBoard |
-| **Document type** | Setup confirmation (setup output) |
-| **Status** | Pending verification |
-| **Source checklist** | [`../input/setup-checklist.md`](../input/setup-checklist.md) |
-| **HVE stage** | Stage 1 — Setup output |
-| **Confirmed by** | _name_ |
-| **Confirmed on** | _YYYY-MM-DD_ |
+| **Project** | `<your project name>` |
+| **Status** | Not started |
+| **Confirmed by** | `<your name>` |
+| **Confirmed on** | `<YYYY-MM-DD>` |
 
 ---
 
-## 1. Purpose of this document
+## 1. The editor and Copilot
 
-Durable proof that Stage 1 is complete: the HVE crew is installed, the Python environment works, and the repo scaffolding is in place.
-
-Do **not** start Discovery prompts until the checklist below is green (or exceptions are noted).
-
----
-
-## 2. Verification results
-
-### 2.1 Editor and Copilot
-
-| Check | Result | Evidence / notes |
+| Check | Result | Notes |
 | --- | --- | --- |
-| Repo open as VS Code workspace root | ☐ Pass / ☐ Fail | |
-| GitHub Copilot Chat works | ☐ Pass / ☐ Fail | |
+| Repository opened as the folder in VS Code | ☐ Pass / ☐ Fail | |
+| Copilot Chat opens and replies | ☐ Pass / ☐ Fail | |
 | **HVE Core - All** installed | ☐ Pass / ☐ Fail | Extension id: `ise-hve-essentials.hve-core-all` |
-| VS Code reloaded after install | ☐ Pass / ☐ Fail | |
+| VS Code reloaded after installing | ☐ Pass / ☐ Fail | |
 
-### 2.2 HVE helpers
+## 2. The helpers
 
-| Helper | Visible in picker? | Notes |
+Tick the ones you can see in the mode dropdown. Names vary slightly between versions — if yours differ, write down what you actually see.
+
+| Helper | Visible? | Used in | Name in your version, if different |
+| --- | --- | --- | --- |
+| `brd-builder` | ☐ Yes / ☐ No | Stage 2 | |
+| `prd-builder` | ☐ Yes / ☐ No | Stage 3 | |
+| `adr-creation` | ☐ Yes / ☐ No | Stage 3 | |
+| `github-backlog-manager` | ☐ Yes / ☐ No | Stages 4, 5 | |
+| `RPI Agent` | ☐ Yes / ☐ No | Stage 6 | |
+| A review helper | ☐ Yes / ☐ No | Stage 7 | |
+| A documentation helper | ☐ Yes / ☐ No | Stage 9 | |
+
+If `brd-builder` or `RPI Agent` are missing, stop and fix that before going further. Those two are not optional.
+
+## 3. The folders
+
+| Path | There? |
+| --- | --- |
+| `lifecycle/` | ☐ Yes / ☐ No |
+| `lifecycle/02-discovery/input/mvp-framing.md` | ☐ Yes / ☐ No |
+| `src/` | ☐ Yes / ☐ No |
+| `tests/` | ☐ Yes / ☐ No |
+| `docs/guides/` | ☐ Yes / ☐ No |
+| `.copilot-tracking/` | ☐ Yes / ☐ No |
+
+## 4. Git
+
+| Check | Result | Notes |
 | --- | --- | --- |
-| `brd-builder` | ☐ Yes / ☐ No | Required for Stage 2 |
-| `prd-builder` | ☐ Yes / ☐ No | Required for Stage 3 |
-| `RPI Agent` | ☐ Yes / ☐ No | Required for Stage 6 |
-| Other (backlog / review / docs) | ☐ Yes / ☐ No / ☐ N/A | List names if useful: |
+| `git status` runs without error | ☐ Pass / ☐ Fail | |
+| You are on your own branch, not `template` | ☐ Pass / ☐ Fail | Branch name: |
+| Repository exists on GitHub | ☐ Yes / ☐ No / ☐ Not using GitHub | Needed for Stage 4 issues; there is a fallback if not |
 
-### 2.3 Python environment
-
-| Check | Result | Evidence / notes |
-| --- | --- | --- |
-| Env name | — | Expected: `hve-env` (or note alternative) |
-| `python --version` | ☐ Pass / ☐ Fail | Must be **3.12.x** |
-| Optional `pip install -e ".[dev]"` | ☐ Pass / ☐ Fail / ☐ Skipped | |
-
-Commands used:
-
-```bash
-conda create -n hve-env python=3.12
-conda activate hve-env
-python --version
-```
-
-Paste or note actual output:
+Paste what `git status` printed:
 
 ```text
 _paste here_
 ```
 
-### 2.4 Repository scaffolding
+## 5. Anything unusual
 
-| Path | Present? |
-| --- | --- |
-| `src/pulseboard/` | ☐ Yes / ☐ No |
-| `tests/` | ☐ Yes / ☐ No |
-| `scripts/` | ☐ Yes / ☐ No |
-| `docs/guides/` | ☐ Yes / ☐ No |
-| `lifecycle/` | ☐ Yes / ☐ No |
-| `.copilot-tracking/` | ☐ Yes / ☐ No |
-| `pyproject.toml` | ☐ Yes / ☐ No |
-| `README.md` | ☐ Yes / ☐ No |
-
-### 2.5 Optional sanity
-
-| Check | Result | Notes |
+| What | Does it matter? | What you did about it |
 | --- | --- | --- |
-| `git status` | ☐ Pass / ☐ Fail / ☐ Skipped | |
+| _nothing, or describe_ | | |
 
----
-
-## 3. Exceptions and follow-ups
-
-| Item | Impact | Follow-up |
-| --- | --- | --- |
-| _none / describe_ | | |
-
----
-
-## 4. Stage gate
+## 6. Ready to continue?
 
 | Gate | Met? |
 | --- | --- |
-| HVE helpers required for Discovery + Implementation are visible | ☐ |
-| Python 3.12 environment works | ☐ |
-| Repo scaffolding present | ☐ |
-| No blockers that prevent opening `brd-builder` | ☐ |
+| The helpers needed for Stages 2 and 6 are visible | ☐ |
+| The folders are all present | ☐ |
+| Git works and you are on your own branch | ☐ |
+| Nothing is blocking you from opening `brd-builder` | ☐ |
 
-**Stage 1 complete:** ☐ Yes — proceed to Discovery · ☐ No — fix failures above first
+**Stage 1 complete:** ☐ Yes — continue · ☐ No — fix the failures above first
 
 ---
 
-## 5. HVE handoff (after confirmation)
+## 7. What next
 
 | Step | Action |
 | --- | --- |
-| **Next stage** | Stage 2 — Discovery |
-| **Input** | [`lifecycle/02-discovery/input/mvp-framing.md`](../../02-discovery/input/mvp-framing.md) |
-| **Helper** | **`brd-builder`** (do **not** use RPI Agent yet) |
-| **Output** | `lifecycle/02-discovery/output/brd.md` |
+| **Now** | Write your idea into [`../../02-discovery/input/mvp-framing.md`](../../02-discovery/input/mvp-framing.md). This is the only document you write by hand. |
+| **Then** | Open [Stage 2 — Discovery](../../02-discovery/prompt/README.md) |
+| **Helper for Stage 2** | `brd-builder` — not `RPI Agent` |
+| **It will produce** | `lifecycle/02-discovery/output/brd.md` |
 
-Guide: [docs/guides/README.md](../../../docs/guides/README.md) — Stage 2 prompt.
+Track your progress in [CHECKLIST.md](../../CHECKLIST.md).

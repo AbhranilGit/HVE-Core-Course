@@ -1,117 +1,109 @@
-# PulseBoard — Setup Checklist
+# Stage 1 — Setup
 
-| Field | Value |
+Get the tools working before you think about features.
+
+| | |
 | --- | --- |
-| **Product** | PulseBoard |
-| **Document type** | Setup checklist (setup input) |
-| **Status** | Ready to execute |
-| **Audience** | Engineer starting the HVE journey |
-| **HVE stage** | Stage 1 — Setup input |
-| **Helper** | Marketplace **HVE Core - All** (`ise-hve-essentials.hve-core-all`) |
-| **Next artifact** | `lifecycle/01-setup/output/setup-confirmation.md` |
+| **What you do** | Install the AI helpers and confirm they appear |
+| **Produces** | [`../output/setup-confirmation.md`](../output/setup-confirmation.md), filled in |
+| **Takes** | About fifteen minutes |
 
 ---
 
-## 1. Purpose of this document
+## 1. What this stage is for
 
-Get the **crew and machine** ready before anyone talks features, writes a BRD, or opens the RPI Agent.
+Everything else in this kit depends on a set of specialist AI helpers being available inside VS Code. This stage installs them and proves they are there.
 
-In HVE terms:
+Nothing about your product happens here. No requirements, no code — just tools.
 
-- This file is the **durable input** for Stage 1 — the checklist you follow.
-- Completing it produces **confirmed setup notes** in `output/`.
-- **Not yet:** BRD, PRD, tickets, API, or board UI.
+## 2. What you need
 
----
-
-## 2. Prerequisites (bring these)
-
-| Requirement | Notes |
+| Thing | Why |
 | --- | --- |
-| **VS Code** | Current stable build |
-| **GitHub Copilot** | Chat enabled and signed in |
-| **This repository** | Cloned locally; you can open the workspace root |
-| **Python 3.12+** | Prefer conda env named `hve-env` |
-| **Git** | For later delivery; useful now for status sanity |
-| **Browser** | To verify the app later (not required to finish setup) |
+| **VS Code** | The editor everything runs inside |
+| **GitHub Copilot** | The AI, with Chat enabled and signed in |
+| **This repository, on your machine** | You already have it if you can read this file |
+| **Git** | To save your work and, later, publish a release |
+| **A GitHub account** | Optional but recommended — Stage 4 creates tasks there |
+
+You do **not** need to have chosen a programming language. That is decided in Stage 3, and written down as an ADR.
 
 ---
 
-## 3. Tooling checklist
+## 3. Install and check
 
-Work top to bottom. Record evidence in the output confirmation when done.
+Work top to bottom. Record what happened in [`../output/setup-confirmation.md`](../output/setup-confirmation.md) as you go.
 
-### 3.1 Editor and Copilot
+### 3.1 The editor and Copilot
 
-- [ ] Open this repo as the VS Code workspace root
-- [ ] Confirm GitHub Copilot Chat opens and responds
-- [ ] Install extension **[HVE Core - All](https://marketplace.visualstudio.com/items?itemName=ise-hve-essentials.hve-core-all)**
-- [ ] Reload VS Code after install
+- [ ] Open this repository as the folder in VS Code — **File → Open Folder**, and choose the project's top-level folder, not a subfolder
+- [ ] Open Copilot Chat: click the chat icon in the left Activity Bar, or press `Ctrl+Alt+I` (`Cmd+Alt+I` on a Mac)
+- [ ] Type "hello" in the chat and confirm you get a reply — if not, you are not signed in to Copilot
 
-### 3.2 HVE helpers visible
+### 3.2 Install the helpers
 
-In Copilot Chat agent / mode picker, confirm at least:
+- [ ] Open the Extensions panel: the squares icon in the left Activity Bar, or `Ctrl+Shift+X`
+- [ ] Search for **HVE Core - All**, or [install it from the marketplace](https://marketplace.visualstudio.com/items?itemName=ise-hve-essentials.hve-core-all)
+- [ ] Click **Install**
+- [ ] **Reload VS Code afterwards** — the helpers do not appear until you do. Open the Command Palette with `Ctrl+Shift+P` and run *Developer: Reload Window*
 
-- [ ] `brd-builder` (Stage 2 — Discovery)
-- [ ] `prd-builder` (Stage 3 — Product definition)
-- [ ] `RPI Agent` (Stage 6 — Implementation)
-- [ ] Related helpers appear as available (e.g. backlog / review / documentation — names may vary slightly by extension version)
+### 3.3 Confirm the helpers appear
 
-### 3.3 Python environment
+In Copilot Chat, click the mode dropdown at the bottom of the chat box. You should see a longer list than before. Look for:
 
-```bash
-conda create -n hve-env python=3.12
-conda activate hve-env
-python --version   # expect 3.12.x
-```
+- [ ] `brd-builder` — used in Stage 2
+- [ ] `prd-builder` — used in Stage 3
+- [ ] `adr-creation` — used in Stage 3
+- [ ] `github-backlog-manager` — used in Stages 4 and 5
+- [ ] `RPI Agent` — used in Stage 6
+- [ ] Review and documentation helpers of some kind — used in Stages 7 and 9
 
-- [ ] `hve-env` (or equivalent) activates
-- [ ] `python --version` reports **3.12.x** (matches `requires-python = ">=3.12"` in `pyproject.toml`)
-- [ ] Optional: `pip install -e ".[dev]"` from repo root succeeds when you are ready to run tests
+Names vary slightly between versions of the extension. If one is missing but something obviously equivalent is there, use that and note it in the confirmation file. If the list did not change at all, the extension is not installed or VS Code was not reloaded.
 
-### 3.4 Repository scaffolding present
+### 3.4 Check the folders are in place
 
-Confirm these paths exist (they should already be in the repo):
+These should already exist. You are just confirming nothing is missing:
 
-- [ ] `src/pulseboard/` (application package)
-- [ ] `tests/`
-- [ ] `scripts/`
-- [ ] `docs/guides/` (HVE lifecycle guide)
-- [ ] `lifecycle/` (stage input/output folders)
-- [ ] `.copilot-tracking/` (durable RPI artifacts later)
-- [ ] `pyproject.toml` and `README.md`
+- [ ] `lifecycle/` — the nine stages
+- [ ] `lifecycle/02-discovery/input/mvp-framing.md` — the file you fill in next
+- [ ] `src/` and `tests/` — empty for now; Stage 6 fills them
+- [ ] `docs/guides/` — the glossary and background reading
+- [ ] `.copilot-tracking/` — where the helpers keep their working notes
 
-### 3.5 Sanity commands (optional but recommended)
+### 3.5 Check Git works
+
+Open a terminal in VS Code (**Terminal → New Terminal**) and run:
 
 ```bash
 git status
-conda activate hve-env && python --version
 ```
 
-- [ ] `git status` runs without error
-- [ ] Python version check matches §3.3
+- [ ] It runs without an error and tells you which branch you are on
+- [ ] You are on your own branch, not `template` — if you are still on `template`, run `git checkout -b my-project-main` first
+
+### 3.6 Your language and tools — later, not now
+
+You do not install a programming language yet. Stage 3 decides which one, and records the choice as an ADR. Stage 6 will tell you what to install before any code is written.
+
+If you already know what you will use, note it in section 4 of your [framing document](../../02-discovery/input/mvp-framing.md) under "Stack intent". Stage 3 will take it into account rather than re-opening the question.
 
 ---
 
-## 4. Done means / not yet
+## 4. Done when
 
-| Done when | Explicitly not yet |
+| Finished | Not yet |
 | --- | --- |
-| HVE Core All installed; key helpers visible in Copilot | BRD / PRD written |
-| Python 3.12 env works | FastAPI app or board UI |
-| Repo folders above exist | GitHub issues / sprint plan |
-| Confirmation written to `output/setup-confirmation.md` | Using **RPI Agent** to invent product scope |
+| HVE Core - All is installed and the helpers appear in the dropdown | Any requirements written |
+| `git status` runs cleanly and you are on your own branch | Any code written |
+| The folders above all exist | Any tasks created |
+| `../output/setup-confirmation.md` is filled in | Any use of `RPI Agent` |
 
----
-
-## 5. HVE handoff
+## 5. What next
 
 | Step | Action |
 | --- | --- |
-| **Now** | Execute §§3.1–3.4; fill `lifecycle/01-setup/output/setup-confirmation.md` |
-| **Next stage** | Stage 2 — Discovery |
-| **Next input** | `lifecycle/02-discovery/input/mvp-framing.md` |
-| **Next helper** | Select **`brd-builder`** (not RPI Agent) |
-| **Next output** | `lifecycle/02-discovery/output/brd.md` |
+| **Now** | Fill in [`../output/setup-confirmation.md`](../output/setup-confirmation.md) |
+| **Then** | Write your idea into [`../../02-discovery/input/mvp-framing.md`](../../02-discovery/input/mvp-framing.md) — the only document you write by hand |
+| **Then** | Open [Stage 2 — Discovery](../../02-discovery/prompt/README.md) and pick `brd-builder` |
 
-Guide: [docs/guides/README.md](../../../docs/guides/README.md) — Stage 1 and Stage 2.
+Track your progress in [CHECKLIST.md](../../CHECKLIST.md). Background reading, if you want it: [why this process exists](../../../docs/guides/README.md).

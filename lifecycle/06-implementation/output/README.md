@@ -1,27 +1,27 @@
-# Stage 6 — RPI outputs
+# Stage 6 — the notes each task leaves behind
 
-For each GitHub issue, persist and verify **research → plan → implement** before moving on.
+Every task gets its own folder here, holding the three files the AI writes as it works plus your checklist. Together they are the record of *why* the code looks the way it does — which is what makes the Stage 7 review possible.
 
-Invoke with **RPI Agent** and `/rpi continue={1|2|3} task=...`.
+The folders appear automatically when you run Step 0 in [`../prompt/README.md`](../prompt/README.md). You do not create them by hand.
 
 ```text
 output/
+├── _template/         # The blank checklist that gets copied per task. Leave it alone.
+├── issue-01/
+│   ├── README.md      # Your checklist — tick as you go
+│   ├── research.md    # Written by step 1
+│   ├── plan.md        # Written by step 2
+│   └── implement.md   # Written by step 3, alongside the real code
 ├── issue-02/
-│   ├── README.md      # verification checklist (gate)
-│   ├── research.md    # /rpi continue=1
-│   ├── plan.md        # /rpi continue=2
-│   └── implement.md   # /rpi continue=3 summary + file list
-├── issue-06/
-…
+└── …
 ```
 
-| Phase | `/rpi` flag | Artifact | Done when |
+| Step | What you type | The file it writes | It is finished when |
 | --- | --- | --- | --- |
-| Research | `continue=1` | `research.md` | Findings recorded; no production code yet; checklist §Research checked |
-| Plan | `continue=2` | `plan.md` | Steps + AC checks recorded; matches research; checklist §Plan checked |
-| Implement | `continue=3` | `implement.md` + code in `src/` / `tests/` | AC met; evidence noted; checklist §Implement checked |
+| Research | `/rpi continue=1` | `research.md` | Findings are recorded, no code written yet, and the Research boxes are ticked |
+| Plan | `/rpi continue=2` | `plan.md` | Steps and acceptance checks are recorded, they follow the research, and the Plan boxes are ticked |
+| Implement | `/rpi continue=3` | `implement.md`, plus code in `src/` and `tests/` | The acceptance criteria are met, the code runs, and the Implement boxes are ticked |
 
-Also keep HVE session evidence under `.copilot-tracking/` when the agent writes it.  
-**Lifecycle files above are the durable per-issue trail for this course.**
+The helpers also save their own working notes under `.copilot-tracking/`. You rarely need to open those, but the Stage 7 review reads them, so leave them in place.
 
-Prompts: [`../prompt/README.md`](../prompt/README.md).
+**The files in this folder are the durable trail.** Chat history disappears; these do not.

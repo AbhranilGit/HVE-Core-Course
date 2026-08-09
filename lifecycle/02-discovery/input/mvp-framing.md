@@ -1,107 +1,137 @@
-# PulseBoard — MVP Framing
+# MVP Framing — write your idea here
+
+> **This is the only document you write by hand.** Everything after this is generated from it. Delete the guidance quotes as you go, or leave them — the helpers ignore them.
+
+## How to fill this in
+
+1. **Describe the problem, not the solution.** Write what is painful today and for whom. Resist designing screens or picking a database — Stage 3 does that, with your input.
+2. **Be brutal in section 3.** The "out of scope" list is the most valuable part of this file. Every prompt in this kit points back here to stop features creeping in.
+3. **Do not leave a section blank.** If you are unsure, write your best guess and add the doubt to section 6. Stage 2 will ask you about it properly.
+4. **Plain language is fine.** No one is grading the writing. Short and honest beats polished and vague.
+
+Do not worry about getting this perfect. You can come back and edit it at any stage — in fact, that is exactly what you should do when you change your mind later.
+
+The examples below are from a made-up habit tracker, purely to show the shape of a good answer. Replace them.
+
+---
 
 | Field | Value |
 | --- | --- |
-| **Product** | PulseBoard — local-first team status board (doing / blocked / next → today’s board) |
-| **Status** | Accepted |
+| **Product** | `<name — and one line on what it does>` |
+| **Status** | Draft |
 | **HVE stage** | Stage 2 — Discovery input |
 | **Next artifact** | `lifecycle/02-discovery/output/brd.md` via **`brd-builder`** |
-| **Stack intent** | Python · FastAPI · SQLite · HTMX |
+| **Stack intent** | `<optional: any technology you already know you want, or "undecided">` |
 
 ---
 
 ## 1. Problem
 
-Small teams share daily status in chat (Teams, Slack, WhatsApp…). Updates get buried, blockers are hard to spot, and mid-day joiners cannot reconstruct *today*. Standup context lives in a noisy stream instead of one glanceable, day-scoped board.
+> What is painful today, and why do existing workarounds fall short? Two or three sentences.
+>
+> *Example: "People who want to build a habit lose track after a few days. They use notes apps or memory, so they cannot see whether they are actually improving, and they give up without knowing how close they came."*
 
-**Hypothesis:** If the team can post doing / blocked / next onto a shared today’s board on a local machine, they will replace ad-hoc standup chat for daily status within ~two weeks.
+`<your problem statement>`
+
+**Hypothesis:** if `<the people you are helping>` can `<do the core thing>`, then `<the change you expect to see>` within `<a rough timeframe>`.
+
+> *Example: "If someone can log a habit in under five seconds and see this week at a glance, they will keep logging for a full month."*
 
 ---
 
 ## 2. Users
 
-| Role | Need |
+> Who will actually use this? Two or three roles is plenty for a first version. If you only have one, that is fine.
+
+| Role | What they need from it |
 | --- | --- |
-| **IC (poster)** | Fast create/edit of today’s doing / blocked / next; see teammates |
-| **Lead / facilitator (reader)** | One today’s board to spot blockers and coverage without scrolling chat |
+| `<role>` | `<the one thing they need to be able to do>` |
+| `<role>` | `<the one thing they need to be able to do>` |
 
-**Out of audience (MVP):** enterprise IT admins, multi-tenant SaaS buyers, mobile-only users, anonymous public users.
+**Not for (in this version):** `<groups you are deliberately not serving yet>`
 
-**Scale:** ~5–15 people on one shared local instance.
+> *Example: "Not for teams, coaches, or anyone wanting to share progress publicly."*
+
+**Rough scale:** `<how many people, how much data — a guess is fine>`
 
 ---
 
 ## 3. In scope / out of scope
 
-### In (P0)
+> The most important section. Anything not listed under **In** is **out** until you come back and edit this file.
+
+### In (must exist in the first version)
 
 | Capability | Notes |
 | --- | --- |
-| Create status | doing / blocked / next (default day: today) |
-| View today’s board | Team list/board for the current day |
-| Simple local identity | Display name or demo login (choice → ADR); no SSO |
-| Local persistence | SQLite on one machine |
-| Runnable locally | Documented start path; Python 3.12+ |
-| Thin first slice | Post + today’s board = Sprint 1 / `v0.1.0` core |
+| `<capability>` | `<any constraint or default worth stating>` |
+| `<capability>` | `<any constraint or default worth stating>` |
+| `<capability>` | `<any constraint or default worth stating>` |
 
-### Out
+> *Example: "Log a habit once per day", "See this week's record at a glance", "Add and remove habits", "Data survives closing the app".*
 
-SSO / OAuth · notifications / email / Slack bots · mobile app · multi-tenant SaaS · real-time websockets · historical analytics · RBAC · rich media attachments · replacing chat for all communication · becoming a full project tracker.
+### Out (not now — maybe never)
 
-Anything not listed under **In** is out until this framing is updated.
+`<list everything you are saying no to, separated by ·>`
+
+> *Example: "Reminders and notifications · sharing with friends · mobile app · accounts and login · charts and statistics · importing from other apps."*
+
+Keep this list generous. Writing something here does not kill it forever; it just keeps it out of version one.
 
 ---
 
 ## 4. Constraints
 
+> Anything that limits how this gets built. Skip rows that do not apply, and write "no constraint" where you genuinely do not care — that is useful information too.
+
 | Area | Rule |
 | --- | --- |
-| Deployment | Local-first; single developer or shared lab machine |
-| Data | SQLite OK; no cloud DB required |
-| UI / API | HTMX-friendly UI; FastAPI backend |
-| Auth | Simple local identity only |
-| Quality | Tests for create/list; review against PRD AC before “done” |
-| Tooling | HVE Core All + Copilot; conda `hve-env` (Python 3.12) |
-| Process | Durable truth lives in `lifecycle/` and `.copilot-tracking/`, not chat |
+| Where it runs | `<e.g. on my own laptop / a shared machine / a server>` |
+| Data | `<where data lives; anything you must not store>` |
+| Users and access | `<login needed? or is a name enough?>` |
+| Technology | `<languages or tools you must use or must avoid — "no preference" is a valid answer>` |
+| Quality bar | `<what must be tested or reviewed before you call it done>` |
+| Time or effort | `<any deadline or budget of hours>` |
 
 ---
 
 ## 5. Success metrics
 
-Validation window: ~2 weeks of team use after `v0.1.0`.
+> How will you know, a few weeks after launch, whether this worked? Pick two or three you can actually observe. Vague goals like "users love it" are not measurable; "I logged something on at least five days last week" is.
 
-| Metric | Target |
+Validation window: `<how long you will watch before judging>`
+
+| What you will measure | Target |
 | --- | --- |
-| Adoption | ≥70% of active members post ≥3 weekdays in a sample week |
-| Replacement | Facilitator runs standup from the board ≥3 consecutive days |
-| Blocker visibility | ≥1 real blocker found via the board that chat would have missed |
-| Operability | New teammate can start the app from docs/runbook without tribal knowledge |
-| Scope discipline | Ship without SSO, notifications, or mobile |
+| `<observable behaviour>` | `<number or threshold>` |
+| `<observable behaviour>` | `<number or threshold>` |
 
-**Go** → deepen via PRD/next sprint. **Low posting** → simplify UX or revisit hypothesis before adding integrations.
+**If it works:** `<what you would build next>`
+**If it does not:** `<what you would change or question first>`
 
 ---
 
 ## 6. Open questions
 
-For BRD / ADR / PRD — do not invent in implementation chat.
+> Things you genuinely have not decided. Do not invent answers here — later stages will walk you through them. Listing a question is a decision to decide it later, which is fine. Leaving it unlisted and hoping is not.
 
-1. Display name only vs demo login / shared password?  
-2. One status per person per day, or multiple?  
-3. Edit anytime same day, or lock after standup?  
-4. Timezone / “today” boundary for remote teammates?  
-5. Blocked: free text only, or also a filterable flag?  
-6. Minimum test/review evidence before tagging `v0.1.0`?
+1. `<question>`
+2. `<question>`
+3. `<question>`
+
+> *Example: "Can a habit be logged more than once a day?", "What happens to a missed day — does the streak reset?", "Should old data be editable?"*
 
 ---
 
-## 7. HVE handoff
+## 7. What happens next
+
+You do not need to change anything in this table. It tells the next stage what to do.
 
 | Step | Action |
 | --- | --- |
-| **Helper** | **`brd-builder`** (not RPI Agent) |
-| **Seed** | This file — problem, users, in/out, constraints, metrics |
-| **Output** | `lifecycle/02-discovery/output/brd.md` |
-| **Not yet** | Full PRD depth, GitHub issues, or code in `src/pulseboard/` |
+| **Helper to pick** | **`brd-builder`** — not RPI Agent |
+| **Reads** | This file |
+| **Produces** | `lifecycle/02-discovery/output/brd.md` |
+| **Not yet** | Features, technology choices, tasks, or any code |
 
-After BRD acceptance → Stage 3 (`prd-builder` + ADRs), still bound by §3.
+When this file is filled in, open **[Stage 2 — Discovery](../prompt/README.md)**.

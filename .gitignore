@@ -1,32 +1,35 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.egg-info/
-.eggs/
-dist/
-build/
-.venv/
-venv/
+# This file lists things git should never save.
+# Add entries for your own language once you decide it in Stage 3
+# (for example __pycache__/ for Python, node_modules/ for JavaScript).
+
+# Secrets — never commit these
 .env
 .env.*
+*.pem
+*.key
 
-# Test / coverage
-.pytest_cache/
-.coverage
-htmlcov/
-.mypy_cache/
-.ruff_cache/
-
-# App data
+# Local databases and data files
 *.db
+*.sqlite
 *.sqlite3
 
-# IDE / OS
+# Build and dependency folders
+dist/
+build/
+node_modules/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Editor and operating system files
 .idea/
 .vscode/
 *.swp
 .DS_Store
+Thumbs.db
 
-# Tooling
-.conda/
+# Logs and caches
+*.log
+.cache/

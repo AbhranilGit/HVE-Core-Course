@@ -1,37 +1,27 @@
----
-title: PulseBoard MVP architecture decision records
-description: Index of accepted ADRs for PulseBoard MVP product definition
-author: PulseBoard
-ms.date: 2026-08-09
-ms.topic: reference
-keywords:
-  - adr
-  - pulseboard
-  - architecture
-estimated_reading_time: 2
----
+# Architecture decision records
 
-## Purpose
+Each file here records one technical decision: what you chose, why, what it costs you, and when it would be worth changing your mind.
 
-Architecture decisions for PulseBoard MVP that the BRD/PRD left open or that MVP constraints require. Product scope remains bound by the accepted BRD and PRD.
+These are produced in [Stage 3, part B](../../prompt/README.md). The folder is empty until you run it.
 
-## Sources
+## Why bother
 
-* [brd.md](../../../02-discovery/output/brd.md) (Accepted)
-* [prd.md](../prd.md)
+Six months from now, someone — probably you — will ask "why is this built this way?" Without these files the answer is lost, and the AI helpers have no way to stay consistent with choices you already made. Every later stage reads this folder so it builds with your language and your tools rather than guessing.
 
-## Accepted ADRs
+## Naming
 
-| ADR | Decision |
-|-----|----------|
-| [2026-08-09-local-identity-display-name-v01.md](2026-08-09-local-identity-display-name-v01.md) | Display name + cookie continuity; no SSO/passwords |
-| [2026-08-09-sqlite-local-persistence-v01.md](2026-08-09-sqlite-local-persistence-v01.md) | SQLite file on the host; one DB per instance |
-| [2026-08-09-web-stack-fastapi-htmx-v01.md](2026-08-09-web-stack-fastapi-htmx-v01.md) | Python 3.12+, FastAPI, HTMX server-rendered UI |
-| [2026-08-09-today-instance-timezone-v01.md](2026-08-09-today-instance-timezone-v01.md) | Today = calendar date in instance timezone |
-| [2026-08-09-status-domain-model-v01.md](2026-08-09-status-domain-model-v01.md) | One status per name per day; same-day edit; free-text blocked |
+`YYYY-MM-DD-<short-slug>-v01.md`, for example `2026-01-15-sqlite-for-local-storage-v01.md`.
 
-## Non-goals of this folder
+## The decisions recorded so far
 
-* Application code
-* GitHub issues or sprint plans
-* Expanding MVP beyond BRD/PRD in-scope capabilities
+The Stage 3 prompt fills this table in as it creates each file.
+
+| Decision record | What was decided |
+| --- | --- |
+| | |
+
+## What does not belong here
+
+- Application code
+- Tasks or sprint plans
+- New product features — an ADR records *how* you build, never *what* you build
