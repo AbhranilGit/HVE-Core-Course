@@ -1,92 +1,130 @@
-# Stage 9 — Operations prompts
+# Stage 9 — Operations
+
+Write the page that tells the next person how to run this.
 
 | | |
 | --- | --- |
-| **Inputs** | Shipped app under `src/pulseboard/`; tag `v0.1.0` / Stage 8 notes; existing [`../output/runbook.md`](../output/runbook.md) if present |
-| **Outputs** | Canonical [`../output/runbook.md`](../output/runbook.md); optional [`../output/ops-confirmation.md`](../output/ops-confirmation.md) |
-
-Order: **A (runbook)** → **B (ops confirmation)**.  
-Do not invent product features in this stage.
-
-A runbook may already exist from Sprint 2 (#8). Prefer **verify and update** against the real app over rewriting from scratch.
+| **Reads** | Your code, your ADRs, and the Stage 8 release notes |
+| **Produces** | [`../output/runbook.md`](../output/runbook.md), and optionally [`../output/ops-confirmation.md`](../output/ops-confirmation.md) |
+| **Helper** | `Doc Ops` |
 
 ---
 
-## A. Author or refresh the runbook
+## 1. What this stage is for
 
-### 1. Agent
+A **runbook** is the page someone opens when they need to start your app, find its data, or work out why it will not run. That someone is usually you, six months from now, having forgotten everything.
 
-**`Doc Ops`** (agent picker — this is the documentation helper in HVE Core All).  
-Fallback: default Copilot Chat if Doc Ops is unavailable.  
-Do **not** use BRD Builder, PRD Builder, or RPI Agent / Task Implementer for feature work here.
+This is the stage people skip, and it is the reason projects become unusable within a year. It takes about ten minutes.
 
-### 2. Prompt
+A runbook may already exist if one of your Sprint 2 tasks produced one. If so, this stage checks and updates it rather than starting again.
+
+## 2. Before you start
+
+- [ ] The app runs, and you know the commands that start it
+- [ ] Stage 8 is finished, so `v0.1.0` exists
+
+---
+
+## A. Write the runbook
+
+1. Open Copilot Chat.
+2. Choose **`Doc Ops`** from the mode dropdown — this is the documentation helper.
+3. If it is not listed, use the default Copilot Chat with the same prompt.
+
+Do **not** use `brd-builder`, `prd-builder`, or `RPI Agent` here. You are not building anything in this stage.
 
 ```text
-Author or refresh the PulseBoard operator runbook for v0.1.0.
+Write an operator runbook for version v0.1.0 of this product. If
+lifecycle/09-operations/output/runbook.md already exists, verify and update it in
+place rather than rewriting it from scratch.
 
 Read from the workspace:
-- lifecycle/09-operations/output/runbook.md (update in place if present)
-- src/pulseboard/ (especially app startup, DB path, identity, today board routes)
+- src/ and tests/ — especially how the application starts, where it stores data,
+  and any configuration it reads
+- lifecycle/03-product-definition/output/adr/ — the technical decisions in force
 - lifecycle/08-delivery/output/v0.1.0-release-notes.md
-- lifecycle/08-delivery/output/v0.1.0-release-evidence-checklist.md
-- README.md
-- pyproject.toml
+- README.md and any dependency or build configuration files in the repository
 
-Include:
-- Prerequisites (Python 3.12+, recommended conda env hve-env)
-- How to install deps and start the app (exact commands from this repo)
-- URL / how to open today's board
-- Where the SQLite file lives (env vars and defaults)
-- Timezone / "today" notes if applicable (e.g. PULSEBOARD_TZ)
-- How to run tests
-- How to verify the board loads (smoke checks)
-- Common failures (port in use, missing deps, empty DB, wrong cwd for DB path) and fixes
-- Explicit local-first MVP limits (no SSO, notifications, mobile)
+The runbook must cover:
+- What must be installed first, with versions, taken from the ADRs and the
+  repository's own configuration
+- How to install dependencies and start the application — the exact commands
+  that work in this repository
+- How to reach it once running, for example the address to open
+- Where its data is stored, including any defaults and environment variables
+- How to run the tests
+- How to check it is working, in a few steps someone can follow blind
+- The failures most likely to happen and how to fix each one
+- What this version deliberately cannot do, from the framing's out-of-scope list
 
 Rules:
-- Match the actual code and commands; do not invent flags or paths.
-- Keep the runbook the durable operator source of truth under lifecycle/09-operations/output/runbook.md.
-- Do not add product features.
+- Every command must match what is actually in this repository. Do not invent
+  flags, paths, or environment variables — read them from the code.
+- Where you cannot verify something, say so rather than guessing.
+- Do not add features.
 
 Save to:
 lifecycle/09-operations/output/runbook.md
 ```
 
+**You should see:** `lifecycle/09-operations/output/runbook.md`
+
 ---
 
-## B. Ops confirmation (optional but recommended)
+## B. Prove the runbook works (recommended)
 
-### 1. Agent
-
-**`Doc Ops`** (or default Copilot Chat).
-
-### 2. Prompt
+The only real test of a runbook is following it exactly, as though you knew nothing.
 
 ```text
-Produce a short PulseBoard ops confirmation that a new teammate can start from the runbook alone.
+Produce a short operations confirmation showing that someone new could start this
+product from the runbook alone.
 
 Read from the workspace:
 - lifecycle/09-operations/output/runbook.md
-- src/pulseboard/
+- src/
 - lifecycle/08-delivery/output/v0.1.0-release-notes.md
 
 Record:
-1) Commands you (or the operator) would run to install, start, open the board, and run tests
-2) Pass/fail for smoke checks: app starts, board URL loads, display name + post status + see today row (or note if not executed in this session)
-3) Gaps or ambiguities in the runbook to fix
-4) Confirmation that ops docs do not expand MVP scope
+1) The exact commands to install, start, use, and test the product
+2) Pass or fail for each check: does it install, does it start, does the main
+   feature work, do the tests pass. Say plainly if a check was not actually run
+   in this session.
+3) Anything unclear, missing, or wrong in the runbook
+4) Confirmation that nothing in these documents adds features beyond the release
 
-Do not implement code unless fixing a factual error in the runbook.
+Do not change application code, except to correct a factual error in the runbook.
 
 Save to:
 lifecycle/09-operations/output/ops-confirmation.md
 ```
 
+**You should see:** `lifecycle/09-operations/output/ops-confirmation.md`
+
+Better still, follow the runbook yourself on a clean machine, or a fresh copy of the repository. Every gap you find now is a gap the next person would have hit.
+
 ---
 
-## Done when
+## 3. If a helper asks you a question
 
-- [ ] `lifecycle/09-operations/output/runbook.md` matches how the shipped app actually starts and stores data  
-- [ ] Smoke path is clear for a new teammate (optional `ops-confirmation.md` filled)  
-- [ ] No new product features introduced under “ops”  
+Anything about how the app starts should come from the code — say "read it from `src/`". If it asks about something only you know, such as where the app will run in future, answer briefly and let it record your answer.
+
+## 4. Done when
+
+- [ ] `lifecycle/09-operations/output/runbook.md` exists
+- [ ] Its commands match how the app really starts — you have tried them
+- [ ] Someone who has never seen this project could follow it
+- [ ] No new features appeared under the heading of "operations"
+
+Tick Stage 9 in [CHECKLIST.md](../../CHECKLIST.md).
+
+---
+
+## You are finished
+
+You have a working release, and the documents explaining what it does, why it exists, and how to run it.
+
+What next:
+
+- **Building more?** Go back to [Stage 2](../../02-discovery/prompt/README.md), update your [framing document](../../02-discovery/input/mvp-framing.md) with what you learned, and run the lifecycle again for the next version.
+- **Found a bug?** Add it to your backlog and take it through [Stage 6](../../06-implementation/prompt/README.md), so the record stays honest.
+- **Handing it over?** The runbook and the release notes are what you send.
