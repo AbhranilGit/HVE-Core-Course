@@ -1,0 +1,24 @@
+{
+  "adrDirectory": "lifecycle/03-product-definition/output/adr/",
+  "lastAccessed": "2026-08-09T00:00:00Z",
+  "status": "accepted-drafts",
+  "sources": [
+    "lifecycle/02-discovery/output/brd.md",
+    "lifecycle/03-product-definition/output/prd.md"
+  ],
+  "adrs": [
+    "2026-08-09-local-identity-display-name-v01.md",
+    "2026-08-09-sqlite-local-persistence-v01.md",
+    "2026-08-09-web-stack-fastapi-htmx-v01.md",
+    "2026-08-09-today-instance-timezone-v01.md",
+    "2026-08-09-status-domain-model-v01.md"
+  ],
+  "decisionsSummary": {
+    "identity": "display name + HTTP cookie; no SSO/passwords",
+    "persistence": "SQLite file; unique (display_name, status_day)",
+    "stack": "Python 3.12+, FastAPI, HTMX SSR, no websockets",
+    "today": "instance timezone calendar date; default host local",
+    "statusDomain": "one per name per day; edit same day; blocked free text"
+  },
+  "scopeGuard": "No product scope expansion; no application code; no tickets"
+}
