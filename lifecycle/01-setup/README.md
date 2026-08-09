@@ -125,8 +125,18 @@ Run this in the chat, with any helper selected:
 /git-setup
 ```
 
-It configures the repository's Git settings for you. Then open a terminal in
-VS Code (**Terminal → New Terminal**) and run:
+It reads your Git configuration, shows you a table of what is set and what is
+missing, and then **asks before changing anything**. Expect a yes/no question per
+group of fixes; anything other than an explicit yes is treated as no.
+
+Two things to know before you answer:
+
+- It proposes **global** settings, so your answers affect every project on this machine, not just this one.
+- It only volunteers help with your identity (`user.name` and `user.email`, which Git will not let you commit without) and with wiring VS Code up as your editor and diff tool. Commit signing and `safe.directory` are shown in the table but left alone unless you bring them up.
+
+It will not touch this repository — no commits, no branches, no remotes.
+
+Then open a terminal in VS Code (**Terminal → New Terminal**) and run:
 
 ```bash
 git status
