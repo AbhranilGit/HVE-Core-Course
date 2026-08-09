@@ -12,6 +12,6 @@ Each project stage has an **input** folder (what you feed the work) and an **out
 | 6 Implementation | `06-implementation/` | One GitHub issue at a time; per-issue RPI prompts in `prompt/` | `output/issue-NN/{research,plan,implement}.md` + verify gate; **code** in `src/pulseboard/`; RPI in `.copilot-tracking/` |
 | 7 Review | `07-review/` | Sprint plan + Stage 6 evidence + code; prompts in `prompt/` | `output/sprint-1-rpi-review.md`, `output/sprint-2-rpi-review.md`, `output/sprint-1-code-review.md` |
 | 8 Delivery | `08-delivery/` | Accepted Stage 7 reviews; prompts in `prompt/` | checklist sign-off; PR/merge/tag `v0.1.0`; `output/v0.1.0-release-notes.md` |
-| 9 Operations | `09-operations/` | Shipped app behavior | `output/runbook.md` |
+| 9 Operations | `09-operations/` | Shipped app + Stage 8 notes; prompts in `prompt/` | `output/runbook.md`; optional `output/ops-confirmation.md` |
 
 Convention: stage *N* output often becomes stage *N+1* input (copy, move, or reference the path in the next prompt).
