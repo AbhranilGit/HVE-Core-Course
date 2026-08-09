@@ -16,11 +16,29 @@ For **each** issue, run and **persist** Research → Plan → Implement, and **v
 | 8 | [#8](https://github.com/AbhranilGit/HVE-Core-Course/issues/8) | [issue-08.md](issue-08.md) | [`../output/issue-08/`](../output/issue-08/) | 2 |
 | 9 | [#7](https://github.com/AbhranilGit/HVE-Core-Course/issues/7) | [issue-07.md](issue-07.md) | [`../output/issue-07/`](../output/issue-07/) | 2 |
 
+## How to invoke (RPI Agent)
+
+1. Select **RPI Agent** in Copilot Chat.  
+2. Attach the backlog snapshot (and the issue prompt if useful).  
+3. Run **`/rpi`** with:
+
+```text
+/rpi continue={1|2|3} task=...
+```
+
+| `continue` | Phase | Persist to |
+| --- | --- | --- |
+| `1` | Research | `output/issue-NN/research.md` |
+| `2` | Plan | `output/issue-NN/plan.md` |
+| `3` | Implement | `output/issue-NN/implement.md` + code |
+
+Do **not** use `continue=all` while you are gating phases. Prefer a new chat or `/clear` between phases if context gets noisy.
+
 ## Per-issue RPI loop
 
-1. **Research** (`/rpi-research`) → attach backlog snapshot → save `output/issue-NN/research.md` → check Research  
-2. **Plan** (`/rpi-plan`) → save `output/issue-NN/plan.md` → check Plan  
-3. **Implement** (`/rpi-implement`) → code + `output/issue-NN/implement.md` → check Implement  
+1. **Research** — `/rpi continue=1 task=...` → fill `research.md` → check Research in that folder’s `README.md`  
+2. **Plan** — `/rpi continue=2 task=...` → fill `plan.md` → check Plan  
+3. **Implement** — `/rpi continue=3 task=...` → code + `implement.md` → check Implement  
 4. Only then open the **next** issue prompt
 
 Also keep agent session evidence under `.copilot-tracking/` when present.  

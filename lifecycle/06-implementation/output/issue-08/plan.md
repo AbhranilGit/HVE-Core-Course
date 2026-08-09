@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Issue | [#8](https://github.com/AbhranilGit/HVE-Core-Course/issues/8) |
-| Phase | Plan (`/rpi-plan`) |
+| Phase | Plan (`/rpi continue=2`) |
 | Status | Pending |
 | Based on | [`research.md`](research.md) |
 

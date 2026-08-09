@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Issue | [#8](https://github.com/AbhranilGit/HVE-Core-Course/issues/8) |
-| Phase | Research (`/rpi-research`) |
+| Phase | Research (`/rpi continue=1`) |
 | Status | Pending |
 
 ## Findings
