@@ -19,7 +19,7 @@ estimated_reading_time: 8
 |--------------------|-----------------------------------------------------------------------|
 | Product            | PulseBoard                                                            |
 | Document type      | Business Requirements Document (BRD)                                  |
-| Status             | Draft for acceptance                                                  |
+| Status             | Accepted                                                  |
 | HVE stage          | Stage 2 — Discovery                                                   |
 | Source of truth    | [mvp-framing.md](../input/mvp-framing.md) (Accepted)                  |
 | Related handoff    | Stage 3 PRD and ADRs after BRD acceptance; bound by in-scope list     |
