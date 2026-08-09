@@ -61,6 +61,7 @@ python --version   # expect 3.12.x
 
 | Doc | Purpose |
 | --- | --- |
+| [Operations runbook](lifecycle/09-operations/output/runbook.md) | Canonical local start path for operators |
 | [HVE lifecycle guide](docs/guides/README.md) | How we use HVE stage-by-stage on PulseBoard |
 | [Lifecycle folders](lifecycle/README.md) | Input/output locations per stage |
 | [MVP framing](lifecycle/02-discovery/input/mvp-framing.md) | Accepted product boundaries |
