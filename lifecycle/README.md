@@ -8,7 +8,7 @@ Each project stage has an **input** folder (what you feed the work) and an **out
 | 2 Discovery | `02-discovery/` | `input/mvp-framing.md`; agent + prompt in `prompt/` | `output/brd.md` |
 | 3 Product definition | `03-product-definition/` | Accepted BRD from discovery; agent + prompts in `prompt/` | `output/prd.md`, `output/adr/`, optional architecture diagram |
 | 4 Decomposition | `04-decomposition/` | Accepted PRD (+ ADRs); agent + prompt in `prompt/` | GitHub issues + `output/backlog-snapshot.md` |
-| 5 Sprint planning | `05-sprint-planning/` | Backlog snapshot | `output/sprint-plan.md` |
+| 5 Sprint planning | `05-sprint-planning/` | Backlog snapshot + open issues; agent + prompt in `prompt/` | `output/sprint-plan.md` |
 | 6 Implementation | `06-implementation/` | Issue + AC, plan pointers | `output/issue-N-*.md`; **code** in `src/pulseboard/`; RPI in `.copilot-tracking/` |
 | 7 Review | `07-review/` | Sprint plan + tracking evidence | `output/sprint-1-*-review.md` |
 | 8 Delivery | `08-delivery/` | Accepted review | PR/merge/tag + `output/v0.1.0-release-notes.md` |
