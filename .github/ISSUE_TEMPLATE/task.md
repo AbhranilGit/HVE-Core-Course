@@ -19,8 +19,13 @@ criterion id so the trail back to `docs/prds/` survives.
 
 ## Depends on
 
-Issue numbers that must be closed first, or `nothing`.
+Work item ids that must be closed first, or `nothing`.
 
 ## Out of scope
 
 Anything a reader might reasonably assume is included but is not.
+
+## Notes for whoever maintains this
+
+Anything about the existing code this touches that the next person would want to
+know. Leave blank if there is nothing.

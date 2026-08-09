@@ -4,9 +4,9 @@ Build it, one task at a time.
 
 | | |
 | --- | --- |
-| **Reads** | `docs/planning/sprint-plan.md`, your issues, your PRD, and your decision records |
-| **Produces** | Code in `src/` and `tests/`, evidence under `.copilot-tracking/`, and a closed issue per task |
-| **Commands** | `/task-research`, `/task-plan`, `/task-implement`, `/task-review`, then `GitHub Backlog Manager` to close the issue |
+| **Reads** | `docs/planning/sprint-plan.md`, the work items, the PRD, and the decision records |
+| **Produces** | Code in the customer's tree, evidence under `.copilot-tracking/`, and a closed work item per task |
+| **Commands** | `/task-research`, `/task-plan`, `/task-implement`, `/task-review`, then `ADO Backlog Manager` to close the item |
 
 This is the longest stage. Read sections 1 and 2 before you start — they explain
 the loop you will repeat for every task.
@@ -38,13 +38,42 @@ typing the command switches helper for you.
 If the research misunderstood something, you catch it in a paragraph rather than
 in three hundred lines of code.
 
-Once the review passes, one last thing closes the task out: the issue that asked
-for the work gets the evidence as a comment, and is closed. Without the review
-record, Stage 8 has no evidence to cite. Without closing the issue, your board
-keeps showing work that has already shipped.
+Once the review passes, one last thing closes the task out: the work item that
+asked for the work gets the evidence as a comment, and is closed. Without the
+review record, Stage 8 has no evidence to cite. Without closing the item, the
+customer's board keeps showing work that has already shipped — and their board,
+not your memory, is what the sponsor looks at.
 
 You repeat this for every task in your sprint plan, in order. Do not run two
 tasks at once, and do not skip ahead.
+
+### Why the research phase matters more here
+
+On a greenfield product, research protects you from an AI that invents things
+confidently. That is still true. But on someone else's codebase it does
+something more valuable: it forces the model — and you — to learn how *this*
+system already works before changing it.
+
+Every codebase has local conventions that are invisible until you violate one.
+An error-handling pattern, a naming scheme, a place where configuration is
+expected to live, a test helper everyone uses. Code that ignores those is code
+the customer's engineers will quietly rewrite after you leave, which means you
+were never really helping.
+
+So read the research output with a specific question in mind: *does this describe
+their system accurately, or does it describe a generic one?* If it reads like it
+could have been written about any project, it is not finished.
+
+### Enablement starts here, not in the final sprint
+
+The four-phase loop is the most teachable thing you will do on this engagement.
+Once you have run it a few times, start running it **with** the engineers named
+in section 2 of your [engagement brief](../00-engagement/engagement-brief.md) —
+first watching you, then driving with you reading.
+
+Do not save this for the handover sprint. Someone who has run the loop eight
+times over six weeks can keep using it; someone shown it once in a final-week
+session cannot.
 
 ## 2. Where the evidence lives
 
@@ -63,7 +92,7 @@ file there.
 ```
 
 `<date>` is today's date, and `<slug>` is a short lowercase name for the task.
-This kit uses the issue number and a short title: `issue-01-user-can-log-in`.
+This kit uses the work item id and a short title: `wi-4821-operator-can-log-in`.
 
 The phases chain together by **file path**, not by name. `/task-plan` takes
 `research=<path>`, `/task-implement` takes `plan=<path>`, and `/task-review`
@@ -76,17 +105,17 @@ Two things follow from all this:
 - **`.copilot-tracking/` is ignored by Git by default**, because it is working evidence rather than product documentation. Stages 7 and 8 read it from your machine while you still have it. If your team wants the trail committed, remove the `.copilot-tracking/` lines from `.gitignore`.
 - **Do not tidy it up mid-project.** Stage 7 reads it.
 
-The durable, committed record of this stage is the code in `src/` and `tests/`,
-your closed issues, and the running log in [`task-log.md`](task-log.md).
+The durable, committed record of this stage is the code itself, the closed work
+items, and the running log in [`task-log.md`](task-log.md).
 
 ## 3. Prerequisites
 
 - `docs/planning/sprint-plan.md` exists and lists the tasks in order
-- Your issues exist in your tracker with acceptance criteria
-- Your decision records say which language and tools you are using
-- One of them names the exact command that runs the tests — step 4 runs it after every task
-- `.github/copilot-instructions.md` has its Stack table filled in from those records
-- You have installed whatever that language needs to run on your machine
+- The work items exist in their tracker with acceptance criteria
+- `.github/copilot-instructions.md` records the inherited stack, including the real paths to their application code and tests
+- The test command in it is one you have run yourself and seen pass
+- You can build and run their system locally, or in whatever environment they expect you to work in
+- You have a branch naming convention that matches theirs
 
 ## 4. Set up your task log (do this once)
 
@@ -94,18 +123,22 @@ Open [`task-log.md`](task-log.md) and copy your sprint plan's task order into th
 table — one row per task, with the slug you will use. It takes two minutes and it
 is the page you will come back to after every task.
 
-You can have a helper do it. Use the **default Copilot Chat**, not one of the
-task helpers:
+Keep it in the repository rather than in your own notes. Whoever picks this
+engagement up after you needs to see which tasks were gated and which were
+rushed.
+
+You can have a helper fill it in. Use the **default Copilot Chat**, not one of
+the task helpers:
 
 ```text
 Read docs/planning/sprint-plan.md from the workspace.
 
 Fill in the task table in lifecycle/06-implementation/task-log.md, one row per
-task, in sprint plan order. For each row set the order number, the issue number,
-the task title, the sprint, and a slug formed as issue-NN-<short-title>, where
-NN is the issue number zero-padded to two digits and <short-title> is the title
-in lowercase with spaces replaced by hyphens, punctuation removed, under about
-six words. For example: issue-01-user-can-log-in.
+task, in sprint plan order. For each row set the order number, the work item id,
+the task title, the iteration, and a slug formed as wi-<id>-<short-title>, where
+<short-title> is the title in lowercase with spaces replaced by hyphens,
+punctuation removed, under about six words. For example:
+wi-4821-operator-can-log-in.
 
 Leave the four phase columns empty — I fill those in as I go.
 
@@ -122,23 +155,33 @@ reads that file — so nothing is lost, and the helper works from the evidence
 rather than from a long, drifting conversation. This is the single habit that
 keeps the loop honest.
 
-Replace `<NN>`, `<slug>`, and `<issue>` with the values from your task log.
+Replace `<NN>`, `<slug>`, and `<id>` with the values from your task log.
 
 ### Step 1 — Research
 
 ```text
-/task-research topic=Task <NN> for issue #<issue>, slug <slug>
+/task-research topic=Task <NN> for work item <id>, slug <slug>
 
 Read from the workspace:
-- Issue #<issue> and its acceptance criteria
-- docs/decisions/, for the locked technical decisions, and follow them
+- Work item <id> and its acceptance criteria
+- docs/decisions/, for the decisions and inherited constraints in force
 - The PRD in docs/prds/, only where this task needs it
-- The existing code in src/ and tests/
+- .github/copilot-instructions.md, for where the code and tests actually live
+- The existing code in the paths it names
 
-Capture the existing repository patterns, constraints, options, and open
-questions needed to plan this task. Stay inside this one task's scope.
+This is an existing codebase that I did not write. Before anything else,
+establish how it already does things in the area this task touches:
+- The patterns it uses for this kind of change, with file and line references
+- How errors, logging, and configuration are handled here
+- The test conventions: where tests live, how they are named, what helpers exist
+- Anything nearby that looks like a deliberate constraint rather than an accident
 
-Do not write production code. Do not plan or implement yet.
+Then capture the options and open questions needed to plan this task. Prefer the
+approach that matches what is already here over the approach you would pick for
+a new codebase, and say so explicitly where the two differ.
+
+Stay inside this one task's scope. Do not write production code. Do not plan or
+implement yet.
 ```
 
 **Then:** open the research file it names, read it, and confirm the Research gate
@@ -150,13 +193,16 @@ it.
 ```text
 /task-plan research=.copilot-tracking/research/<date>/<slug>-research.md
 
-Plan the implementation of task <NN> for issue #<issue>.
+Plan the implementation of task <NN> for work item <id>.
 
 Base the plan on that research document. If it is missing or incomplete, stop
 and say so rather than guessing.
 
-Follow the decisions recorded in docs/decisions/. Take the acceptance criteria
-from issue #<issue>.
+Follow the decisions recorded in docs/decisions/, including the inherited
+constraints. Take the acceptance criteria from work item <id>.
+
+Match the existing patterns the research identified. Where you deliberately
+depart from one, say which, and why it is worth the inconsistency.
 
 Include the steps, the files you will touch, the acceptance checks, and the
 risks. Stay inside this task's scope.
@@ -177,16 +223,21 @@ plan path down.
 ```text
 /task-implement plan=.copilot-tracking/plans/<date>/<slug>-plan.instructions.md phaseStop=true
 
-Implement the approved plan for task <NN>, issue #<issue>.
+Implement the approved plan for task <NN>, work item <id>.
 
 Follow that plan as the sole implementation guide. Use its research for
 background only; do not re-plan. If the plan is missing or incomplete, stop and
 say so.
 
-The acceptance criteria come from issue #<issue>. Follow the technical decisions
+The acceptance criteria come from work item <id>. Follow the technical decisions
 in docs/decisions/ and the conventions in .github/copilot-instructions.md.
 
-Put application and test changes under src/ and tests/.
+Put changes in the code and test paths recorded in copilot-instructions.md, and
+follow the surrounding code's conventions rather than introducing new ones.
+
+Do not reformat, restructure, or tidy code this task does not touch. This is
+someone else's repository and unrelated changes make the review harder and the
+handover worse.
 
 Do not start any other task in this session. Do not add anything beyond this
 task's scope and the accepted PRD.
@@ -204,10 +255,10 @@ through, but the pause is the cheapest place to catch a wrong turn.
 ```text
 /task-review plan=.copilot-tracking/plans/<date>/<slug>-plan.instructions.md
 
-Review task <NN>, issue #<issue>.
+Review task <NN>, work item <id>.
 
 Reconcile the plan, the phase details, the planning log, and the change evidence
-against the acceptance criteria in issue #<issue>.
+against the acceptance criteria in work item <id>.
 
 Run the test command recorded in .github/copilot-instructions.md and the
 decision records. If no command is recorded, that is a gap in Stage 3: use the
@@ -233,39 +284,43 @@ consciously accepted what it found.
 
 **Then:** confirm the Review gate in [`task-log.md`](task-log.md).
 
-### Step 5 — Close the issue
+### Step 5 — Close the work item
 
-Clear the chat and switch to **`GitHub Backlog Manager`** in the mode dropdown.
+Clear the chat and switch to **`ADO Backlog Manager`** in the mode dropdown, or
+their tracker's equivalent.
 
 ```text
-Close issue #<issue> for task <NN>, now that it is implemented and reviewed.
+Close work item <id> for task <NN>, now that it is implemented and reviewed.
 
 Read the review log for <slug> under .copilot-tracking/reviews/ and the change
 record under .copilot-tracking/changes/.
 
-Before closing, confirm the review records every acceptance criterion in issue
-#<issue> as passing and the test run as passed. If any criterion fails, is
-unverified, or the tests did not pass, do not close the issue: comment what is
-still outstanding and tell me.
+Before closing, confirm the review records every acceptance criterion in work
+item <id> as passing and the test run as passed. If any criterion fails, is
+unverified, or the tests did not pass, do not close it: comment what is still
+outstanding and tell me.
 
 If it is safe to close:
 - Comment with a short summary of what changed, the test command and its result,
   and one line per acceptance criterion saying how it was met
-- Close the issue
+- Close the work item
+
+Write the comment for the customer's engineers, not for me. They will read it
+after I have gone, without the conversation I had while building it.
 
 Do not include .copilot-tracking paths in the comment — summarize the evidence
-instead. Do not close any other issue. Do not edit application code.
+instead. Do not close any other item. Do not edit application code.
 ```
 
 **Do not start the next task until the current one's tests have passed and its
-issue is closed.**
+work item is closed.**
 
 ## 6. The gates
 
 - Research read and confirmed → Plan may start
 - Plan and planning log read and confirmed → Implement may start
 - Code runs and Implement confirmed → Review may start
-- Review passed and issue closed → the next task may start
+- Review passed and work item closed → the next task may start
 
 Clear the chat at each of those arrows.
 
@@ -275,9 +330,13 @@ becomes guesswork.
 
 ## 7. If the helper asks you a question
 
-Answer from the issue, the PRD, or your decision records. If it asks you to
+Answer from the work item, the PRD, or your decision records. If it asks you to
 attach a file, tell it the path and say "read it from the workspace" — every
 prompt here already contains the paths it needs.
+
+If it asks something only the customer can answer — what a rule should be, which
+of two behaviours is correct — stop and ask them. Guessing produces code that
+passes review and fails the demo.
 
 If it says a file it needs is missing, check the path you passed in. The commands
 chain by explicit file path, so a typo in `research=` or `plan=` is the usual
@@ -285,13 +344,14 @@ cause.
 
 ## 8. Done when
 
-- Every Sprint 1 task has research, plan, changes, and review evidence under `.copilot-tracking/`
+- Every task in the iteration has research, plan, changes, and review evidence under `.copilot-tracking/`
 - Every review recorded a passing test run, with every acceptance criterion met
-- Every task's issue is closed with that evidence summarized in the comment
+- Every task's work item is closed with that evidence summarized in the comment
 - Every task's four gates are confirmed in [`task-log.md`](task-log.md)
 - The code runs, and the thin slice from your sprint plan actually works
-- The same is true for Sprint 2 tasks
 - No features appeared that were not in the backlog
+- Nothing was reformatted or restructured that the tasks did not require
+- At least one of the engineers you are enabling has watched the loop run end to end
 
 **Next:** [Stage 7 — Review](../07-review/README.md)
 

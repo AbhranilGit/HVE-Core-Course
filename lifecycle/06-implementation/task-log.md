@@ -13,14 +13,14 @@ columns, and can do it for you from the sprint plan.
 
 ## Tasks
 
-| # | Issue | Task | Sprint | Slug | Research | Plan | Implement | Review | Closed |
+| # | Work item | Task | Iteration | Slug | Research | Plan | Implement | Review | Closed |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | | | | | | | | | | |
 | | | | | | | | | | |
 | | | | | | | | | | |
 
 The slug is what ties a task's four evidence files together. Use the same one
-every time: `issue-NN-short-title`, for example `issue-01-user-can-log-in`.
+every time: `wi-<id>-short-title`, for example `wi-4821-operator-can-log-in`.
 
 ## What each gate means
 
@@ -45,8 +45,8 @@ is Complete, or you have read a Needs Rework verdict and consciously accepted
 what it found. Every acceptance criterion is recorded as passing, with evidence.
 Follow-up work was routed rather than quietly fixed.
 
-**Closed** — the issue comment records how each acceptance criterion was met and
-the issue is closed.
+**Closed** — the work item comment records how each acceptance criterion was met
+and the item is closed.
 
 ## Notes and deviations
 

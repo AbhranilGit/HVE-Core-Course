@@ -1,115 +1,159 @@
 # Stage 2 — Discovery
 
-Turn your idea into a clear written statement of the problem you are solving.
+Turn the statement of work into a business requirements document you can hold
+people to.
 
 | | |
 | --- | --- |
-| **Reads** | [`mvp-framing.md`](mvp-framing.md) |
-| **Produces** | `docs/brds/<name>-brd.md` |
-| **Helper** | `BRD Builder` |
+| **Reads** | [`scope-framing.md`](scope-framing.md) and the scope source it points at |
+| **Produces** | `docs/brds/<name>-brd.md`, plus any required planning documents |
+| **Helper** | `BRD Builder`, then the planners your compliance obligations require |
 
 ---
 
 ## 1. What this stage is for
 
-You are about to produce a **BRD** — a business requirements document. It is a
-short write-up of *why* this product should exist: the problem, who has it, what
-success looks like, and what you are deliberately not building.
+You are producing a **BRD** — a short write-up of *why* this engagement exists:
+the problem, who has it, what success looks like, and what is deliberately not
+being built.
 
-It deliberately says nothing about features or technology. That comes in
-Stage 3. Getting the "why" written down first is what stops the next six stages
-from drifting.
+The difference from a greenfield project is that most of this has already been
+decided. Somebody sold this work, and the terms are in a statement of work or an
+Architecture Design Session output. Your job is not to invent the problem
+statement. It is to make the existing one **precise enough to build against**,
+and to surface every place where it is not.
+
+That reframing changes what a good outcome looks like here. A BRD that fluently
+restates the sales deck is a failure. A BRD that says "the statement of work
+does not define what 'near real time' means, and the three plausible readings
+imply different architectures" is worth the day it took.
 
 ## 2. Prerequisites
 
+- [Stage 0](../00-engagement/README.md) is done and the engagement brief is filled in
+- [`scope-framing.md`](scope-framing.md) is filled in, with ambiguities marked rather than resolved
+- Section 6 of that file has been through the customer at least once
 - Stage 1 is finished and the helpers appear in Copilot Chat
-- [`mvp-framing.md`](mvp-framing.md) is filled in with your idea — no `<placeholders>` left
-- You have this repository open as the folder in VS Code
 
 ## 3. Pick the helper
 
-1. Open Copilot Chat in VS Code (the chat icon in the left Activity Bar, or `Ctrl+Alt+I` / `Cmd+Alt+I`).
-2. Click the mode dropdown at the bottom of the chat box — it usually says *Ask* or *Agent*.
+1. Open Copilot Chat.
+2. Click the mode dropdown at the bottom of the chat box.
 3. Choose **`BRD Builder`**.
 
-Do **not** use `PRD Builder` or any of the task helpers here. `Task Implementor`
-writes code, and it will happily start building your app instead of thinking
-about the problem.
-
-Not in the list? See [If something goes wrong](../../README.md#if-something-goes-wrong).
+Do not use `PRD Builder` or the task helpers here. You are not deciding features
+and you are certainly not writing code.
 
 ## 4. Paste this prompt
 
-Copy the whole block below and paste it into the chat. Change nothing — it
-already knows where to find your idea.
-
 ```text
-Create a business requirements document (BRD) for the product described in
-lifecycle/02-discovery/mvp-framing.md.
+Create a business requirements document (BRD) for the engagement described in
+lifecycle/02-discovery/scope-framing.md.
 
-Read that file from the workspace. Do not ask me to attach it.
+Read that file and the scope source it points at from the workspace. Also read
+lifecycle/00-engagement/engagement-brief.md for the engagement's boundaries and
+constraints. Do not ask me to attach any of them.
 
-Workflow:
-- Use the framing to answer the discovery questions yourself.
-- Only ask me where the framing is silent or genuinely ambiguous.
-- Derive assumptions and risks from the framing; do not invent new scope.
-- Carry forward the open questions the framing already lists; add new ones only
-  if something important is missing.
+This scope was contracted, not invented. Work accordingly:
+- Treat the scope source as authoritative. Where it is specific, use its terms.
+- Do not resolve the items marked ambiguous in the framing. Carry each one
+  forward as an open question with the readings it could bear and what each
+  would imply for the build.
+- Derive assumptions and risks from the framing and the engagement brief. Do not
+  invent new scope, and do not quietly widen an in-scope item.
+- Where the framing records an inherited constraint, treat it as fixed and note
+  what it rules out.
 
 Produce a BRD covering: problem statement, stakeholders, in and out of scope,
-success metrics, assumptions, risks, and open questions.
+success measures, assumptions, inherited constraints, risks, and open questions.
 
-Do not write a PRD, acceptance criteria, ADRs, tickets, or any application code.
-Do not widen the scope beyond the framing's in-scope list.
+Flag explicitly anything in the scope source that you believe cannot be
+delivered within the stated constraints. That is more useful to me than a
+document that reads smoothly.
+
+Do not write a PRD, acceptance criteria, decision records, work items, or any
+application code.
 
 Save the BRD to your default location under docs/brds/ and tell me the exact
 path you used.
 ```
 
-`BRD Builder` already knows to write to `docs/brds/<name>-brd.md`, and it keeps
-its session state in `.copilot-tracking/brd-sessions/<name>.state.json`. That is
-how it resumes if you come back tomorrow — leave both alone.
+`BRD Builder` writes to `docs/brds/<name>-brd.md` and keeps its session state in
+`.copilot-tracking/brd-sessions/<name>.state.json`, which is how it resumes if
+you come back to it tomorrow. Leave both alone.
 
 ## 5. What you should see afterwards
 
-A new file under **`docs/brds/`**, named after your product and ending in
-`-brd.md`. The helper tells you the exact path.
+A new file under **`docs/brds/`** ending in `-brd.md`.
 
-Open it and skim. It should describe *your* problem in your terms. If it
-describes a different product, or lists features you never mentioned, say so in
-the chat and ask it to work only from the framing file.
+Read the open questions and the "cannot be delivered" flags first. Those are the
+parts you take back to the sponsor, and they are why you did this before writing
+any code rather than after.
 
-Write the path down — Stage 3 asks for it.
+Then read the scope sections against the statement of work, line by line. If the
+BRD has quietly grown a capability the contract does not mention, fix it now.
+Everything downstream — the PRD, the work items, the release evidence — inherits
+this scope, and a widening here becomes unpaid work in week nine.
 
-## 6. If the helper asks you a question
+## 6. Required planning documents
 
-`BRD Builder` works by guided question-and-answer, so expect a few. Answer from
-your [framing document](mvp-framing.md). If the answer is not there, decide now,
-tell the helper — and then **add that answer to the framing document**, so the
-next stage inherits it instead of asking again.
+In the course variant of this template these planners are optional. Here they
+are not. Section 6 of your [engagement brief](../00-engagement/engagement-brief.md)
+records which obligations apply, and each one that applies turns into a required
+document at this stage.
 
-## 7. Done when
+| If the brief says | Helper | Command |
+| --- | --- | --- |
+| The system contains AI, or makes automated decisions about people | `RAI Planner` | `/rai-capture`, then `/rai-plan-from-prd` once Stage 3 exists |
+| It handles personal data, credentials, payments, or health records | `Security Planner` | `/security-capture`, then `/security-plan-from-prd` |
+| The customer requires supply-chain assurance | `SSSC Planner` | `/sssc-from-brd`, or `/sssc-from-prd` later |
+
+The `-capture` commands work from what you have now. The `-from-prd` variants
+produce the fuller assessment and need Stage 3's PRD, so run those when you get
+there — but start the conversation here, because what they surface often changes
+the PRD.
+
+`/sssc-from-brd` and `/rai-plan-from-security-plan` let these chain off each
+other rather than starting cold each time. Commit everything they produce.
+
+**If none apply, record that decision rather than leaving it blank.** Add a line
+to the BRD naming who confirmed it and when. "Nobody raised compliance" and
+"compliance does not apply" look identical in an empty document, and they are
+very different positions to be in during a customer security review.
+
+## 7. If the helper asks you a question
+
+Answer from the [scope framing](scope-framing.md) or the scope source it points
+at. If the answer is in neither, **do not decide it yourself**. Add it to section
+6 of the framing as an open question, tell the helper it is unresolved, and put
+it on the agenda for your next customer conversation.
+
+This is the habit that separates delivery work from personal projects. On your
+own product, deciding an open question yourself is efficient. On someone else's,
+it is how you end up having built something nobody agreed to.
+
+## 8. Done when
 
 - A `-brd.md` file exists under `docs/brds/`
-- The problem it describes is recognisably yours
-- Its out-of-scope list matches what you wrote in the framing
-- Nothing in it surprised you — if something did, fix the framing and rerun
+- Its scope matches the statement of work, with nothing added
+- Every ambiguity from the framing survives as an open question rather than being silently resolved
+- Anything undeliverable within the constraints is flagged in writing
+- Every required planning document from section 6 exists, or the BRD records who confirmed none were needed
+- The open questions have been sent to the customer
+
+**Next:** [Stage 3 — Product definition](../03-product-definition/README.md)
 
 ---
 
-## Optional — if your domain needs it
+## Optional — when a technical unknown blocks the BRD
 
-HVE Core ships extra Discovery planners. Skip these unless your domain calls for
-one; each produces its own plan document alongside the BRD.
+If you cannot write the BRD because something about the customer's existing
+system is genuinely unknown, investigate before you guess:
 
-| Helper | Use it when |
-| --- | --- |
-| `Security Planner` | The product handles credentials, personal data, or anything an attacker would want. Produces a STRIDE-based security model. |
-| `RAI Planner` | The product contains AI or makes automated decisions about people. Produces a Responsible AI assessment. |
-| `SSSC Planner` | You need supply-chain assurance — SBOM, SLSA, OpenSSF Scorecard. |
-| `/task-research topic=...` | A genuine technical unknown blocks the BRD. Investigates and writes evidence under `.copilot-tracking/research/` before you commit to anything. |
+```text
+/task-research topic=<the unknown>
+```
 
-Run them after the BRD exists, and tell each one to read the BRD from
-`docs/brds/`.
-
-**Next:** [Stage 3 — Product definition](../03-product-definition/README.md)
+It writes what it finds to `.copilot-tracking/research/<date>/`. Use it for
+questions like "how does their current export actually work" — not for
+questions only the customer can answer.
