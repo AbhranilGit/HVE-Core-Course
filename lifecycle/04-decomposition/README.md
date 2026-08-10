@@ -12,27 +12,17 @@ Break the contracted features into work items the customer's tracker can carry.
 
 ## 1. What this stage is for
 
-A feature like "operators can reconcile a batch" is too big to build in one go.
-This stage chops the PRD into **work items** small enough to finish in a sitting,
-each carrying the id of the PRD acceptance criterion it came from.
+A feature like "operators can reconcile a batch" is too big to build in one go. This stage chops the PRD into **work items** small enough to finish in a sitting, each carrying the id of the PRD acceptance criterion it came from.
 
-That thread from criterion to work item to commit is what lets Stage 7 ask "did
-we deliver what was contracted?" and get an answer that survives scrutiny. On a
-personal project it is good hygiene. On an engagement it is how you get paid.
+That thread from criterion to work item to commit is what lets Stage 7 ask "did we deliver what was contracted?" and get an answer that survives scrutiny. On a personal project it is good hygiene. On an engagement it is how you get paid.
 
-The work happens in two steps, and the gap between them is the point. The helper
-first **proposes** a backlog into planning files. You read them, and so does the
-customer's product owner. Only then does a second command write anything to
-their tracker.
+The work happens in two steps, and the gap between them is the point. The helper first **proposes** a backlog into planning files. You read them, and so does the customer's product owner. Only then does a second command write anything to their tracker.
 
-Resist the temptation to collapse those steps. Creating eighty work items in
-someone else's Azure DevOps project without showing them first is a memorable way
-to start an engagement badly.
+Resist the temptation to collapse those steps. Creating eighty work items in someone else's Azure DevOps project without showing them first is a memorable way to start an engagement badly.
 
 ## 2. This page assumes Azure DevOps
 
-Most enterprise customers run Azure DevOps, so that is the worked example. The
-shape is identical elsewhere; only the command names change.
+Most enterprise customers run Azure DevOps, so that is the worked example. The shape is identical elsewhere; only the command names change.
 
 | Their tracker | Helper | Discover | Apply |
 | --- | --- | --- | --- |
@@ -40,8 +30,7 @@ shape is identical elsewhere; only the command names change.
 | **GitHub Issues** | `GitHub Backlog Manager` | `/github-discover-issues` | `/github-execute-backlog` |
 | **Jira** | `Jira Backlog Manager` | `/jira-discover-issues` | `/jira-execute-backlog` |
 
-Use whatever they already use. Introducing a second tracker for the duration of
-an engagement guarantees that half the history is lost at handover.
+Use whatever they already use. Introducing a second tracker for the duration of an engagement guarantees that half the history is lost at handover.
 
 ## 3. Prerequisites
 
@@ -84,29 +73,17 @@ Do not create or modify anything in Azure DevOps yet, and do not write code.
 Do not assign iterations — that is the next stage.
 ```
 
-**You should see:** a tracking folder at
-`.copilot-tracking/workitems/discovery/<scope>/` containing `issue-analysis.md`
-with the coverage assessment, `issues-plan.md` with the proposed items, a
-planning log, and `handoff.md`. The helper tells you the paths.
+**You should see:** a tracking folder at `.copilot-tracking/workitems/discovery/<scope>/` containing `issue-analysis.md` with the coverage assessment, `issues-plan.md` with the proposed items, a planning log, and `handoff.md`. The helper tells you the paths.
 
-If your PRD has a deep hierarchy of epics and features, the helper may route this
-through the `AzDO PRD to WIT` agent and write to
-`.copilot-tracking/workitems/prds/<name>/` instead. Same idea, same review step.
+If your PRD has a deep hierarchy of epics and features, the helper may route this through the `AzDO PRD to WIT` agent and write to `.copilot-tracking/workitems/prds/<name>/` instead. Same idea, same review step.
 
 ## 5. Review it, and have the customer review it
 
-Open `issues-plan.md` and read it properly. Then send it to the product owner
-before you apply anything.
+Open `issues-plan.md` and read it properly. Then send it to the product owner before you apply anything.
 
-Two checks of your own first. Every item should trace to a PRD criterion id — an
-item that traces to nothing is scope you invented. And the count should feel
-plausible: five to fifteen per sprint's worth of work is normal, so eighty items
-for a six-week engagement means they are too granular, and six means they are too
-coarse to track.
+Two checks of your own first. Every item should trace to a PRD criterion id — an item that traces to nothing is scope you invented. And the count should feel plausible: five to fifteen per sprint's worth of work is normal, so eighty items for a six-week engagement means they are too granular, and six means they are too coarse to track.
 
-The customer's check is different from yours and more important: they are looking
-for the thing they assumed was included that is not on the list. Better to find
-it here than in the final demo.
+The customer's check is different from yours and more important: they are looking for the thing they assumed was included that is not on the list. Better to find it here than in the final demo.
 
 ## 6. Apply the approved plan
 
@@ -123,20 +100,15 @@ When you are done, list every item you created with its id, title, and type, so
 I can check the set against the PRD.
 ```
 
-Where a command offers `autonomy`, use `partial` on a customer tenant so it stops
-at review gates. `dryRun=true` shows you what it would do without writing
-anything, which is worth one run the first time you do this on their project.
+Where a command offers `autonomy`, use `partial` on a customer tenant so it stops at review gates. `dryRun=true` shows you what it would do without writing anything, which is worth one run the first time you do this on their project.
 
-**You should see:** work items in their tracker, and an execution record under
-`.copilot-tracking/workitems/execution/<date>/`.
+**You should see:** work items in their tracker, and an execution record under `.copilot-tracking/workitems/execution/<date>/`.
 
-Leave them open. Stage 6 closes each one as its task is built and reviewed, with
-the evidence in the comment.
+Leave them open. Stage 6 closes each one as its task is built and reviewed, with the evidence in the comment.
 
 ### No tracker access yet?
 
-If access is still pending — and in Stage 1 you noted that it often is — do not
-let it block you. Use the default Copilot Chat:
+If access is still pending — and in Stage 1 you noted that it often is — do not let it block you. Use the default Copilot Chat:
 
 ```text
 Read the PRD in docs/prds/ and docs/decisions/ from the workspace.
@@ -150,17 +122,11 @@ path is built first.
 Do not invent anything outside the contracted scope. Do not write code.
 ```
 
-Wherever a later stage says "the work item", read "the entry in
-`docs/planning/backlog.md`". Migrate it into their tracker as soon as access
-lands, because a backlog that lives only in a markdown file will not survive your
-departure.
+Wherever a later stage says "the work item", read "the entry in `docs/planning/backlog.md`". Migrate it into their tracker as soon as access lands, because a backlog that lives only in a markdown file will not survive your departure.
 
 ## 7. If the helper asks you a question
 
-Answer from the PRD. Questions about item types, area paths, or how their
-hierarchy is organised go to the technical contact — every organisation's Azure
-DevOps has local conventions, and matching theirs matters more than matching
-anyone's best practice.
+Answer from the PRD. Questions about item types, area paths, or how their hierarchy is organised go to the technical contact — every organisation's Azure DevOps has local conventions, and matching theirs matters more than matching anyone's best practice.
 
 ## 8. Done when
 

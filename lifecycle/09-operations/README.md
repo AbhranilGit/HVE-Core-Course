@@ -14,19 +14,11 @@ Do **A** through **E**. Start in your second-to-last iteration, not your last we
 
 ## 1. What this stage is for
 
-Everything before this produced software. This stage decides whether the software
-survives contact with your departure.
+Everything before this produced software. This stage decides whether the software survives contact with your departure.
 
-It is worth being blunt about the failure mode, because it is common and it does
-not look like failure at the time. An engagement ships working, well-tested,
-well-documented software. The FDE leaves. Six months later the system is
-unchanged, because nobody on the customer's team can safely modify it. Every
-individual artefact was good. The engagement still failed.
+It is worth being blunt about the failure mode, because it is common and it does not look like failure at the time. An engagement ships working, well-tested, well-documented software. The FDE leaves. Six months later the system is unchanged, because nobody on the customer's team can safely modify it. Every individual artefact was good. The engagement still failed.
 
-What prevents that is not more documentation. It is that people on the customer's
-team have already **done** the work, with you watching, and hit problems while you
-were still there to help. If your enablement plan is a session in the final week,
-it is not an enablement plan.
+What prevents that is not more documentation. It is that people on the customer's team have already **done** the work, with you watching, and hit problems while you were still there to help. If your enablement plan is a session in the final week, it is not an enablement plan.
 
 The measure of this stage is not what you produced. It is what they can do.
 
@@ -37,16 +29,13 @@ The measure of this stage is not what you produced. It is what they can do.
 - Section 2 names the engineers being enabled
 - Section 8 says where everything ends up
 
-**Timing matters here more than anywhere else in this template.** Part D needs
-your presence while the customer's engineers do real work, and you cannot compress
-that into a final afternoon. Start this stage one iteration before the end.
+**Timing matters here more than anywhere else in this template.** Part D needs your presence while the customer's engineers do real work, and you cannot compress that into a final afternoon. Start this stage one iteration before the end.
 
 ---
 
 ## A. Write the runbook
 
-Use the **default Copilot Chat**. HVE Core's documentation helper is a quality
-checker rather than a first-draft writer, so it comes in at part B.
+Use the **default Copilot Chat**. HVE Core's documentation helper is a quality checker rather than a first-draft writer, so it comes in at part B.
 
 ```text
 Write an operator runbook for version v0.1.0.
@@ -99,18 +88,11 @@ Clear the chat and run:
 /doc-ops-update scope=docs
 ```
 
-`Doc Ops` reads every markdown file under `docs/`, then checks whether the
-writing follows the project's conventions, whether the **example commands and
-file paths actually exist and work**, and whether anything in the repository is
-undocumented. That middle check is the one that matters — it is exactly how a
-runbook goes stale, and exactly what you cannot spot by rereading your own words.
+`Doc Ops` reads every markdown file under `docs/`, then checks whether the writing follows the project's conventions, whether the **example commands and file paths actually exist and work**, and whether anything in the repository is undocumented. That middle check is the one that matters — it is exactly how a runbook goes stale, and exactly what you cannot spot by rereading your own words.
 
-It keeps a session file under `.copilot-tracking/doc-ops/<date>-session.md`. Add
-`validate-only=true` for findings without edits.
+It keeps a session file under `.copilot-tracking/doc-ops/<date>-session.md`. Add `validate-only=true` for findings without edits.
 
-Then do the test that actually counts: **have one of the customer's engineers
-follow the runbook on their own machine, from scratch, while you say nothing.**
-Every place they get stuck is a defect in the runbook. Fix it and repeat.
+Then do the test that actually counts: **have one of the customer's engineers follow the runbook on their own machine, from scratch, while you say nothing.** Every place they get stuck is a defect in the runbook. Fix it and repeat.
 
 Doing this yourself proves nothing. You already know the answers.
 
@@ -118,8 +100,7 @@ Doing this yourself proves nothing. You already know the answers.
 
 ## C. Write the handover document
 
-The runbook says how to operate the system. The handover document says everything
-else the customer needs and cannot reconstruct from the repository.
+The runbook says how to operate the system. The handover document says everything else the customer needs and cannot reconstruct from the repository.
 
 ```text
 Write a handover document for this engagement.
@@ -155,20 +136,15 @@ less useful than one that says where the bodies are buried.
 
 **You should see:** `docs/operations/handover.md`
 
-Point 4 is the section people soften, and the one that is worth the most. If you
-know a module is fragile, or a test suite has a gap, or a decision was made under
-time pressure and should be revisited, say so plainly. You will not be there to
-warn them later.
+Point 4 is the section people soften, and the one that is worth the most. If you know a module is fragile, or a test suite has a gap, or a decision was made under time pressure and should be revisited, say so plainly. You will not be there to warn them later.
 
 ---
 
 ## D. Enable the engineers
 
-This is the part with no command, and the part that determines whether the
-engagement mattered.
+This is the part with no command, and the part that determines whether the engagement mattered.
 
-For each engineer named in section 2 of the engagement brief, work through a
-progression. Do not skip to the end.
+For each engineer named in section 2 of the engagement brief, work through a progression. Do not skip to the end.
 
 | Stage | What happens | You are |
 | --- | --- | --- |
@@ -177,28 +153,19 @@ progression. Do not skip to the end.
 | **Solo with review** | They take a task alone; you review the pull request | Reviewing |
 | **Solo** | They take a task and one of their own colleagues reviews it | Not involved |
 
-The last row is the actual goal, and the one most engagements never reach. An
-engineer who can only work with you reviewing has not been enabled; they have
-been temporarily assisted.
+The last row is the actual goal, and the one most engagements never reach. An engineer who can only work with you reviewing has not been enabled; they have been temporarily assisted.
 
-Use real backlog items, never exercises. Contrived tasks teach the tool and hide
-everything difficult about the codebase.
+Use real backlog items, never exercises. Contrived tasks teach the tool and hide everything difficult about the codebase.
 
-Track this as work items in their tracker, with acceptance criteria like any other
-work. Enablement that is not tracked is enablement that gets dropped the first
-week things get busy — and it will be a busy week, because it is the last one.
+Track this as work items in their tracker, with acceptance criteria like any other work. Enablement that is not tracked is enablement that gets dropped the first week things get busy — and it will be a busy week, because it is the last one.
 
-Record in the handover document where each engineer actually got to. If someone
-never made it past pairing, that is a real risk to write down, not a failure to
-hide.
+Record in the handover document where each engineer actually got to. If someone never made it past pairing, that is a real risk to write down, not a failure to hide.
 
 ---
 
 ## E. Confirm the exit criteria
 
-Take section 4 of the engagement brief and go through it with the sponsor, line
-by line, before your last day. Not on your last day — you want time to fix
-something small.
+Take section 4 of the engagement brief and go through it with the sponsor, line by line, before your last day. Not on your last day — you want time to fix something small.
 
 | For each criterion | Record |
 | --- | --- |
@@ -206,36 +173,25 @@ something small.
 | Partly met | What is missing, and what it would take |
 | Not met | Why, and what you recommend |
 
-Put the outcome at the top of `docs/operations/handover.md`, with the date and
-who confirmed it. This is the document that says the engagement is complete, and
-it is the one people will look for a year from now.
+Put the outcome at the top of `docs/operations/handover.md`, with the date and who confirmed it. This is the document that says the engagement is complete, and it is the one people will look for a year from now.
 
-If a criterion is not met, say so plainly. An engagement that closes with a
-documented gap is in far better shape than one that closes with a gap nobody
-wrote down.
+If a criterion is not met, say so plainly. An engagement that closes with a documented gap is in far better shape than one that closes with a gap nobody wrote down.
 
 ---
 
 ## F. When something breaks later
 
-You may not be there, but the customer will be. HVE Core has a command for
-working an incident:
+You may not be there, but the customer will be. HVE Core has a command for working an incident:
 
 ```text
 /incident-response severity=3 phase=triage
 ```
 
-`severity` runs from 1 (worst) to 4, and `phase` steps through `triage`,
-`diagnose`, `mitigate`, and `rca`. Keep the reports under
-`docs/operations/incidents/`.
+`severity` runs from 1 (worst) to 4, and `phase` steps through `triage`, `diagnose`, `mitigate`, and `rca`. Keep the reports under `docs/operations/incidents/`.
 
-Show the customer's engineers this during part D, on a past incident or a
-simulated one. It is worth ten minutes, and it is the command they will reach for
-on their worst day.
+Show the customer's engineers this during part D, on a past incident or a simulated one. It is worth ten minutes, and it is the command they will reach for on their worst day.
 
-Once the cause is known, fix it as a normal task through
-[Stage 6](../06-implementation/README.md). Hotfixes get the same discipline as
-features, which is exactly why the record stays honest.
+Once the cause is known, fix it as a normal task through [Stage 6](../06-implementation/README.md). Hotfixes get the same discipline as features, which is exactly why the record stays honest.
 
 ---
 
@@ -254,8 +210,7 @@ features, which is exactly why the record stays honest.
 
 ## You are finished
 
-The measure of this engagement is not what you built. It is what they can build
-next week without you.
+The measure of this engagement is not what you built. It is what they can build next week without you.
 
 | Situation | What to do |
 | --- | --- |

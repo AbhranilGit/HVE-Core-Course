@@ -1,13 +1,8 @@
 # HVE for delivery engagements
 
-A repository template for engineers who drop into a customer's environment for a
-fixed period, build something with them, and leave behind a system they can
-maintain.
+A repository template for engineers who drop into a customer's environment for a fixed period, build something with them, and leave behind a system they can maintain.
 
-It wraps Microsoft's [HVE Core](https://microsoft.github.io/hve-core/) tooling in
-a sequence of stage pages: which helper to pick, what to paste, what should
-appear, and what has to be true before you move on. The HVE lifecycle is
-unchanged — this variant supplies the engagement context around it.
+It wraps Microsoft's [HVE Core](https://microsoft.github.io/hve-core/) tooling in a sequence of stage pages: which helper to pick, what to paste, what should appear, and what has to be true before you move on. The HVE lifecycle is unchanged — this variant supplies the engagement context around it.
 
 Targets **HVE Core - All 3.3.101**.
 
@@ -22,52 +17,33 @@ This repository has two branches for two different situations.
 | `learning-template` | Learning HVE, or your own product | New codebase, you decide the scope, GitHub, solo |
 | `master` *(this one)* | A customer engagement | Existing codebase, contracted scope, Azure DevOps, a team you are enabling and a last day |
 
-The stages are the same nine. What differs is who decides scope, whose repository
-you are in, what "done" means, and who has to be able to run it after you leave.
+The stages are the same nine. What differs is who decides scope, whose repository you are in, what "done" means, and who has to be able to run it after you leave.
 
-If you are new to HVE, read the course variant first. It explains the machinery
-in more detail. This one assumes you know it and concentrates on what the
-engagement context adds.
+If you are new to HVE, read the course variant first. It explains the machinery in more detail. This one assumes you know it and concentrates on what the engagement context adds.
 
 ---
 
 ## What is different about delivery work
 
-The standard lifecycle quietly assumes you own the product. On an engagement you
-do not, and five things change as a result.
+The standard lifecycle quietly assumes you own the product. On an engagement you do not, and five things change as a result.
 
-**Scope arrives, it does not emerge.** Someone sold this work. Your discovery
-stage reconciles a statement of work with reality and surfaces its ambiguities —
-it does not invent a product. Stage 2 is reframed accordingly.
+**Scope arrives, it does not emerge.** Someone sold this work. Your discovery stage reconciles a statement of work with reality and surfaces its ambiguities — it does not invent a product. Stage 2 is reframed accordingly.
 
-**The codebase is already there.** You are adding to a system with its own
-conventions, its own history, and its own reasons for things that look wrong at
-first glance. The research phase in Stage 6 stops being a hedge against AI
-invention and becomes how you learn a codebase you did not write.
+**The codebase is already there.** You are adding to a system with its own conventions, its own history, and its own reasons for things that look wrong at first glance. The research phase in Stage 6 stops being a hedge against AI invention and becomes how you learn a codebase you did not write.
 
-**The deadline is fixed and external.** You plan backwards from a last day you
-did not choose. Stage 5 does the arithmetic honestly and asks what genuinely fits.
+**The deadline is fixed and external.** You plan backwards from a last day you did not choose. Stage 5 does the arithmetic honestly and asks what genuinely fits.
 
-**Compliance is not optional.** Security, Responsible AI, and supply-chain
-reviews are obligations you inherit from the engagement, not extras you run if
-you feel like it. Stage 0 records which apply and Stages 2 and 7 enforce them.
+**Compliance is not optional.** Security, Responsible AI, and supply-chain reviews are obligations you inherit from the engagement, not extras you run if you feel like it. Stage 0 records which apply and Stages 2 and 7 enforce them.
 
-**Handover is the deliverable.** The measure of the engagement is not what you
-built but what the customer's engineers can build next month without you. That
-is why Stage 9 is enablement rather than documentation, and why it starts an
-iteration before the end.
+**Handover is the deliverable.** The measure of the engagement is not what you built but what the customer's engineers can build next month without you. That is why Stage 9 is enablement rather than documentation, and why it starts an iteration before the end.
 
 ---
 
 ## Stage 0
 
-The nine HVE stages describe how a product gets built. They do not describe how
-an engagement starts and ends, so this variant adds one stage in front of them.
+The nine HVE stages describe how a product gets built. They do not describe how an engagement starts and ends, so this variant adds one stage in front of them.
 
-**[Stage 0 — Engagement framing](lifecycle/00-engagement/README.md)** produces
-the engagement brief: the window, the people, the exit criteria, what you are
-inheriting, and which compliance obligations apply. Later stages read it, and
-several of them behave differently depending on what it says.
+**[Stage 0 — Engagement framing](lifecycle/00-engagement/README.md)** produces the engagement brief: the window, the people, the exit criteria, what you are inheriting, and which compliance obligations apply. Later stages read it, and several of them behave differently depending on what it says.
 
 The nine keep their usual numbers, so the mapping back to HVE Core stays intact.
 
@@ -88,8 +64,7 @@ The nine keep their usual numbers, so the mapping back to HVE Core stays intact.
 | 8 | [Delivery](lifecycle/08-delivery/README.md) | Ship through their process; the PR is where enablement happens | `/ado-create-pull-request`, `PR Review`, `/git-merge` | `docs/releases/`, a tag |
 | 9 | [Handover](lifecycle/09-operations/README.md) | Runbook, handover document, and engineers who can work unaided | `/doc-ops-update` | `docs/operations/`, exit criteria signed off |
 
-Stages 6, 7, and 8 loop once per iteration. Reach Stage 9 only in your last one —
-and start it before then.
+Stages 6, 7, and 8 loop once per iteration. Reach Stage 9 only in your last one — and start it before then.
 
 ---
 
@@ -117,8 +92,7 @@ The handover document is the one people skip and the one that gets read most.
 - **The MCP server for their tracker**, connected and authenticated. Stages 4 and 5 do not work without it, and access requests in customer tenants are slow — start that on day one
 - Whatever their codebase needs to build and test locally
 
-Helper names and commands move between HVE Core releases. If a stage page does
-not match what you see, check your version first; Stage 1 shows you where.
+Helper names and commands move between HVE Core releases. If a stage page does not match what you see, check your version first; Stage 1 shows you where.
 
 ---
 
@@ -130,11 +104,7 @@ cd <engagement-name>
 git checkout master
 ```
 
-Then read [Stage 0](lifecycle/00-engagement/README.md) and fill in the
-engagement brief. [Stage 1](lifecycle/01-setup/README.md) covers both cases for
-where the code lives: copying this scaffolding into an existing customer
-repository, which is the common one, or starting a new repository for the
-engagement.
+Then read [Stage 0](lifecycle/00-engagement/README.md) and fill in the engagement brief. [Stage 1](lifecycle/01-setup/README.md) covers both cases for where the code lives: copying this scaffolding into an existing customer repository, which is the common one, or starting a new repository for the engagement.
 
 ---
 
@@ -146,9 +116,7 @@ engagement.
 | **Slash command** | A focused routine invoked with `/something` |
 | **Instructions** | Conventions applied quietly in the background |
 
-Most commands carry their own helper — `/task-plan` switches you to
-`Task Planner` without touching the dropdown. Only `BRD Builder`, `PRD Builder`,
-`ADR Creation`, `PR Review`, and the Stage 2 planners need picking by hand.
+Most commands carry their own helper — `/task-plan` switches you to `Task Planner` without touching the dropdown. Only `BRD Builder`, `PRD Builder`, `ADR Creation`, `PR Review`, and the Stage 2 planners need picking by hand.
 
 ```mermaid
 flowchart TB
@@ -163,9 +131,7 @@ flowchart TB
     ST -->|Hand over| F9["Doc Ops<br/>runbook and handover"]
 ```
 
-The customer's tracker decides whether you use the `/ado-*` or `/github-*`
-family. Use whatever they already run; introducing a second tracker for the
-duration of an engagement guarantees half the history is lost at handover.
+The customer's tracker decides whether you use the `/ado-*` or `/github-*` family. Use whatever they already run; introducing a second tracker for the duration of an engagement guarantees half the history is lost at handover.
 
 ---
 
@@ -173,12 +139,9 @@ duration of an engagement guarantees half the history is lost at handover.
 
 **`lifecycle/`** is the process. You read it; the helpers mostly do not.
 
-**`docs/`** is what the customer keeps. `docs/brds/`, `docs/prds/`, and
-`docs/decisions/` are HVE Core's own default locations, which is how the helpers
-find each other's work without being told. The rest belongs to this template.
+**`docs/`** is what the customer keeps. `docs/brds/`, `docs/prds/`, and `docs/decisions/` are HVE Core's own default locations, which is how the helpers find each other's work without being told. The rest belongs to this template.
 
-**`.copilot-tracking/`** is the helpers' workbench: research, plans, change
-records, review logs, and backlog drafts. Three rules:
+**`.copilot-tracking/`** is the helpers' workbench: research, plans, change records, review logs, and backlog drafts. Three rules:
 
 1. **Leave it alone while the engagement is live.** Stage 7 reads it. Emptying it to tidy up throws away the evidence the review needs.
 2. **It is not committed.** Anything that must survive your departure belongs in `docs/`, which is why Stages 7, 8, and 9 write committed summaries there.
@@ -203,9 +166,7 @@ records, review logs, and backlog drafts. Three rules:
 └── .copilot-tracking/            # Working evidence, not committed
 ```
 
-In an existing repository the application code stays wherever it already lives.
-Record its real paths in `.github/copilot-instructions.md` rather than creating
-`src/` and `tests/` alongside their equivalents.
+In an existing repository the application code stays wherever it already lives. Record its real paths in `.github/copilot-instructions.md` rather than creating `src/` and `tests/` alongside their equivalents.
 
 ---
 
@@ -252,15 +213,10 @@ Record its real paths in `.github/copilot-instructions.md` rather than creating
 
 ## Words you will see
 
-BRD, PRD, decision record, thin vertical slice, RPI, exit criteria, brownfield,
-and the rest are defined in the **[glossary](GLOSSARY.md)**.
+BRD, PRD, decision record, thin vertical slice, RPI, exit criteria, brownfield, and the rest are defined in the **[glossary](GLOSSARY.md)**.
 
 ---
 
 ## Start
 
-**[Stage 0 — Engagement framing](lifecycle/00-engagement/README.md)**, then work
-down. The two documents you write by hand are
-[`engagement-brief.md`](lifecycle/00-engagement/engagement-brief.md) and
-[`scope-framing.md`](lifecycle/02-discovery/scope-framing.md). Everything else is
-produced by a helper and checked by you.
+**[Stage 0 — Engagement framing](lifecycle/00-engagement/README.md)**, then work down. The two documents you write by hand are [`engagement-brief.md`](lifecycle/00-engagement/engagement-brief.md) and [`scope-framing.md`](lifecycle/02-discovery/scope-framing.md). Everything else is produced by a helper and checked by you.

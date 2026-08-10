@@ -8,19 +8,15 @@ Build it, one task at a time.
 | **Produces** | Code in the customer's tree, evidence under `.copilot-tracking/`, and a closed work item per task |
 | **Commands** | `/task-research`, `/task-plan`, `/task-implement`, `/task-review`, then `ADO Backlog Manager` to close the item |
 
-This is the longest stage. Read sections 1 and 2 before you start — they explain
-the loop you will repeat for every task.
+This is the longest stage. Read sections 1 and 2 before you start — they explain the loop you will repeat for every task.
 
 ---
 
 ## 1. What this stage is for
 
-You now write the code. But not in one giant "build my app" request — that is
-how AI produces something confident and wrong.
+You now write the code. But not in one giant "build my app" request — that is how AI produces something confident and wrong.
 
-Instead, every task goes through four phases, known collectively as **RPI**. Each
-phase is its own command, and each one writes a file you read before allowing the
-next:
+Instead, every task goes through four phases, known collectively as **RPI**. Each phase is its own command, and each one writes a file you read before allowing the next:
 
 | Phase | Command | What happens | Evidence it leaves behind |
 | --- | --- | --- | --- |
@@ -29,57 +25,31 @@ next:
 | **Implement** | `/task-implement` | It follows the plan and writes the actual code. | Code, plus `.copilot-tracking/changes/<date>/<slug>-changes.md` |
 | **Review** | `/task-review` | It reconciles the plan against what changed, runs the tests, and records a status. | `.copilot-tracking/reviews/<date>/<slug>-plan-review.md` |
 
-Each command carries its own helper. `/task-research` runs as `Task Researcher`,
-`/task-plan` as `Task Planner`, `/task-implement` as `Task Implementor`, and
-`/task-review` as `Task Reviewer`. You do not need to touch the mode dropdown —
-typing the command switches helper for you.
+Each command carries its own helper. `/task-research` runs as `Task Researcher`, `/task-plan` as `Task Planner`, `/task-implement` as `Task Implementor`, and `/task-review` as `Task Reviewer`. You do not need to touch the mode dropdown — typing the command switches helper for you.
 
-**You read each file before running the next command.** That is the whole trick.
-If the research misunderstood something, you catch it in a paragraph rather than
-in three hundred lines of code.
+**You read each file before running the next command.** That is the whole trick. If the research misunderstood something, you catch it in a paragraph rather than in three hundred lines of code.
 
-Once the review passes, one last thing closes the task out: the work item that
-asked for the work gets the evidence as a comment, and is closed. Without the
-review record, Stage 8 has no evidence to cite. Without closing the item, the
-customer's board keeps showing work that has already shipped — and their board,
-not your memory, is what the sponsor looks at.
+Once the review passes, one last thing closes the task out: the work item that asked for the work gets the evidence as a comment, and is closed. Without the review record, Stage 8 has no evidence to cite. Without closing the item, the customer's board keeps showing work that has already shipped — and their board, not your memory, is what the sponsor looks at.
 
-You repeat this for every task in your sprint plan, in order. Do not run two
-tasks at once, and do not skip ahead.
+You repeat this for every task in your sprint plan, in order. Do not run two tasks at once, and do not skip ahead.
 
 ### Why the research phase matters more here
 
-On a greenfield product, research protects you from an AI that invents things
-confidently. That is still true. But on someone else's codebase it does
-something more valuable: it forces the model — and you — to learn how *this*
-system already works before changing it.
+On a greenfield product, research protects you from an AI that invents things confidently. That is still true. But on someone else's codebase it does something more valuable: it forces the model — and you — to learn how *this* system already works before changing it.
 
-Every codebase has local conventions that are invisible until you violate one.
-An error-handling pattern, a naming scheme, a place where configuration is
-expected to live, a test helper everyone uses. Code that ignores those is code
-the customer's engineers will quietly rewrite after you leave, which means you
-were never really helping.
+Every codebase has local conventions that are invisible until you violate one. An error-handling pattern, a naming scheme, a place where configuration is expected to live, a test helper everyone uses. Code that ignores those is code the customer's engineers will quietly rewrite after you leave, which means you were never really helping.
 
-So read the research output with a specific question in mind: *does this describe
-their system accurately, or does it describe a generic one?* If it reads like it
-could have been written about any project, it is not finished.
+So read the research output with a specific question in mind: *does this describe their system accurately, or does it describe a generic one?* If it reads like it could have been written about any project, it is not finished.
 
 ### Enablement starts here, not in the final sprint
 
-The four-phase loop is the most teachable thing you will do on this engagement.
-Once you have run it a few times, start running it **with** the engineers named
-in section 2 of your [engagement brief](../00-engagement/engagement-brief.md) —
-first watching you, then driving with you reading.
+The four-phase loop is the most teachable thing you will do on this engagement. Once you have run it a few times, start running it **with** the engineers named in section 2 of your [engagement brief](../00-engagement/engagement-brief.md) — first watching you, then driving with you reading.
 
-Do not save this for the handover sprint. Someone who has run the loop eight
-times over six weeks can keep using it; someone shown it once in a final-week
-session cannot.
+Do not save this for the handover sprint. Someone who has run the loop eight times over six weeks can keep using it; someone shown it once in a final-week session cannot.
 
 ## 2. Where the evidence lives
 
-The four commands write to fixed locations under `.copilot-tracking/`. Those
-paths are HVE Core's own convention, and each phase finds the previous phase's
-file there.
+The four commands write to fixed locations under `.copilot-tracking/`. Those paths are HVE Core's own convention, and each phase finds the previous phase's file there.
 
 ```text
 .copilot-tracking/
@@ -91,22 +61,16 @@ file there.
 └── reviews/<date>/<slug>-plan-review.md             # /task-review
 ```
 
-`<date>` is today's date, and `<slug>` is a short lowercase name for the task.
-This kit uses the work item id and a short title: `wi-4821-operator-can-log-in`.
+`<date>` is today's date, and `<slug>` is a short lowercase name for the task. This kit uses the work item id and a short title: `wi-4821-operator-can-log-in`.
 
-The phases chain together by **file path**, not by name. `/task-plan` takes
-`research=<path>`, `/task-implement` takes `plan=<path>`, and `/task-review`
-takes `plan=<path>`. Each command tells you the path it wrote; you paste that
-path into the next one. Keeping the slug consistent is still worth doing, because
-it is what makes the folders readable a month later.
+The phases chain together by **file path**, not by name. `/task-plan` takes `research=<path>`, `/task-implement` takes `plan=<path>`, and `/task-review` takes `plan=<path>`. Each command tells you the path it wrote; you paste that path into the next one. Keeping the slug consistent is still worth doing, because it is what makes the folders readable a month later.
 
 Two things follow from all this:
 
 - **`.copilot-tracking/` is ignored by Git by default**, because it is working evidence rather than product documentation. Stages 7 and 8 read it from your machine while you still have it. If your team wants the trail committed, remove the `.copilot-tracking/` lines from `.gitignore`.
 - **Do not tidy it up mid-project.** Stage 7 reads it.
 
-The durable, committed record of this stage is the code itself, the closed work
-items, and the running log in [`task-log.md`](task-log.md).
+The durable, committed record of this stage is the code itself, the closed work items, and the running log in [`task-log.md`](task-log.md).
 
 ## 3. Prerequisites
 
@@ -119,16 +83,11 @@ items, and the running log in [`task-log.md`](task-log.md).
 
 ## 4. Set up your task log (do this once)
 
-Open [`task-log.md`](task-log.md) and copy your sprint plan's task order into the
-table — one row per task, with the slug you will use. It takes two minutes and it
-is the page you will come back to after every task.
+Open [`task-log.md`](task-log.md) and copy your sprint plan's task order into the table — one row per task, with the slug you will use. It takes two minutes and it is the page you will come back to after every task.
 
-Keep it in the repository rather than in your own notes. Whoever picks this
-engagement up after you needs to see which tasks were gated and which were
-rushed.
+Keep it in the repository rather than in your own notes. Whoever picks this engagement up after you needs to see which tasks were gated and which were rushed.
 
-You can have a helper fill it in. Use the **default Copilot Chat**, not one of
-the task helpers:
+You can have a helper fill it in. Use the **default Copilot Chat**, not one of the task helpers:
 
 ```text
 Read docs/planning/sprint-plan.md from the workspace.
@@ -149,11 +108,7 @@ Do not write any application code and do not start work on any task.
 
 Run the four commands below in order, for one task at a time.
 
-**Clear the chat between every phase.** Run `/clear` or start a new chat before
-each command. Each phase writes what it learned to a file, and the next phase
-reads that file — so nothing is lost, and the helper works from the evidence
-rather than from a long, drifting conversation. This is the single habit that
-keeps the loop honest.
+**Clear the chat between every phase.** Run `/clear` or start a new chat before each command. Each phase writes what it learned to a file, and the next phase reads that file — so nothing is lost, and the helper works from the evidence rather than from a long, drifting conversation. This is the single habit that keeps the loop honest.
 
 Replace `<NN>`, `<slug>`, and `<id>` with the values from your task log.
 
@@ -184,9 +139,7 @@ Stay inside this one task's scope. Do not write production code. Do not plan or
 implement yet.
 ```
 
-**Then:** open the research file it names, read it, and confirm the Research gate
-in [`task-log.md`](task-log.md). **Copy the path down** — the next command needs
-it.
+**Then:** open the research file it names, read it, and confirm the Research gate in [`task-log.md`](task-log.md). **Copy the path down** — the next command needs it.
 
 ### Step 2 — Plan
 
@@ -210,13 +163,9 @@ risks. Stay inside this task's scope.
 Do not implement yet.
 ```
 
-`Task Planner` runs a `Plan Validator` over its own work and records what that
-found in a **planning log**, under `.copilot-tracking/plans/logs/`. Read the
-discrepancy section of that log — it is where the real problems surface, and the
-planner will have already reworked the plan in response to the serious ones.
+`Task Planner` runs a `Plan Validator` over its own work and records what that found in a **planning log**, under `.copilot-tracking/plans/logs/`. Read the discrepancy section of that log — it is where the real problems surface, and the planner will have already reworked the plan in response to the serious ones.
 
-**Then:** confirm the Plan gate in [`task-log.md`](task-log.md), and copy the
-plan path down.
+**Then:** confirm the Plan gate in [`task-log.md`](task-log.md), and copy the plan path down.
 
 ### Step 3 — Implement
 
@@ -243,12 +192,9 @@ Do not start any other task in this session. Do not add anything beyond this
 task's scope and the accepted PRD.
 ```
 
-`phaseStop=true` makes it pause after each phase of the plan so you can look at
-what it did before it carries on. Drop it if you would rather it run straight
-through, but the pause is the cheapest place to catch a wrong turn.
+`phaseStop=true` makes it pause after each phase of the plan so you can look at what it did before it carries on. Drop it if you would rather it run straight through, but the pause is the cheapest place to catch a wrong turn.
 
-**Then:** check the code runs, and confirm the Implement gate in
-[`task-log.md`](task-log.md).
+**Then:** check the code runs, and confirm the Implement gate in [`task-log.md`](task-log.md).
 
 ### Step 4 — Review
 
@@ -277,17 +223,13 @@ fixes in this step. If a test fails or a criterion is unmet, say so plainly and
 stop rather than starting another task.
 ```
 
-`Task Reviewer` finishes with an **overall status** of Complete, Needs Rework, or
-Blocked, plus a count of critical and major findings. A task is only done when
-the status is Complete — or when you have read a Needs Rework verdict and
-consciously accepted what it found.
+`Task Reviewer` finishes with an **overall status** of Complete, Needs Rework, or Blocked, plus a count of critical and major findings. A task is only done when the status is Complete — or when you have read a Needs Rework verdict and consciously accepted what it found.
 
 **Then:** confirm the Review gate in [`task-log.md`](task-log.md).
 
 ### Step 5 — Close the work item
 
-Clear the chat and switch to **`ADO Backlog Manager`** in the mode dropdown, or
-their tracker's equivalent.
+Clear the chat and switch to **`ADO Backlog Manager`** in the mode dropdown, or their tracker's equivalent.
 
 ```text
 Close work item <id> for task <NN>, now that it is implemented and reviewed.
@@ -312,8 +254,7 @@ Do not include .copilot-tracking paths in the comment — summarize the evidence
 instead. Do not close any other item. Do not edit application code.
 ```
 
-**Do not start the next task until the current one's tests have passed and its
-work item is closed.**
+**Do not start the next task until the current one's tests have passed and its work item is closed.**
 
 ## 6. The gates
 
@@ -324,23 +265,15 @@ work item is closed.**
 
 Clear the chat at each of those arrows.
 
-If a step went wrong, rerun that step's command rather than patching the result
-by hand — otherwise the evidence stops matching the code, and the Stage 7 review
-becomes guesswork.
+If a step went wrong, rerun that step's command rather than patching the result by hand — otherwise the evidence stops matching the code, and the Stage 7 review becomes guesswork.
 
 ## 7. If the helper asks you a question
 
-Answer from the work item, the PRD, or your decision records. If it asks you to
-attach a file, tell it the path and say "read it from the workspace" — every
-prompt here already contains the paths it needs.
+Answer from the work item, the PRD, or your decision records. If it asks you to attach a file, tell it the path and say "read it from the workspace" — every prompt here already contains the paths it needs.
 
-If it asks something only the customer can answer — what a rule should be, which
-of two behaviours is correct — stop and ask them. Guessing produces code that
-passes review and fails the demo.
+If it asks something only the customer can answer — what a rule should be, which of two behaviours is correct — stop and ask them. Guessing produces code that passes review and fails the demo.
 
-If it says a file it needs is missing, check the path you passed in. The commands
-chain by explicit file path, so a typo in `research=` or `plan=` is the usual
-cause.
+If it says a file it needs is missing, check the path you passed in. The commands chain by explicit file path, so a typo in `research=` or `plan=` is the usual cause.
 
 ## 8. Done when
 
@@ -359,15 +292,8 @@ cause.
 
 ## In a hurry?
 
-`/rpi task="..."` runs all five phases — research, plan, implement, review, and a
-discovery step that suggests follow-up work — as one coordinated workflow under
-the `RPI Agent` helper. It is faster and far less gated: you give up the chance
-to catch a misunderstanding while it is still one paragraph long.
+`/rpi task="..."` runs all five phases — research, plan, implement, review, and a discovery step that suggests follow-up work — as one coordinated workflow under the `RPI Agent` helper. It is faster and far less gated: you give up the chance to catch a misunderstanding while it is still one paragraph long.
 
-Its `continue` argument is easy to misread. `/rpi continue=2` does **not** mean
-"run phase 2" — it means "carry on with suggested work item 2" from the discovery
-step of a previous `/rpi` run. There is no way to ask `/rpi` for a single phase;
-that is exactly what the four `/task-*` commands are for.
+Its `continue` argument is easy to misread. `/rpi continue=2` does **not** mean "run phase 2" — it means "carry on with suggested work item 2" from the discovery step of a previous `/rpi` run. There is no way to ask `/rpi` for a single phase; that is exactly what the four `/task-*` commands are for.
 
-Use `/rpi` for a one-line fix. Use the four separate commands for anything you
-would be annoyed to have to throw away.
+Use `/rpi` for a one-line fix. Use the four separate commands for anything you would be annoyed to have to throw away.

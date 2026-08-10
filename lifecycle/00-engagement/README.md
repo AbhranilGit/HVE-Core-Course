@@ -1,7 +1,6 @@
 # Stage 0 — Engagement framing
 
-Write down the shape of the engagement before you write down the shape of the
-product.
+Write down the shape of the engagement before you write down the shape of the product.
 
 | | |
 | --- | --- |
@@ -14,28 +13,17 @@ product.
 
 ## 1. Why this stage exists
 
-The nine HVE stages describe how a product gets built. They do not describe how
-an engagement starts and ends, and that omission is where delivery work goes
-wrong.
+The nine HVE stages describe how a product gets built. They do not describe how an engagement starts and ends, and that omission is where delivery work goes wrong.
 
-An engagement has boundaries a product does not have. It has a last day. It has
-someone who owns the code after you leave and who may not have written any of
-it. It has a contract that says what "finished" means, and that definition is
-usually narrower than what you would build if left alone. It has a customer
-team whose ability to keep going is the actual deliverable, whatever the
-statement of work says the deliverable is.
+An engagement has boundaries a product does not have. It has a last day. It has someone who owns the code after you leave and who may not have written any of it. It has a contract that says what "finished" means, and that definition is usually narrower than what you would build if left alone. It has a customer team whose ability to keep going is the actual deliverable, whatever the statement of work says the deliverable is.
 
-None of that fits in a BRD. Write it here instead, on day one, while you still
-have the account team's attention and before anyone has opinions about the
-architecture.
+None of that fits in a BRD. Write it here instead, on day one, while you still have the account team's attention and before anyone has opinions about the architecture.
 
 ## 2. The question this stage answers
 
 **What has to be true for you to leave?**
 
-Everything in the brief exists to make that answerable. If you cannot say on day
-one what your last day looks like, you will discover the answer in week ten,
-when it is expensive.
+Everything in the brief exists to make that answerable. If you cannot say on day one what your last day looks like, you will discover the answer in week ten, when it is expensive.
 
 ## 3. Prerequisites
 
@@ -47,34 +35,23 @@ You do not need repository access yet. Stage 1 handles that.
 
 ## 4. Fill in the brief
 
-Open [`engagement-brief.md`](engagement-brief.md) and work through it. Most of
-it you will not know on your own — that is the point. The gaps are your first
-week's questions, and the brief is how you make them visible rather than
-discovering them one at a time.
+Open [`engagement-brief.md`](engagement-brief.md) and work through it. Most of it you will not know on your own — that is the point. The gaps are your first week's questions, and the brief is how you make them visible rather than discovering them one at a time.
 
-Where you genuinely do not know, write `unknown — asking <person> by <date>`
-rather than guessing. An unknown you have named is a manageable risk. An unknown
-you have papered over is a surprise.
+Where you genuinely do not know, write `unknown — asking <person> by <date>` rather than guessing. An unknown you have named is a manageable risk. An unknown you have papered over is a surprise.
 
 ## 5. Take it to the customer
 
-Do not keep the brief to yourself. Walk the sponsor and the technical contact
-through it in the first week, specifically:
+Do not keep the brief to yourself. Walk the sponsor and the technical contact through it in the first week, specifically:
 
 - **The exit criteria.** This is the conversation people avoid and the one that matters most. If your definition of done and the sponsor's differ, you want to find out now.
 - **Who is being enabled.** Name the individuals. "The customer team" is not a name. If nobody is named, you are not doing an engagement, you are doing outsourcing, and the handover in Stage 9 will fail.
 - **What happens to the repository.** Who owns it, where it ends up, and who has permission to merge after you go.
 
-Update the brief with what you learn. It is a living document for the first two
-weeks and a stable one after that.
+Update the brief with what you learn. It is a living document for the first two weeks and a stable one after that.
 
 ## 6. If something is refused
 
-Sometimes you will ask who is being enabled and get no answer, or ask about exit
-criteria and be told "just build it". That is information. Record it in the
-brief's risk section in plain language, tell your lead, and carry on — but do
-not quietly replace the missing answer with your own assumption. Your assumption
-will not be the one you are held to.
+Sometimes you will ask who is being enabled and get no answer, or ask about exit criteria and be told "just build it". That is information. Record it in the brief's risk section in plain language, tell your lead, and carry on — but do not quietly replace the missing answer with your own assumption. Your assumption will not be the one you are held to.
 
 ## 7. Done when
 
@@ -90,10 +67,6 @@ will not be the one you are held to.
 
 ## Where this sits in HVE
 
-HVE Core's lifecycle has nine stages and this is not one of them. It is numbered
-zero deliberately: the nine keep their usual numbers so the mapping to the
-framework stays intact, and the engagement framing sits in front of them.
+HVE Core's lifecycle has nine stages and this is not one of them. It is numbered zero deliberately: the nine keep their usual numbers so the mapping to the framework stays intact, and the engagement framing sits in front of them.
 
-If you are working on your own product rather than a customer's, you do not need
-this stage. The [course variant](../../README.md#two-variants) of this template
-drops it.
+If you are working on your own product rather than a customer's, you do not need this stage. The [course variant](../../README.md#two-variants) of this template drops it.

@@ -14,28 +14,15 @@ Order the work against a fixed last day.
 
 You have a backlog and a deadline you did not choose. This stage reconciles them.
 
-The difference from planning your own product is the direction you plan in. On a
-personal project you order the work and see how long it takes. Here the last day
-is fixed by a contract, so you plan backwards from it and find out what fits. The
-question is not "what should we build first" but **"what is the most valuable
-thing that can be genuinely finished before I leave"**.
+The difference from planning your own product is the direction you plan in. On a personal project you order the work and see how long it takes. Here the last day is fixed by a contract, so you plan backwards from it and find out what fits. The question is not "what should we build first" but **"what is the most valuable thing that can be genuinely finished before I leave"**.
 
 Two rules follow, and they matter more than any sequencing technique.
 
-**Sprint 1 is always a thin vertical slice.** The smallest complete path a real
-user could exercise, touching every layer. Not the foundations, not the data
-model, not "the platform work". A thin slice means that when something goes wrong
-in week five — and something will — you have something real rather than
-scaffolding.
+**Sprint 1 is always a thin vertical slice.** The smallest complete path a real user could exercise, touching every layer. Not the foundations, not the data model, not "the platform work". A thin slice means that when something goes wrong in week five — and something will — you have something real rather than scaffolding.
 
-**The last sprint is reserved for handover.** Not features. Documentation,
-enablement, the runbook, and the sessions where the customer's engineers drive
-while you watch. Teams that skip this find themselves writing the runbook on
-their final afternoon, and the quality shows.
+**The last sprint is reserved for handover.** Not features. Documentation, enablement, the runbook, and the sessions where the customer's engineers drive while you watch. Teams that skip this find themselves writing the runbook on their final afternoon, and the quality shows.
 
-That reservation is the single most commonly broken rule in delivery work, and
-breaking it is how an engagement produces working software that nobody can
-maintain.
+That reservation is the single most commonly broken rule in delivery work, and breaking it is how an engagement produces working software that nobody can maintain.
 
 ## 2. Prerequisites
 
@@ -55,13 +42,9 @@ Before running anything, do this arithmetic honestly:
 | Your real allocation | `<full time, or the days per week from the brief>` |
 | **Sprints available for building** | `<the number that matters>` |
 
-Most engagements have fewer building sprints than people assume. Discovering that
-now is uncomfortable; discovering it in week eight is a conversation with the
-sponsor about what will not be delivered.
+Most engagements have fewer building sprints than people assume. Discovering that now is uncomfortable; discovering it in week eight is a conversation with the sponsor about what will not be delivered.
 
-If the arithmetic says the contracted scope does not fit, that is a finding, not
-a failure. Raise it this week, while there is still time to cut something
-deliberately rather than run out of time accidentally.
+If the arithmetic says the contracted scope does not fit, that is a finding, not a failure. Raise it this week, while there is still time to cut something deliberately rather than run out of time accidentally.
 
 ## 4. Plan the first iteration
 
@@ -100,8 +83,7 @@ Working notes land in `.copilot-tracking/workitems/sprint/<iteration-kebab>/`.
 
 ## 5. Plan the remaining iterations
 
-Repeat for each building iteration, clearing the chat between them. For the last
-one, plan handover rather than features:
+Repeat for each building iteration, clearing the chat between them. For the last one, plan handover rather than features:
 
 ```text
 /ado-sprint-plan project=<their-project> iteration=<final-iteration-path> autonomy=partial
@@ -124,15 +106,11 @@ feature work at this point, list it separately as what will not be delivered,
 so I can take that to the sponsor.
 ```
 
-That last instruction is the useful one. An explicit list of what is not getting
-built, produced in week two rather than week ten, is what turns an awkward
-conversation into a planned one.
+That last instruction is the useful one. An explicit list of what is not getting built, produced in week two rather than week ten, is what turns an awkward conversation into a planned one.
 
 ## 6. Commit the plan
 
-The tracker's planning notes live under `.copilot-tracking/`, which is not
-committed. Stages 6, 7, and 8 all read the sprint plan, and so will whoever picks
-this up after you.
+The tracker's planning notes live under `.copilot-tracking/`, which is not committed. Stages 6, 7, and 8 all read the sprint plan, and so will whoever picks this up after you.
 
 ```text
 Write the combined plan to docs/planning/sprint-plan.md.
@@ -150,18 +128,13 @@ Read your own planning notes under .copilot-tracking/workitems/sprint/ for the
 content, but do not cite those paths in the file.
 ```
 
-**You should see:** `docs/planning/sprint-plan.md`, and populated iterations in
-their tracker.
+**You should see:** `docs/planning/sprint-plan.md`, and populated iterations in their tracker.
 
 ## 7. Take it to the customer
 
-The sprint plan is a commitment, so it needs the product owner and sponsor to see
-it. Walk them through three things specifically: what the first demo will show,
-which exit criterion each handover item satisfies, and the unscheduled list.
+The sprint plan is a commitment, so it needs the product owner and sponsor to see it. Walk them through three things specifically: what the first demo will show, which exit criterion each handover item satisfies, and the unscheduled list.
 
-Record the date they agreed and any changes they asked for at the top of
-`sprint-plan.md`. When scope is disputed in week nine, a dated agreement is worth
-more than a recollection.
+Record the date they agreed and any changes they asked for at the top of `sprint-plan.md`. When scope is disputed in week nine, a dated agreement is worth more than a recollection.
 
 ## 8. Optional helpers
 
@@ -181,5 +154,4 @@ Neither writes the plan.
 - Unscheduled backlog items are listed explicitly as not being delivered
 - The sponsor and product owner have seen it, and the date is recorded
 
-**Next:** [Stage 6 — Implementation](../06-implementation/README.md) — the long
-one. Read its first section before you start.
+**Next:** [Stage 6 — Implementation](../06-implementation/README.md) — the long one. Read its first section before you start.
