@@ -35,7 +35,7 @@ You do not need repository access yet. Stage 1 handles that.
 
 ## 4. Fill in the brief
 
-Open [`engagement-brief.md`](engagement-brief.md) and work through it. Most of it you will not know on your own — that is the point. The gaps are your first week's questions, and the brief is how you make them visible rather than discovering them one at a time.
+Open [`engagement-brief.md`](engagement-brief.md) and work through it. See [`engagement-brief.sample.md`](engagement-brief.sample.md) for a filled-in example. Most of it you will not know on your own — that is the point. The gaps are your first week's questions, and the brief is how you make them visible rather than discovering them one at a time.
 
 Where you genuinely do not know, write `unknown — asking <person> by <date>` rather than guessing. An unknown you have named is a manageable risk. An unknown you have papered over is a surprise.
 

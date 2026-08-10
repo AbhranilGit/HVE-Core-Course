@@ -21,7 +21,7 @@ That reframing changes what a good outcome looks like here. A BRD that fluently 
 ## 2. Prerequisites
 
 - [Stage 0](../00-engagement/README.md) is done and the engagement brief is filled in
-- [`scope-framing.md`](scope-framing.md) is filled in, with ambiguities marked rather than resolved
+- [`scope-framing.md`](scope-framing.md) is filled in, with ambiguities marked rather than resolved (see [`scope-framing.sample.md`](scope-framing.sample.md) for an example)
 - Section 6 of that file has been through the customer at least once
 - Stage 1 is finished and the helpers appear in Copilot Chat
 
