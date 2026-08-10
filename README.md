@@ -19,8 +19,8 @@ This repository has two branches for two different situations.
 
 | Branch | For | Assumes |
 | --- | --- | --- |
-| `template` | Learning HVE, or your own product | New codebase, you decide the scope, GitHub, solo |
-| `template-fde` *(this one)* | A customer engagement | Existing codebase, contracted scope, Azure DevOps, a team you are enabling and a last day |
+| `learning-template` | Learning HVE, or your own product | New codebase, you decide the scope, GitHub, solo |
+| `master` *(this one)* | A customer engagement | Existing codebase, contracted scope, Azure DevOps, a team you are enabling and a last day |
 
 The stages are the same nine. What differs is who decides scope, whose repository
 you are in, what "done" means, and who has to be able to run it after you leave.
@@ -127,7 +127,7 @@ not match what you see, check your version first; Stage 1 shows you where.
 ```bash
 git clone <repo-url> <engagement-name>
 cd <engagement-name>
-git checkout template-fde
+git checkout master
 ```
 
 Then read [Stage 0](lifecycle/00-engagement/README.md) and fill in the

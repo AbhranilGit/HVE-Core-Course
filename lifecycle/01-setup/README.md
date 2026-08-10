@@ -66,7 +66,7 @@ Less common, but simpler. Use this template as the starting point:
 ```bash
 git clone <this-repo-url> <engagement-name>
 cd <engagement-name>
-git checkout template-fde
+git checkout master
 git checkout -b main
 ```
 
