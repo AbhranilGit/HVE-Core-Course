@@ -1,136 +1,185 @@
 # Stage 5 — Sprint planning
 
-Put the tasks in order, and decide what you build first.
+Order the work against a fixed last day.
 
 | | |
 | --- | --- |
-| **Reads** | Your backlog, your PRD, and your framing |
-| **Produces** | `docs/planning/sprint-plan.md`, and milestones in your tracker |
-| **Command** | `/github-sprint-plan`, or the equivalent for your tracker |
+| **Reads** | The backlog, the PRD, the scope framing, and the engagement brief |
+| **Produces** | `docs/planning/sprint-plan.md`, and iterations in the customer's tracker |
+| **Command** | `/ado-sprint-plan`, or the equivalent for their tracker |
 
 ---
 
 ## 1. What this stage is for
 
-You have a pile of tasks. This stage sorts them into batches:
+You have a backlog and a deadline you did not choose. This stage reconciles them.
 
-- **Sprint 1** builds a **thin vertical slice** — the smallest complete path a real person could actually use, end to end. Not every screen half-built, but one thing that genuinely works.
-- **Sprint 2** hardens it: tests, documentation, and anything needed to call it a release.
+The difference from planning your own product is the direction you plan in. On a
+personal project you order the work and see how long it takes. Here the last day
+is fixed by a contract, so you plan backwards from it and find out what fits. The
+question is not "what should we build first" but **"what is the most valuable
+thing that can be genuinely finished before I leave"**.
 
-Two sprints is this template's default because it is the smallest number that
-separates "make it work" from "make it shippable". Larger products need more — if
-yours does, plan more milestones and keep the same rule: the first sprint is
-always a thin slice.
+Two rules follow, and they matter more than any sequencing technique.
 
-Building the thin slice first is the single most useful habit here. It means that
-when you run out of time or patience, you have something real rather than a pile
-of unfinished parts.
+**Sprint 1 is always a thin vertical slice.** The smallest complete path a real
+user could exercise, touching every layer. Not the foundations, not the data
+model, not "the platform work". A thin slice means that when something goes wrong
+in week five — and something will — you have something real rather than
+scaffolding.
+
+**The last sprint is reserved for handover.** Not features. Documentation,
+enablement, the runbook, and the sessions where the customer's engineers drive
+while you watch. Teams that skip this find themselves writing the runbook on
+their final afternoon, and the quality shows.
+
+That reservation is the single most commonly broken rule in delivery work, and
+breaking it is how an engagement produces working software that nobody can
+maintain.
 
 ## 2. Prerequisites
 
-- Stage 4 is finished and your backlog exists
-- Every item in it has acceptance criteria
-- You have created two milestones in your tracker, named `Sprint 1` and `Sprint 2`. The command plans one milestone at a time and needs them to exist
+- Stage 4 is finished and the backlog exists
+- Every item has acceptance criteria
+- Section 3 of the [engagement brief](../00-engagement/engagement-brief.md) gives you the last day, the sprint length, and the demo cadence
+- The iterations exist in their tracker, named as their project names them
 
-## 3. Plan Sprint 1
+## 3. Work out how many sprints you actually have
 
-`/github-sprint-plan` runs discovery and triage as one sequence: it works out
-which issues belong in the milestone, checks the coverage for gaps, then applies
-labels and milestone assignments.
+Before running anything, do this arithmetic honestly:
+
+| | |
+| --- | --- |
+| Sprints between now and the last day | `<count>` |
+| Minus the final handover sprint | `<count - 1>` |
+| Your real allocation | `<full time, or the days per week from the brief>` |
+| **Sprints available for building** | `<the number that matters>` |
+
+Most engagements have fewer building sprints than people assume. Discovering that
+now is uncomfortable; discovering it in week eight is a conversation with the
+sponsor about what will not be delivered.
+
+If the arithmetic says the contracted scope does not fit, that is a finding, not
+a failure. Raise it this week, while there is still time to cut something
+deliberately rather than run out of time accidentally.
+
+## 4. Plan the first iteration
 
 ```text
-/github-sprint-plan milestone=Sprint 1 documents=docs/prds/<name>.md autonomy=partial
+/ado-sprint-plan project=<their-project> iteration=<their-iteration-path> documents=docs/prds/<name>.md autonomy=partial
 
-Plan Sprint 1 as a thin vertical slice.
+Plan the first iteration as a thin vertical slice.
 
 Also read from the workspace:
-- lifecycle/02-discovery/mvp-framing.md, for the in-scope list
-- The open issues in this repository
+- lifecycle/00-engagement/engagement-brief.md, for the window and the exit criteria
+- lifecycle/02-discovery/scope-framing.md, section 3, for contracted scope
+- The existing open work items in this project
 
 Workflow:
-- Order work from the existing backlog only. Do not invent new features.
-- Only ask me where an item's scope or dependencies are genuinely ambiguous.
-- Sprint 1 must be a thin vertical slice: derive it from the framing's in-scope
-  list and the PRD, and state in one sentence what a user will be able to do
-  end to end when Sprint 1 is finished.
-- Push polish, extra tests, and documentation to Sprint 2, unless Sprint 1's
-  slice cannot work without them.
+- Order work from the existing backlog only. Do not invent new items.
+- The first iteration must be a thin vertical slice: state in one sentence what
+  a real user will be able to do end to end when it closes, and make sure that
+  sentence would mean something to the sponsor at the demo.
+- Push hardening, extra tests, and documentation later, unless the slice cannot
+  work without them.
+- Flag any item whose dependencies cannot be satisfied within this iteration.
 
 Produce:
-- An ordered list of items for Sprint 1, with the reason for that order
-- Any dependencies between items
-- A definition of done for the sprint
+- An ordered list of items with the reason for that order
+- Dependencies between items
+- A definition of done for the iteration
+- What will be demonstrated at the end of it
 
-Assign each of those issues to the Sprint 1 milestone.
+Assign those items to the iteration.
 
-Do not write application code. Do not create new issues unless a genuine gap
-blocks the thin slice — ask me first if you think one is needed.
+Do not write application code. Do not create new items unless a genuine gap
+blocks the slice — ask me first.
 ```
 
-Its working notes land in `.copilot-tracking/github-issues/sprint/sprint-1/`.
+Working notes land in `.copilot-tracking/workitems/sprint/<iteration-kebab>/`.
 
-## 4. Plan Sprint 2
+## 5. Plan the remaining iterations
 
-Same command, clear the chat first.
+Repeat for each building iteration, clearing the chat between them. For the last
+one, plan handover rather than features:
 
 ```text
-/github-sprint-plan milestone=Sprint 2 documents=docs/prds/<name>.md autonomy=partial
+/ado-sprint-plan project=<their-project> iteration=<final-iteration-path> autonomy=partial
 
-Plan Sprint 2: everything left after the Sprint 1 thin slice.
+Plan the final iteration as handover, not feature work.
 
-Sprint 2 hardens and packages the product — tests, documentation, and whatever
-is needed to call it a release. It does not add new features.
+Read lifecycle/00-engagement/engagement-brief.md, sections 2 and 4, for the
+engineers being enabled and the exit criteria.
 
-Produce an ordered list with dependencies and a definition of done, and assign
-those issues to the Sprint 2 milestone.
+This iteration exists to satisfy the exit criteria. Include:
+- The runbook and any documentation the exit criteria require
+- Enablement sessions with the named engineers, as tracked items with their own
+  acceptance criteria
+- Time for the customer's engineers to ship a change themselves, with me
+  reviewing rather than driving
+- Any residual defects from earlier reviews that were accepted as must-fix
+
+Do not schedule new features here. If the backlog still contains unstarted
+feature work at this point, list it separately as what will not be delivered,
+so I can take that to the sponsor.
 ```
 
-## 5. Commit the plan
+That last instruction is the useful one. An explicit list of what is not getting
+built, produced in week two rather than week ten, is what turns an awkward
+conversation into a planned one.
 
-The sprint planning notes live under `.copilot-tracking/`, which is not in Git.
-Stages 6, 7, and 8 all read the sprint plan, so it needs a committed copy.
+## 6. Commit the plan
+
+The tracker's planning notes live under `.copilot-tracking/`, which is not
+committed. Stages 6, 7, and 8 all read the sprint plan, and so will whoever picks
+this up after you.
 
 ```text
 Write the combined plan to docs/planning/sprint-plan.md.
 
-List every item in build order with its issue number, title, and the sprint it
-belongs to. Include, for each sprint, the definition of done and any
-dependencies between items. For Sprint 1, include the one-sentence description
-of what a user will be able to do end to end.
+List every item in build order with its work item id, title, and iteration.
+For each iteration include the definition of done, what gets demonstrated, and
+the dependencies. For the first, include the one-sentence description of what a
+user will be able to do end to end. For the last, show how each item maps to an
+exit criterion from the engagement brief.
 
-Read your own sprint planning notes under .copilot-tracking/github-issues/sprint/
-for the content, but do not cite those paths in the file itself.
+Add a section listing anything in the backlog that is not scheduled, and mark it
+clearly as not planned for delivery in this engagement.
+
+Read your own planning notes under .copilot-tracking/workitems/sprint/ for the
+content, but do not cite those paths in the file.
 ```
 
-**You should see:** `docs/planning/sprint-plan.md`, and both milestones populated
-in your tracker.
+**You should see:** `docs/planning/sprint-plan.md`, and populated iterations in
+their tracker.
 
-Check the one-sentence description of the Sprint 1 slice. If you cannot imagine a
-person using what it describes, the slice is not thin — it is incomplete. Ask for
-a rework.
+## 7. Take it to the customer
 
-## 6. Optional helpers
+The sprint plan is a commitment, so it needs the product owner and sponsor to see
+it. Walk them through three things specifically: what the first demo will show,
+which exit criterion each handover item satisfies, and the unscheduled list.
+
+Record the date they agreed and any changes they asked for at the top of
+`sprint-plan.md`. When scope is disputed in week nine, a dated agreement is worth
+more than a recollection.
+
+## 8. Optional helpers
 
 | Helper | Use it when |
 | --- | --- |
-| `Agile Coach` | Your stories or acceptance criteria are vague, and you want them tightened before you order them. Works with any tracker. |
-| `Product Manager Advisor` | You want a second opinion on what should come first. |
+| `Agile Coach` | The customer's stories or acceptance criteria are vague and you want them tightened before ordering. Works with any tracker |
+| `Product Manager Advisor` | You and the product owner disagree about priority and you want a structured second opinion |
 
-Neither writes the plan. Run them before section 3 if you want them at all.
+Neither writes the plan.
 
-## 7. If the helper asks you a question
-
-Answer from the backlog or the PRD. Questions about what matters most to you are
-yours to answer — you are the one who knows which part of the idea you most want
-to see working.
-
-## 8. Done when
+## 9. Done when
 
 - `docs/planning/sprint-plan.md` exists and lists every item in build order
-- Sprint 1 describes something a person could genuinely use
-- Both sprints have a definition of done
-- Every issue is assigned to a milestone
-- Every item comes from the backlog — nothing new appeared
+- The first iteration describes something a user could genuinely exercise
+- The final iteration is handover work, mapped to the exit criteria
+- Every iteration has a definition of done and a demo
+- Unscheduled backlog items are listed explicitly as not being delivered
+- The sponsor and product owner have seen it, and the date is recorded
 
 **Next:** [Stage 6 — Implementation](../06-implementation/README.md) — the long
 one. Read its first section before you start.

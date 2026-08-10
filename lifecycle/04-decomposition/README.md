@@ -1,156 +1,174 @@
 # Stage 4 — Decomposition
 
-Break your features into small tasks that can each be finished in one sitting.
+Break the contracted features into work items the customer's tracker can carry.
 
 | | |
 | --- | --- |
 | **Reads** | Your PRD in `docs/prds/` and your decision records in `docs/decisions/` |
-| **Produces** | Work items in your tracker |
-| **Commands** | `/github-discover-issues`, then `/github-execute-backlog` |
+| **Produces** | Work items in the customer's tracker |
+| **Commands** | `/ado-discover-work-items`, then `/ado-update-wit-items` |
 
 ---
 
 ## 1. What this stage is for
 
-A feature like "users can save their work" is too big to build in one go. This
-stage chops your PRD into **work items** — small tasks, each with its own
-acceptance criteria, tracked wherever your team tracks work.
+A feature like "operators can reconcile a batch" is too big to build in one go.
+This stage chops the PRD into **work items** small enough to finish in a sitting,
+each carrying the id of the PRD acceptance criterion it came from.
 
-Each task keeps the id of the PRD acceptance criterion it came from. That thread
-is what lets Stage 7 ask "did we build what we promised?" and get an honest
-answer.
+That thread from criterion to work item to commit is what lets Stage 7 ask "did
+we deliver what was contracted?" and get an answer that survives scrutiny. On a
+personal project it is good hygiene. On an engagement it is how you get paid.
 
-The work happens in two steps, and the gap between them is deliberate. First the
-helper **proposes** a backlog and writes it to a plan file. You read that file.
-Only then does a second command actually create the issues. Nothing is written to
-your tracker until you have seen the list.
+The work happens in two steps, and the gap between them is the point. The helper
+first **proposes** a backlog into planning files. You read them, and so does the
+customer's product owner. Only then does a second command write anything to
+their tracker.
 
-## 2. Choose your tracker
+Resist the temptation to collapse those steps. Creating eighty work items in
+someone else's Azure DevOps project without showing them first is a memorable way
+to start an engagement badly.
 
-This is the first stage where it matters. Pick one and use the same one in
-Stages 5 and 8.
+## 2. This page assumes Azure DevOps
 
-| Your tracker | Helper | Its commands |
-| --- | --- | --- |
-| **GitHub Issues** | `GitHub Backlog Manager` | `/github-discover-issues`, `/github-execute-backlog`, `/github-add-issue`, `/github-triage-issues` |
-| **Azure DevOps** | `ADO Backlog Manager`, or `AzDO PRD to WIT` to plan the hierarchy first | `/ado-discover-work-items`, `/ado-add-work-item`, `/ado-triage-work-items` |
-| **Jira** | `Jira Backlog Manager`, or `Jira PRD to WIT` | `/jira-discover-issues`, `/jira-execute-backlog`, `/jira-triage-issues` |
-| **None** | Any helper — see section 6 | A file you keep in the repo |
+Most enterprise customers run Azure DevOps, so that is the worked example. The
+shape is identical elsewhere; only the command names change.
 
-The rest of this page is written for GitHub because that is the most common
-choice. For Azure DevOps or Jira, swap the command names and read "work item"
-for "issue"; the shape of the stage is the same.
+| Their tracker | Helper | Discover | Apply |
+| --- | --- | --- | --- |
+| **Azure DevOps** | `ADO Backlog Manager` | `/ado-discover-work-items` | `/ado-update-wit-items` |
+| **GitHub Issues** | `GitHub Backlog Manager` | `/github-discover-issues` | `/github-execute-backlog` |
+| **Jira** | `Jira Backlog Manager` | `/jira-discover-issues` | `/jira-execute-backlog` |
+
+Use whatever they already use. Introducing a second tracker for the duration of
+an engagement guarantees that half the history is lost at handover.
 
 ## 3. Prerequisites
 
 - Your PRD exists under `docs/prds/`, with acceptance criteria that have ids
 - Your decision records exist under `docs/decisions/`
-- **Your repository exists on GitHub and you are signed in.** The helper works through the GitHub MCP tools, so the GitHub MCP server has to be connected in VS Code. If it is not, the helper will tell you it cannot reach your repository
-- If your project is only on your laptop, read the fallback in section 6
+- **The Azure DevOps MCP server is connected and authenticated against their organisation.** Everything here runs through it
+- You know the project name, and the area path you are allowed to write to
+- The product owner knows this is coming and has agreed to review the proposal
 
 ## 4. Propose the backlog
 
-Run this in Copilot Chat. The command brings `GitHub Backlog Manager` with it, so
-you do not need the mode dropdown.
-
-Replace `<name>` with your PRD's filename.
-
 ```text
-/github-discover-issues documents=docs/prds/<name>.md
+/ado-discover-work-items project=<their-project> documents=docs/prds/<name>.md
 
-Propose the backlog for the first version of this product.
+Propose the work item hierarchy for this engagement.
 
 Also read from the workspace:
-- docs/decisions/, for decisions already locked
-- .github/ISSUE_TEMPLATE/task.md, for the shape each issue should take
+- docs/decisions/, for decisions and inherited constraints already recorded
+- lifecycle/02-discovery/scope-framing.md, section 3, for the contracted scope
+- .github/ISSUE_TEMPLATE/task.md, for the shape each item should take
 
 Do not ask me to attach these files.
 
 Workflow:
-- Derive issues from the PRD's user stories and acceptance criteria.
+- Derive items from the PRD's user stories and acceptance criteria only.
+- Check what already exists in the project before proposing anything new. This
+  is an existing backlog, not an empty one, and duplicates are expensive.
 - Only ask me where the PRD or the decision records are silent or ambiguous.
-- Do not invent anything outside the PRD's in-scope list.
-- Keep each issue small enough to finish in one working session.
-- Prefer an order that builds one thin end-to-end path first, rather than many
-  half-finished layers.
+- Do not propose anything outside the contracted scope, however sensible it
+  looks. Note it as a suggestion for the customer instead.
+- Keep each item small enough to finish in one working session.
+- Prefer an order that builds one thin end-to-end path first.
 
-Each proposed issue must have:
+Each proposed item must have:
 - A clear title
-- Acceptance criteria that cite the PRD acceptance criterion ids they come from
-- One label describing its kind, for example api, ui, auth, docs, or tests
+- Acceptance criteria citing the PRD acceptance criterion ids they come from
+- A type and an area path consistent with what the project already uses
 
-Do not create anything in GitHub yet, and do not write application code.
-Do not decide sprint order — that is the next stage.
+Do not create or modify anything in Azure DevOps yet, and do not write code.
+Do not assign iterations — that is the next stage.
 ```
 
 **You should see:** a tracking folder at
-`.copilot-tracking/github-issues/discovery/<scope>/` containing
-`issue-analysis.md` (what it found and what already exists),
-`issues-plan.md` (the proposed backlog), and `handoff.md` (the summary and what
-to do next). The helper tells you the paths.
+`.copilot-tracking/workitems/discovery/<scope>/` containing `issue-analysis.md`
+with the coverage assessment, `issues-plan.md` with the proposed items, a
+planning log, and `handoff.md`. The helper tells you the paths.
 
-## 5. Read the plan, then create the issues
+If your PRD has a deep hierarchy of epics and features, the helper may route this
+through the `AzDO PRD to WIT` agent and write to
+`.copilot-tracking/workitems/prds/<name>/` instead. Same idea, same review step.
 
-Open `issues-plan.md` and read it properly. This is the cheapest moment in the
-whole kit to catch a problem.
+## 5. Review it, and have the customer review it
 
-Between five and fifteen issues is normal for a first version. Forty means the
-issues are too small or scope has crept — say so in the chat and ask for a
-consolidation before you go on.
+Open `issues-plan.md` and read it properly. Then send it to the product owner
+before you apply anything.
 
-When you are happy, create them:
+Two checks of your own first. Every item should trace to a PRD criterion id — an
+item that traces to nothing is scope you invented. And the count should feel
+plausible: five to fifteen per sprint's worth of work is normal, so eighty items
+for a six-week engagement means they are too granular, and six means they are too
+coarse to track.
+
+The customer's check is different from yours and more important: they are looking
+for the thing they assumed was included that is not on the list. Better to find
+it here than in the final demo.
+
+## 6. Apply the approved plan
 
 ```text
-/github-execute-backlog handoff=.copilot-tracking/github-issues/discovery/<scope>/handoff.md autonomy=partial
+/ado-update-wit-items
 
-Create the issues from the approved plan. Do not add anything that is not in it.
+Create the work items from the approved plan at
+.copilot-tracking/workitems/discovery/<scope>/handoff.md.
 
-When you are done, list every issue you created with its number, title, and
-label, so I can check the set against the PRD.
+Create only what is in that plan. Do not add, and do not modify existing items
+that the plan does not mention.
+
+When you are done, list every item you created with its id, title, and type, so
+I can check the set against the PRD.
 ```
 
-`autonomy=partial` pauses at review gates so you can watch what it does. Use
-`full` once you trust it, or `manual` to approve every single operation. Adding
-`dryRun=true` shows you what it would do without touching GitHub.
+Where a command offers `autonomy`, use `partial` on a customer tenant so it stops
+at review gates. `dryRun=true` shows you what it would do without writing
+anything, which is worth one run the first time you do this on their project.
 
-**You should see:** issues on your repository's Issues tab, a summary in the
-chat, and an execution record under
-`.copilot-tracking/github-issues/execution/<date>/`.
+**You should see:** work items in their tracker, and an execution record under
+`.copilot-tracking/workitems/execution/<date>/`.
 
-Leave the issues open for now. Stage 6 closes each one as its task is built and
-tested, with the evidence in the comment.
+Leave them open. Stage 6 closes each one as its task is built and reviewed, with
+the evidence in the comment.
 
-### Not using a tracker?
+### No tracker access yet?
 
-Skip both commands. Use the default Copilot Chat instead:
+If access is still pending — and in Stage 1 you noted that it often is — do not
+let it block you. Use the default Copilot Chat:
 
 ```text
 Read the PRD in docs/prds/ and docs/decisions/ from the workspace.
 
-Write the full backlog for the first version to docs/backlog.md, numbering each
-item TASK-01, TASK-02 and so on, each with its title, acceptance criteria citing
-the PRD acceptance criterion ids, and its label. Keep each item small enough to
-finish in one working session, and order them so one thin end-to-end path is
-built first.
+Write the full backlog to docs/planning/backlog.md, numbering each item TASK-01,
+TASK-02 and so on, each with its title, acceptance criteria citing the PRD
+acceptance criterion ids, its type, and its dependencies. Keep each item small
+enough to finish in one working session, and order them so one thin end-to-end
+path is built first.
 
-Do not invent anything outside the PRD's in-scope list. Do not write application
-code.
+Do not invent anything outside the contracted scope. Do not write code.
 ```
 
-The rest of the kit works from that file. Wherever a later stage says "the
-issue", read "the entry in `docs/backlog.md`".
+Wherever a later stage says "the work item", read "the entry in
+`docs/planning/backlog.md`". Migrate it into their tracker as soon as access
+lands, because a backlog that lives only in a markdown file will not survive your
+departure.
 
-## 6. If the helper asks you a question
+## 7. If the helper asks you a question
 
-Answer from the PRD. Questions about how you want work labelled or grouped are
-yours to answer.
+Answer from the PRD. Questions about item types, area paths, or how their
+hierarchy is organised go to the technical contact — every organisation's Azure
+DevOps has local conventions, and matching theirs matters more than matching
+anyone's best practice.
 
-## 7. Done when
+## 8. Done when
 
-- Every task exists in your tracker, or in `docs/backlog.md`
+- Every item exists in their tracker, or in `docs/planning/backlog.md` pending access
 - Every item has acceptance criteria, not just a title
-- Each acceptance criterion cites the PRD id it came from
-- You can see how the items add up to your PRD, with nothing extra
-- Each item looks like something that could be finished in a day or less
+- Each criterion cites the PRD id it came from
+- Nothing appeared that the contracted scope does not cover
+- The product owner has seen the list and agreed it matches what they expect
+- Each item looks finishable in a day or less
 
 **Next:** [Stage 5 — Sprint planning](../05-sprint-planning/README.md)

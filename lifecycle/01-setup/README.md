@@ -1,191 +1,236 @@
 # Stage 1 — Setup
 
-Get the tools working before you think about features.
+Get the tooling working, and get this scaffolding into the repository you will
+actually be working in.
 
 | | |
 | --- | --- |
-| **What you do** | Install the AI helpers, confirm they appear, and record your project's conventions |
-| **Produces** | [`setup-confirmation.md`](setup-confirmation.md) filled in, and [`.github/copilot-instructions.md`](../../.github/copilot-instructions.md) with your project name |
+| **What you do** | Install the helpers, decide where the code lives, and record what you are inheriting |
+| **Produces** | [`setup-confirmation.md`](setup-confirmation.md) filled in, and [`.github/copilot-instructions.md`](../../.github/copilot-instructions.md) describing the customer's project |
 | **Helpers** | None yet — this stage is by hand, plus one slash command |
-| **Takes** | About fifteen minutes |
+| **Takes** | Half a day, most of it waiting for access |
 
 ---
 
 ## 1. What this stage is for
 
-Everything else in this kit depends on a set of specialist AI helpers being
-available inside VS Code. This stage installs them, proves they are there, and
-writes down the handful of conventions every later helper will read.
+Two jobs. Install the specialist AI helpers everything else depends on, and work
+out where this scaffolding lives relative to the customer's code.
 
-Nothing about your product happens here. No requirements, no code — just tools.
+Nothing about the product happens here. No requirements, no code.
 
 ## 2. Prerequisites
 
 | Thing | Why |
 | --- | --- |
+| **[Stage 0](../00-engagement/README.md) done** | Section 5 of the engagement brief tells you what you are inheriting, and this stage checks it |
 | **VS Code** | The editor everything runs inside |
 | **GitHub Copilot** | The AI, with Chat enabled and signed in |
-| **This repository, on your machine** | You already have it if you can read this file |
-| **Git** | To save your work and, later, publish a release |
-| **A GitHub account** | Recommended — Stage 4 creates tasks there. Azure DevOps and Jira also work; see Stage 4 |
-| **The GitHub MCP server** | Only if you use GitHub Issues. Stage 4 works entirely through it, so connect it in VS Code before you get there |
+| **Git** | Obviously |
+| **Access to the customer's repository** | Usually the long pole. Ask on day one |
+| **Access to their tracker** | Azure DevOps project, GitHub repo, or Jira, as recorded in the brief |
 
-You do **not** need to have chosen a programming language. That is decided in
-Stage 3 and recorded as an ADR.
+## 3. Decide where this scaffolding lives
 
----
+This is the decision that shapes the rest of the engagement, and it comes down
+to whether the code already exists.
 
-## 3. Install and check
+### 3a. You are joining an existing repository
+
+The common case. The customer has a codebase and you are adding to it.
+
+Do not restructure their repository around this template. Copy in only the parts
+that carry the process, and leave everything else exactly as you found it:
+
+```bash
+# From a clone of this template, into a clone of theirs
+cp -r lifecycle/            <their-repo>/
+cp -r docs/                 <their-repo>/
+cp    .github/copilot-instructions.md <their-repo>/.github/
+```
+
+Three things to check before you commit that:
+
+- **They may already have `.github/copilot-instructions.md`.** If so, merge rather than overwrite. Their conventions win on anything that conflicts with this template's defaults; you are a guest in their standards.
+- **They may already have a `docs/` folder with a different shape.** Keep theirs. Add only the subfolders you need, and note the divergence from HVE's defaults in your setup confirmation so later stages do not surprise you.
+- **Their `.gitignore` needs the `.copilot-tracking/` rules** from this template's, or the AI's working notes will end up in their history.
+
+Open a pull request for this scaffolding on its own, before any product work.
+It is small, it is easy to review, and it is the customer's first chance to
+object to the process rather than discovering it embedded in a feature branch.
+
+### 3b. The engagement creates a new repository
+
+Less common, but simpler. Use this template as the starting point:
+
+```bash
+git clone <this-repo-url> <engagement-name>
+cd <engagement-name>
+git checkout template-fde
+git checkout -b main
+```
+
+Then push it to wherever section 8 of the engagement brief says the repository
+will live. Do that on day one, not at handover — a repository that has lived in
+the customer's organisation from the start avoids an awkward migration later.
+
+## 4. Install and check
 
 Work top to bottom. Record what happened in
 [`setup-confirmation.md`](setup-confirmation.md) as you go.
 
-### 3.1 The editor and Copilot
+### 4.1 Copilot
 
-- Open this repository as the folder in VS Code — **File → Open Folder**, and choose the project's top-level folder, not a subfolder
-- Open Copilot Chat: click the chat icon in the left Activity Bar, or press `Ctrl+Alt+I` (`Cmd+Alt+I` on a Mac)
-- Type "hello" in the chat and confirm you get a reply — if not, you are not signed in to Copilot
+- Open the working repository as the folder in VS Code — **File → Open Folder**, at the top level
+- Open Copilot Chat: the chat icon in the left Activity Bar, or `Ctrl+Alt+I` (`Cmd+Alt+I` on a Mac)
+- Confirm it replies
 
-### 3.2 Install the helpers
+### 4.2 Install the helpers
 
-- Open the Extensions panel: the squares icon in the left Activity Bar, or `Ctrl+Shift+X`
+- Open the Extensions panel, or press `Ctrl+Shift+X`
 - Search for **HVE Core - All**, or [install it from the marketplace](https://marketplace.visualstudio.com/items?itemName=ise-hve-essentials.hve-core-all)
-- Click **Install**
-- **Reload VS Code afterwards** — the helpers do not appear until you do. Open the Command Palette with `Ctrl+Shift+P` and run *Developer: Reload Window*
+- Install, then **reload VS Code** — the helpers do not appear until you do
 
-**HVE Core - All** is the full bundle and is what this kit assumes. There is
-also a smaller **HVE Core** package. Install one or the other, never both —
-they share content and will conflict.
+**HVE Core - All** is the full bundle and is what this kit assumes. There is also
+a smaller **HVE Core** package. Install one or the other, never both.
 
-Prefer not to use the extension? HVE Core ships an installer skill for
-clone-based adoption. Ask any helper:
+If the customer's policy blocks marketplace extensions — which happens more often
+than you would like — HVE Core ships an installer skill for clone-based adoption.
+Ask any helper:
 
 ```text
 Help me customize hve-core installation for this repository.
 ```
 
-### 3.3 Check the version
+That path commits the prompts and agents into the repository itself, which has
+the side benefit that the customer's engineers get them without installing
+anything. Weigh that against the noise it adds to their tree.
 
-Open the extension's page in VS Code and look at the **Version** field.
+### 4.3 Check the version
 
-This kit is written against **3.3.101**. Helper names and slash commands change
-between HVE Core releases — that is the single most common reason a stage page
-stops matching what you see. Write your version into the confirmation file. If it
-is not 3.3.101, work through the stages expecting some names to differ, and note
-each difference as you find it.
+This kit is written against **3.3.101**. Helper names and slash commands move
+between HVE Core releases, and that is the most common reason a stage page stops
+matching what you see. Record your version in the confirmation file.
 
-### 3.4 Confirm the helpers appear
-
-In Copilot Chat, click the mode dropdown at the bottom of the chat box. You
-should see a much longer list than before. These are the ones this kit names,
-spelled exactly as they appear in 3.3.101:
+### 4.4 Confirm the helpers appear
 
 | Helper | Used in | How you reach it |
 | --- | --- | --- |
 | **BRD Builder** | Stage 2 | Mode dropdown |
+| **RAI Planner**, **Security Planner**, **SSSC Planner** | Stage 2, where your obligations require them | Mode dropdown |
 | **PRD Builder** | Stage 3 | Mode dropdown |
 | **ADR Creation** | Stage 3 | Mode dropdown |
-| **GitHub Backlog Manager** | Stages 4, 5, 6 | Dropdown, or any `/github-*` command |
-| **Task Researcher** | Stage 6 | `/task-research` |
-| **Task Planner** | Stage 6 | `/task-plan` |
-| **Task Implementor** | Stage 6 | `/task-implement` |
-| **Task Reviewer** | Stages 6 and 7 | `/task-review` |
+| **ADO Backlog Manager** | Stages 4, 5, 6 | Dropdown, or any `/ado-*` command |
+| **GitHub Backlog Manager** | Stages 4, 5, 6, if they use GitHub | Dropdown, or any `/github-*` command |
+| **Task Researcher**, **Task Planner**, **Task Implementor**, **Task Reviewer** | Stages 6 and 7 | The `/task-*` commands |
 | **Code Review Full** | Stage 7 | `/code-review-full` |
-| **Security Reviewer** | Stage 7, if it applies | `/security-review` |
+| **Security Reviewer** | Stage 7, where required | `/security-review` |
 | **PR Review** | Stage 8 | Mode dropdown |
 | **Doc Ops** | Stage 9 | `/doc-ops-update` |
 
-Most of these you never pick by hand. A slash command carries its own helper, so
-typing `/task-plan` switches to `Task Planner` for you. Only `BRD Builder`,
-`PRD Builder`, `ADR Creation`, and `PR Review` need the dropdown.
+Most of these you never pick by hand — a slash command carries its own helper.
+Only `BRD Builder`, `PRD Builder`, `ADR Creation`, `PR Review`, and the Stage 2
+planners need the dropdown.
 
-If the list did not change at all, the extension is not installed or VS Code was
-not reloaded.
+### 4.5 Confirm the slash commands
 
-### 3.5 Confirm the slash commands work
+Type `/` in the chat box. This kit uses:
 
-Type `/` in the chat box. You should see a list of commands. This kit uses:
+`/git-setup` · `/ado-discover-work-items` · `/ado-update-wit-items` ·
+`/ado-sprint-plan` · `/ado-create-pull-request` · `/task-research` ·
+`/task-plan` · `/task-implement` · `/task-review` · `/code-review-full` ·
+`/security-review` · `/pull-request` · `/git-merge` · `/doc-ops-update` ·
+`/incident-response`
 
-`/git-setup` · `/github-discover-issues` · `/github-execute-backlog` ·
-`/github-sprint-plan` · `/task-research` · `/task-plan` · `/task-implement` ·
-`/task-review` · `/code-review-full` · `/pull-request` · `/git-merge` ·
-`/doc-ops-update` · `/incident-response`
+Swap the `/ado-*` commands for `/github-*` if the customer uses GitHub Issues.
 
-You do not need to run any of them yet. You are only confirming they exist.
+Where your compliance obligations apply, you will also need `/security-capture`,
+`/security-plan-from-prd`, `/rai-capture`, `/rai-plan-from-prd`, and
+`/sssc-from-brd`.
 
-If you see `/rpi-research`, `/rpi-plan`, or `/rpi-implement` instead of the
-`/task-*` commands, you are on a newer HVE Core than this kit targets. The four
-phases are the same; only the names moved.
+If you see `/rpi-research` and `/rpi-plan` instead of the `/task-*` commands, you
+are on a newer HVE Core than this kit targets. The four phases are unchanged;
+only the names moved.
 
-### 3.6 Configure Git
+### 4.6 Connect the tracker
 
-Run this in the chat, with any helper selected:
+Stages 4 and 5 work entirely through MCP tools, so the relevant MCP server has to
+be connected in VS Code before you get there:
+
+- **Azure DevOps** — the Azure DevOps MCP server, authenticated against their organisation
+- **GitHub** — the GitHub MCP server
+- **Jira** — the Jira integration
+
+Customer tenants frequently require an access request for this. Start it now;
+Stage 4 is blocked without it.
+
+### 4.7 Configure Git
 
 ```text
 /git-setup
 ```
 
-It configures the repository's Git settings for you. Then open a terminal in
-VS Code (**Terminal → New Terminal**) and run:
+It reads your Git configuration, shows a table of what is set, and **asks before
+changing anything**. Note that it proposes **global** settings, so your answers
+affect every project on this machine.
 
-```bash
-git status
-```
+Two things matter more than usual on customer work. Check that your `user.email`
+is the identity the customer expects to see in their history — a personal address
+in a corporate repository causes awkward questions at audit time. And if the
+customer requires signed commits, this is where you sort that out; tell
+`/git-setup` you want signing and it will walk you through GPG or SSH.
 
-- It runs without an error and tells you which branch you are on
-- You are on your own branch, not `template` — if you are still on `template`, run `git checkout -b my-project-main` first
-
-### 3.7 Record your project's conventions
+### 4.8 Record what you are inheriting
 
 Open [`.github/copilot-instructions.md`](../../.github/copilot-instructions.md)
-and fill in the **Project** table: your project's name and a one-line
-description. Leave the **Stack** table alone — Stage 3 fills that in once your
-ADRs exist.
+and fill in the **Project** and **Stack** tables.
 
-This is the file every helper reads on every request. It is how a template
-becomes *your* project.
+This differs from a greenfield project in an important way. On a new product the
+stack is undecided until Stage 3. Here, most of it already exists and you are
+**recording** it, not choosing it. Read it out of the repository rather than
+asking the customer:
 
-### 3.8 Check the folders are in place
+- The language and version, from their build or dependency files
+- The framework, from their imports and project layout
+- The test command that actually works, from their CI configuration — and run it yourself before you write it down
+- Their coding conventions, if documented
 
-These should already exist. You are just confirming nothing is missing:
+Anything genuinely undecided gets a decision record in Stage 3. Anything already
+decided gets recorded here as inherited, and Stage 3 documents it as a constraint
+rather than reopening it.
 
-- `lifecycle/` — the nine stage pages
-- `lifecycle/02-discovery/mvp-framing.md` — the file you fill in next
-- `docs/brds/`, `docs/prds/`, and `docs/decisions/` — where your BRD, PRD, and decision records will land
-- `docs/planning/` — where your sprint plan will land
-- `src/` and `tests/` — empty for now; Stage 6 fills them
-- `.copilot-tracking/` — where the helpers keep their working notes
+### 4.9 Check the folders
 
-### 3.9 Your language and tools — later, not now
+- `lifecycle/` — the stage pages, including [Stage 0](../00-engagement/README.md)
+- `lifecycle/02-discovery/scope-framing.md` — you fill this in next
+- `docs/brds/`, `docs/prds/`, `docs/decisions/` — HVE Core's default locations
+- `docs/planning/`, `docs/reviews/`, `docs/releases/`, `docs/operations/`
+- `.copilot-tracking/` — the helpers' working notes
 
-You do not install a programming language yet. Stage 3 decides which one and
-records the choice as an ADR. Stage 6 tells you what to install before any code
-is written.
-
-If you already know what you will use, note it in the **Stack intent** row at
-the top of your [framing document](../02-discovery/mvp-framing.md). Stage 3 will
-take it into account rather than re-opening the question.
+In an existing repository, the application code lives wherever it already lives.
+Do not create `src/` and `tests/` alongside their equivalents; record their real
+paths in `copilot-instructions.md` instead.
 
 ---
 
-## 4. Done when
+## 5. Done when
 
 | Finished | Not yet |
 | --- | --- |
-| HVE Core - All is installed and the helpers appear in the dropdown | Any requirements written |
-| You have written down which version you have | Any code written |
-| The slash commands appear when you type `/` | Any tasks created |
-| `/git-setup` has run and `git status` is clean on your own branch | Any use of the task helpers |
-| `.github/copilot-instructions.md` names your project | |
+| The scaffolding is in the working repository, merged or in review | Any requirements written |
+| HVE Core - All is installed and the helpers appear | Any code written |
+| You have recorded which version you have | Any work items created |
+| The tracker's MCP server is connected | Any use of the task helpers |
+| `/git-setup` has run and your commit identity is the one the customer expects | |
+| `copilot-instructions.md` records the inherited stack, and you have run their test command yourself | |
 | [`setup-confirmation.md`](setup-confirmation.md) is filled in | |
 
-## 5. What next
+## 6. What next
 
 | Step | Action |
 | --- | --- |
 | **Now** | Fill in [`setup-confirmation.md`](setup-confirmation.md) |
-| **Then** | Write your idea into [`../02-discovery/mvp-framing.md`](../02-discovery/mvp-framing.md) — the only document you write by hand |
+| **Then** | Transcribe the statement of work into [`../02-discovery/scope-framing.md`](../02-discovery/scope-framing.md) |
 | **Then** | Open [Stage 2 — Discovery](../02-discovery/README.md) and pick `BRD Builder` |
 
-The full story of the kit, including the map of all nine stages, is in the
-[main README](../../README.md).
+The map of the whole lifecycle is in the [main README](../../README.md).

@@ -51,7 +51,8 @@ product defined in the BRD under docs/brds/.
 
 Read from the workspace:
 - The BRD in docs/brds/ (the file ending in -brd.md)
-- lifecycle/02-discovery/mvp-framing.md, for the original scope boundaries
+- lifecycle/02-discovery/scope-framing.md, for the contracted scope boundaries
+- lifecycle/00-engagement/engagement-brief.md, for the engagement's constraints
 
 Do not ask me to attach either file.
 
@@ -113,20 +114,28 @@ Create decision records (ADRs) for the first version of this product.
 
 Read from the workspace:
 - The BRD in docs/brds/ and the PRD in docs/prds/
-- lifecycle/02-discovery/mvp-framing.md, for stated constraints
+- lifecycle/02-discovery/scope-framing.md, section 4, for inherited constraints
+- lifecycle/00-engagement/engagement-brief.md, section 5, for what already exists
+- .github/copilot-instructions.md, for the stack already recorded
 
 Place the finished records in docs/decisions/.
 
-Decide only what the BRD and PRD leave open and what the constraints require —
-for example the programming language and framework, how and where data is
-stored, and how users are identified. If the framing states a technology
-preference, record it as a decision with its reasoning rather than re-opening it.
+Most of this system's technology is already chosen — it was chosen before I
+arrived. Treat that as two different jobs:
 
-One of these decisions must cover testing. Record the test framework you have
-chosen and, explicitly, the exact command someone types to run the whole test
-suite — for example `pytest` or `npm test`. Stage 6 runs that command after
-every task and Stage 8 cites its result, so it must be written down here rather
-than guessed at later.
+- For anything inherited, write a record that captures the constraint, who
+  imposed it, and what it rules out. Do not re-open it or present alternatives
+  as though it were still open. A future reader needs to know the decision was
+  inherited rather than made here.
+- For anything genuinely open, decide it properly with alternatives and
+  consequences.
+
+One of these decisions must cover testing, even if the customer already has a
+test suite. Record the framework, the exact command that runs the whole suite,
+and — this is the part that matters on inherited codebases — what the current
+suite does and does not actually cover. Stage 6 runs that command after every
+task and Stage 8 cites its result. If Stage 1 found the suite failing or absent,
+record what you are doing about it here rather than leaving it as folklore.
 
 For each decision record: context, the decision, the alternatives considered,
 the consequences, and when it would be worth revisiting.
@@ -168,10 +177,16 @@ While you are there, add your language's throwaway files to `.gitignore` —
 
 ## 10. If a helper asks you a question
 
-Answer from your [framing document](../02-discovery/mvp-framing.md) or the BRD.
-If neither says, make the call yourself — this stage is exactly where those
-decisions belong. Technical questions you have no opinion on are fine to hand
-back: reply "you decide, and record why in the decision record."
+Technical questions are yours to answer — this stage is exactly where those
+decisions belong, and the customer is paying for that judgement. Questions you
+have no strong view on are fine to hand back: reply "you decide, and record why
+in the decision record."
+
+**Product questions are not yours.** If the helper asks what a feature should do
+and neither the BRD nor the [scope framing](../02-discovery/scope-framing.md)
+answers it, add it to section 6 of the framing and ask the customer. The line
+between "how we build it" and "what we build" is the line between your call and
+theirs.
 
 ## 11. Done when
 

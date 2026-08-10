@@ -13,10 +13,24 @@ Empty until you run that stage.
 
 ## Why bother
 
-Six months from now, someone — probably you — will ask "why is this built this
-way?" Without these files the answer is lost, and the AI helpers have no way to
-stay consistent with choices you already made. Stages 6, 7, and 9 all read this
-folder so they work with your language and your tools rather than guessing.
+Six months from now, someone at the customer will ask "why is this built this
+way?" and you will not be there. Without these files the answer is lost, and the
+AI helpers have no way to stay consistent with choices already made. Stages 6, 7,
+and 9 all read this folder so they work with the real stack rather than guessing.
+
+## Inherited or chosen
+
+On an engagement most of the technology was decided before you arrived, so each
+record has to say which kind it is.
+
+| Kind | What the record captures |
+| --- | --- |
+| **Inherited** | The constraint, who imposed it, and what it rules out. Not re-argued, and no alternatives presented as though it were still open |
+| **Chosen** | The decision made during this engagement, with alternatives and consequences |
+
+That distinction is the whole value of this folder to whoever inherits the
+system. An engineer deciding whether they can change something needs to know
+whether it was a considered choice or a constraint they may have outgrown.
 
 ## Naming
 
@@ -28,20 +42,22 @@ are still talking it through, then moves the finished record here once you
 confirm. It asks you where to put the final file early in the conversation —
 answer `docs/decisions/`.
 
-## The decisions every project needs
+## The questions this folder must answer
 
-Whatever else you record, these three must be answerable from this folder,
-because later stages read them rather than asking you again:
+Whatever else you record, these must be answerable from here, because later
+stages read them rather than asking you again:
 
 | Question | Who reads the answer |
 | --- | --- |
-| What language and framework is this built in? | Stage 6, so it writes code in your stack |
-| Where does the data live? | Stage 6, and the Stage 9 runbook |
-| What exact command runs the tests? | Stage 6 after every task, and Stage 8 at release |
+| What language and framework is this built in? | Stage 6, so it writes code in the real stack |
+| Where does the data live, and where may it not live? | Stage 6, and the Stage 9 runbook |
+| What exact command runs the tests, and what does the suite not cover? | Stage 6 after every task, and Stage 8 at release |
+| What can we not change, and who says so? | Every stage, and whoever maintains this next |
 
 The test command is the one people forget. Write it as something you could paste
 into a terminal — `pytest`, `npm test`, `go test ./...` — not as "run the unit
-tests". Copy it into `.github/copilot-instructions.md` when it is decided.
+tests". Copy it into `.github/copilot-instructions.md` once confirmed, and only
+after you have run it yourself.
 
 ## What does not belong here
 
