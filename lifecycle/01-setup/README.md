@@ -68,7 +68,7 @@ Then push it to wherever section 8 of the engagement brief says the repository w
 
 ## 4. Install and check
 
-Work top to bottom. Record what happened in [`setup-confirmation.md`](setup-confirmation.md) as you go.
+Work top to bottom. Record what happened in [`setup-confirmation.md`](setup-confirmation.md) as you go. See [`setup-confirmation.sample.md`](setup-confirmation.sample.md) for a filled-in example.
 
 ### 4.1 Copilot
 
@@ -148,7 +148,7 @@ Two things matter more than usual on customer work. Check that your `user.email`
 
 ### 4.8 Record what you are inheriting
 
-Open [`.github/copilot-instructions.md`](../../.github/copilot-instructions.md) and fill in the **Project** and **Stack** tables.
+Open [`.github/copilot-instructions.md`](../../.github/copilot-instructions.md) and fill in the **Project** and **Stack** tables. See [`.github/copilot-instructions.sample.md`](../../.github/copilot-instructions.sample.md) for a filled-in example.
 
 This differs from a greenfield project in an important way. On a new product the stack is undecided until Stage 3. Here, most of it already exists and you are **recording** it, not choosing it. Read it out of the repository rather than asking the customer:
 
@@ -187,7 +187,7 @@ In an existing repository, the application code lives wherever it already lives.
 
 | Step | Action |
 | --- | --- |
-| **Now** | Fill in [`setup-confirmation.md`](setup-confirmation.md) |
+| **Now** | Fill in [`setup-confirmation.md`](setup-confirmation.md) (see [`setup-confirmation.sample.md`](setup-confirmation.sample.md) for an example) |
 | **Then** | Transcribe the statement of work into [`../02-discovery/scope-framing.md`](../02-discovery/scope-framing.md) |
 | **Then** | Open [Stage 2 — Discovery](../02-discovery/README.md) and pick `BRD Builder` |
 

@@ -1,8 +1,6 @@
 # Engagement brief
 
-> Fill this in during your first week. Where you do not know, write
-> `unknown — asking <person> by <date>` rather than guessing. Delete the
-> guidance quotes as you go.
+> Fill this in during your first week. Where you do not know, write `unknown — asking <person> by <date>` rather than guessing. Delete the guidance quotes as you go.
 
 | Field | Value |
 | --- | --- |
@@ -16,15 +14,13 @@
 
 ## 1. Why this engagement exists
 
-> Two or three sentences, in the customer's words rather than the account team's.
-> What is broken or missing for them today, and why now?
+> Two or three sentences, in the customer's words rather than the account team's. What is broken or missing for them today, and why now?
 
 `<the business problem>`
 
 **Source of truth for scope:** `<link or path to the SOW, ADS output, or scoping deck>`
 
-> Everything downstream cites this. If it does not exist, say so — it is your
-> first and largest risk.
+> Everything downstream cites this. If it does not exist, say so — it is your first and largest risk.
 
 ---
 
@@ -39,10 +35,7 @@
 
 ### Engineers you are enabling
 
-> Name individuals, not teams. These are the people who must be able to run the
-> loop without you on your last day. If this table is empty, raise it in
-> section 7 as a risk — an engagement with nobody to enable is not an
-> engagement.
+> Name individuals, not teams. These are the people who must be able to run the loop without you on your last day. If this table is empty, raise it in section 7 as a risk — an engagement with nobody to enable is not an engagement.
 
 | Name | Current level with this stack | What they need to own by handover |
 | --- | --- | --- |
@@ -62,20 +55,15 @@
 | Demo day | `<e.g. every second Thursday, to the sponsor and product owner>` |
 | Your allocation | `<full time, or the days per week you are actually on this>` |
 
-> The last day is the only fixed point in this table. Everything else bends
-> around it, which is why Stage 5 plans backwards from it.
+> The last day is the only fixed point in this table. Everything else bends around it, which is why Stage 5 plans backwards from it.
 
 ---
 
 ## 4. Exit criteria
 
-> The most important section. What must be true for you to leave with the work
-> genuinely finished rather than merely stopped?
+> The most important section. What must be true for you to leave with the work genuinely finished rather than merely stopped?
 >
-> Write these so someone else could check them without asking you. "The platform
-> is production ready" is not checkable. "The ingest pipeline runs nightly on
-> their subscription, and two named engineers have each shipped a change to it
-> unaided" is.
+> Write these so someone else could check them without asking you. "The platform is production ready" is not checkable. "The ingest pipeline runs nightly on their subscription, and two named engineers have each shipped a change to it unaided" is.
 
 | # | Must be true on the last day | How it gets verified |
 | --- | --- | --- |
@@ -85,8 +73,7 @@
 
 **In one sentence:** `<what "done" means for this engagement>`
 
-> Say that sentence out loud to the sponsor in week one. Record the date you did
-> and any correction they made:
+> Say that sentence out loud to the sponsor in week one. Record the date you did and any correction they made:
 >
 > Confirmed with `<name>` on `<YYYY-MM-DD>`. Their correction: `<none, or what changed>`
 
@@ -94,9 +81,7 @@
 
 ## 5. What you are inheriting
 
-> You are almost certainly not starting from an empty repository. Write down
-> what already exists, because Stage 1 checks it and Stage 6 has to live inside
-> it.
+> You are almost certainly not starting from an empty repository. Write down what already exists, because Stage 1 checks it and Stage 6 has to live inside it.
 
 | Area | What is already there | Can you change it? |
 | --- | --- | --- |
@@ -108,16 +93,13 @@
 | Test setup | `<framework and the exact command, or "none">` | |
 | Coding standards | `<their documented conventions, if any>` | |
 
-> Where a row says you cannot change something, that constraint belongs in a
-> decision record in Stage 3 — recorded as an inherited constraint with its
-> consequences, not re-argued.
+> Where a row says you cannot change something, that constraint belongs in a decision record in Stage 3 — recorded as an inherited constraint with its consequences, not re-argued.
 
 ---
 
 ## 6. Compliance obligations
 
-> Tick what applies. Each ticked box turns an optional review into a required
-> one, and Stages 2 and 7 will hold you to it.
+> Tick what applies. Each ticked box turns an optional review into a required one, and Stages 2 and 7 will hold you to it.
 
 | Applies | Obligation | Turns into |
 | --- | --- | --- |
@@ -127,9 +109,7 @@
 | `<yes/no>` | It is subject to a named regulation | `<which one, and who on the customer side owns it>` |
 | `<yes/no>` | It processes data that cannot leave a region or tenant | A decision record in Stage 3, and a constraint on every later stage |
 
-> If every row is "no", write down who told you that and when. "Nobody mentioned
-> compliance" is not the same as "compliance does not apply", and the difference
-> surfaces at the worst possible moment.
+> If every row is "no", write down who told you that and when. "Nobody mentioned compliance" is not the same as "compliance does not apply", and the difference surfaces at the worst possible moment.
 
 ---
 

@@ -1,12 +1,8 @@
 # Scope framing
 
-> You are not inventing this. You are transcribing what the statement of work
-> and the Architecture Design Session already decided, in a form the AI helpers
-> can read, and marking every place where they were vague.
+> You are not inventing this. You are transcribing what the statement of work and the Architecture Design Session already decided, in a form the AI helpers can read, and marking every place where they were vague.
 >
-> The vague places are the valuable part. Fill them in with
-> `ambiguous — <what is unclear>` rather than resolving them yourself, then take
-> the list to the customer.
+> The vague places are the valuable part. Fill them in with `ambiguous — <what is unclear>` rather than resolving them yourself, then take the list to the customer.
 
 | Field | Value |
 | --- | --- |
@@ -29,8 +25,7 @@
 
 ## 1. The problem
 
-> In the customer's words. Two or three sentences from the statement of work or
-> the discovery conversations.
+> In the customer's words. Two or three sentences from the statement of work or the discovery conversations.
 
 `<the problem this engagement solves>`
 
@@ -38,8 +33,7 @@
 
 **What they do today instead:** `<the manual process, spreadsheet, or workaround being replaced>`
 
-> That last line matters more than it looks. It is what the customer will
-> compare your work against, whatever the acceptance criteria say.
+> That last line matters more than it looks. It is what the customer will compare your work against, whatever the acceptance criteria say.
 
 ---
 
@@ -68,25 +62,19 @@
 
 ### Out — explicitly not this engagement
 
-> List everything you are saying no to, separated by `·`. Include the things the
-> customer will probably ask for anyway; writing them here now is much easier
-> than declining them in week nine.
+> List everything you are saying no to, separated by `·`. Include the things the customer will probably ask for anyway; writing them here now is much easier than declining them in week nine.
 
 `<out-of-scope list>`
 
 **Deferred to a later phase, if one is agreed:** `<things both sides expect to come back to>`
 
-> The difference between "out" and "deferred" is worth keeping. Out means it was
-> considered and rejected. Deferred means it was considered and postponed, and
-> someone will raise it again.
+> The difference between "out" and "deferred" is worth keeping. Out means it was considered and rejected. Deferred means it was considered and postponed, and someone will raise it again.
 
 ---
 
 ## 4. Inherited constraints
 
-> Pull these from section 5 of the [engagement brief](../00-engagement/engagement-brief.md).
-> Anything you cannot change is a constraint the BRD, the PRD, and every
-> decision record must respect.
+> Pull these from section 5 of the [engagement brief](../00-engagement/engagement-brief.md). Anything you cannot change is a constraint the BRD, the PRD, and every decision record must respect.
 
 | Area | Constraint | Negotiable? |
 | --- | --- | --- |
@@ -101,10 +89,7 @@
 
 ## 5. Success measures
 
-> How the customer will judge this a few weeks after you leave. Take these from
-> the statement of work where it states them. Where it does not, that is a real
-> gap — an engagement with no agreed measure of success is one you cannot be
-> shown to have completed.
+> How the customer will judge this a few weeks after you leave. Take these from the statement of work where it states them. Where it does not, that is a real gap — an engagement with no agreed measure of success is one you cannot be shown to have completed.
 
 Validation window: `<how long after handover before this is judged>`
 
@@ -117,9 +102,7 @@ Validation window: `<how long after handover before this is judged>`
 
 ## 6. Open questions for the customer
 
-> Everything you marked `ambiguous` above, collected. This is your agenda for
-> the next customer conversation, and it is the single most useful output of
-> this document.
+> Everything you marked `ambiguous` above, collected. This is your agenda for the next customer conversation, and it is the single most useful output of this document.
 
 | # | Question | Who answers | Asked on | Answer |
 | --- | --- | --- | --- | --- |
@@ -127,9 +110,7 @@ Validation window: `<how long after handover before this is judged>`
 | Q2 | | | | |
 | Q3 | | | | |
 
-> Record the answers here rather than only in the chat or a meeting note. Stage
-> 2 reads this file, and an answer that lives only in your memory is an answer
-> the AI helpers do not have.
+> Record the answers here rather than only in the chat or a meeting note. Stage 2 reads this file, and an answer that lives only in your memory is an answer the AI helpers do not have.
 
 ---
 
@@ -142,5 +123,4 @@ Validation window: `<how long after handover before this is judged>`
 | **Produces** | `docs/brds/<name>-brd.md` |
 | **Not yet** | Features, technology choices, work items, or any code |
 
-When this file is filled in and section 6 has been through the customer once,
-open **[Stage 2 — Discovery](README.md)**.
+When this file is filled in and section 6 has been through the customer once, open **[Stage 2 — Discovery](README.md)**.
