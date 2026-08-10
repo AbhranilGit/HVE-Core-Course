@@ -64,7 +64,16 @@ The nine keep their usual numbers, so the mapping back to HVE Core stays intact.
 | 8 | [Delivery](lifecycle/08-delivery/README.md) | Ship through their process; the PR is where enablement happens | `/ado-create-pull-request`, `PR Review`, `/git-merge` | `docs/releases/`, a tag |
 | 9 | [Handover](lifecycle/09-operations/README.md) | Runbook, handover document, and engineers who can work unaided | `/doc-ops-update` | `docs/operations/`, exit criteria signed off |
 
-Stages 6, 7, and 8 loop once per iteration. Reach Stage 9 only in your last one — and start it before then.
+Stages 6, 7, and 8 run once per iteration (sprint). Inside Stage 6, the four-phase loop runs once per task — so a sprint with 10 tasks means Stage 6 ten times, then Stage 7 once for the whole sprint, then Stage 8 once to ship it. If more iterations remain, go back to Stage 6. Reach Stage 9 only in your last iteration — and start it before then.
+
+For example, counts for an iteration with 10 tasks:
+
+| Activity | Count |
+| --- | --- |
+| Stage 6 task loops | 10 |
+| Stage 7 | 1 |
+| Stage 8 | 1 |
+| Full 6→7→8 cycle for this sprint | 1 |
 
 ---
 
