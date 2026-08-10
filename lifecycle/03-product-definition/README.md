@@ -32,7 +32,9 @@ This stage has two parts. Do **A** first, then **B**.
 
 1. Open Copilot Chat.
 2. Click the mode dropdown at the bottom of the chat box.
-3. Choose **`PRD Builder`**.
+3. Choose:
+
+   <mark>**PRD Builder**</mark>
 
 Do **not** use `BRD Builder` or any of the task helpers for this part.
 
@@ -80,7 +82,9 @@ Read the acceptance criteria closely — this is the moment to catch a misunders
 ## 6. Pick the helper
 
 1. In Copilot Chat, open the mode dropdown again.
-2. Choose **`ADR Creation`**.
+2. Choose:
+
+   <mark>**ADR Creation**</mark>
 
 Run this after the PRD exists.
 

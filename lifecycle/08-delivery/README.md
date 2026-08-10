@@ -130,7 +130,7 @@ Then do the part no command does for you: **ask a named customer engineer to rev
 
 ## C. Review the pull request
 
-There is no slash command for this one. Clear the chat, choose **`PR Review`** from the mode dropdown, and describe the pull request you opened.
+There is no slash command for this one. Clear the chat, choose <mark>**PR Review**</mark> from the mode dropdown, and describe the pull request you opened.
 
 ```text
 Review the open pull request for the v0.1.0 release on this branch.

@@ -229,7 +229,7 @@ stop rather than starting another task.
 
 ### Step 5 — Close the work item
 
-Clear the chat and switch to **`ADO Backlog Manager`** in the mode dropdown, or their tracker's equivalent.
+Clear the chat and switch to <mark>**ADO Backlog Manager**</mark> in the mode dropdown, or their tracker's equivalent.
 
 ```text
 Close work item <id> for task <NN>, now that it is implemented and reviewed.

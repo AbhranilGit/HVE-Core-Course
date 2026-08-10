@@ -1,7 +1,6 @@
 # Words you will see
 
-Terms this template uses, and what they mean in a delivery context. Come back
-when a stage page uses one you do not recognise.
+Terms this template uses, and what they mean in a delivery context. Come back when a stage page uses one you do not recognise.
 
 Start with the [main README](README.md) if you have not yet.
 
@@ -95,5 +94,4 @@ Start with the [main README](README.md) if you have not yet.
 | `.github/` | `copilot-instructions.md`, this project's conventions and inherited stack, plus the work item template. |
 | `.copilot-tracking/` | Working evidence the helpers save as they research, plan, implement, and review. Not committed. Stage 7 reads it, so leave it in place while the engagement is live. |
 
-In an existing repository the application code and tests stay where they already
-are. Their real paths are recorded in `.github/copilot-instructions.md`.
+In an existing repository the application code and tests stay where they already are. Their real paths are recorded in `.github/copilot-instructions.md`.

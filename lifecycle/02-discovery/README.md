@@ -29,7 +29,9 @@ That reframing changes what a good outcome looks like here. A BRD that fluently 
 
 1. Open Copilot Chat.
 2. Click the mode dropdown at the bottom of the chat box.
-3. Choose **`BRD Builder`**.
+3. Choose:
+
+   <mark>**BRD Builder**</mark>
 
 Do not use `PRD Builder` or the task helpers here. You are not deciding features and you are certainly not writing code.
 

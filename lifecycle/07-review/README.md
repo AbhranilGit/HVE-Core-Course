@@ -158,7 +158,7 @@ Commit what it found to `docs/reviews/security-review.md` in the same shape as t
 
 ## D. Responsible AI review
 
-If the brief says the system contains AI or makes automated decisions about people, review against the assessment `RAI Planner` produced in Stage 2. Clear the chat, pick **`RAI Planner`** from the dropdown, and ask it to check the built system against its own assessment — which mitigations landed, which did not, and what changed since.
+If the brief says the system contains AI or makes automated decisions about people, review against the assessment `RAI Planner` produced in Stage 2. Clear the chat, pick <mark>**RAI Planner**</mark> from the dropdown, and ask it to check the built system against its own assessment — which mitigations landed, which did not, and what changed since.
 
 HVE Core has no dedicated RAI reviewer, so you are using a planning helper to look backwards. It works, but be more sceptical of the output than you would be with `Task Reviewer`, and check the mitigations yourself in the code.
 

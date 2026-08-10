@@ -1,9 +1,6 @@
 # Stage 1 — Setup confirmation
 
-Fill this in as you work through [`README.md`](README.md). It is your proof that
-the tooling works, so that when something misbehaves in week six you know it is
-not the setup. It is also the first thing to hand a colleague who picks the
-engagement up from you.
+Fill this in as you work through [`README.md`](README.md). It is your proof that the tooling works, so that when something misbehaves in week six you know it is not the setup. It is also the first thing to hand a colleague who picks the engagement up from you.
 
 | Field | Value |
 | --- | --- |
@@ -46,8 +43,7 @@ engagement up from you.
 | VS Code reloaded | | |
 | **Extension version** | | This kit targets `3.3.101` |
 
-Write `Yes` or `No` for each helper in the mode dropdown. If your version names
-one differently, record what you actually see.
+Write `Yes` or `No` for each helper in the mode dropdown. If your version names one differently, record what you actually see.
 
 | Helper | Visible? | Used in | Name in your version, if different |
 | --- | --- | --- | --- |
@@ -101,8 +97,7 @@ one differently, record what you actually see.
 
 ## 6. The stack you are inheriting
 
-Read these out of the repository, not out of a conversation. Copy them into
-`.github/copilot-instructions.md` when confirmed.
+Read these out of the repository, not out of a conversation. Copy them into `.github/copilot-instructions.md` when confirmed.
 
 | Field | Value | Where you found it |
 | --- | --- | --- |
@@ -117,12 +112,9 @@ Read these out of the repository, not out of a conversation. Copy them into
 | Documented coding conventions | | Or "none found" |
 | CI system and pipeline file | | |
 
-**Did you run their test command yourself?** `<yes / no>`
-**Did it pass on a clean checkout?** `<yes / no — and what failed>`
+**Did you run their test command yourself?** `<yes / no>` **Did it pass on a clean checkout?** `<yes / no — and what failed>`
 
-> A failing or missing test suite on day one is not a blocker, but it is a
-> finding. Record it here, raise it with the technical contact, and expect it to
-> shape the first iteration.
+> A failing or missing test suite on day one is not a blocker, but it is a finding. Record it here, raise it with the technical contact, and expect it to shape the first iteration.
 
 ## 7. Anything unusual
 
