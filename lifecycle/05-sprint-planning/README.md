@@ -48,6 +48,8 @@ If the arithmetic says the contracted scope does not fit, that is a finding, not
 
 ## 4. Plan the first iteration
 
+Clear the chat. `/ado-sprint-plan` brings the `ADO Backlog Manager` helper with it (or pick that helper from the mode dropdown). For GitHub or Jira, use their sprint-plan equivalent under the same Backlog Manager family.
+
 ```text
 /ado-sprint-plan project=<their-project> iteration=<their-iteration-path> documents=docs/prds/<name>.md autonomy=partial
 
@@ -83,7 +85,7 @@ Working notes land in `.copilot-tracking/workitems/sprint/<iteration-kebab>/`.
 
 ## 5. Plan the remaining iterations
 
-Repeat for each building iteration, clearing the chat between them. For the last one, plan handover rather than features:
+Repeat for each building iteration, clearing the chat between them and staying on `ADO Backlog Manager` via `/ado-sprint-plan`. For the last one, plan handover rather than features:
 
 ```text
 /ado-sprint-plan project=<their-project> iteration=<final-iteration-path> autonomy=partial
@@ -111,6 +113,8 @@ That last instruction is the useful one. An explicit list of what is not getting
 ## 6. Commit the plan
 
 The tracker's planning notes live under `.copilot-tracking/`, which is not committed. Stages 6, 7, and 8 all read the sprint plan, and so will whoever picks this up after you.
+
+Use the **default Copilot Chat** (not `ADO Backlog Manager`) and paste:
 
 ```text
 Write the combined plan to docs/planning/sprint-plan.md.

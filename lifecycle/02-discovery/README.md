@@ -35,7 +35,7 @@ That reframing changes what a good outcome looks like here. A BRD that fluently 
 
 Do not use `PRD Builder` or the task helpers here. You are not deciding features and you are certainly not writing code.
 
-## 4. Paste this prompt
+## 4. Paste this prompt into `BRD Builder`
 
 ```text
 Create a business requirements document (BRD) for the engagement described in
@@ -116,7 +116,7 @@ This is the habit that separates delivery work from personal projects. On your o
 
 ## Optional — when a technical unknown blocks the BRD
 
-If you cannot write the BRD because something about the customer's existing system is genuinely unknown, investigate before you guess:
+If you cannot write the BRD because something about the customer's existing system is genuinely unknown, investigate before you guess. Clear the chat and run `/task-research` — it brings the `Task Researcher` helper with it:
 
 ```text
 /task-research topic=<the unknown>

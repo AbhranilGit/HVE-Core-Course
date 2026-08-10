@@ -114,6 +114,8 @@ Replace `<NN>`, `<slug>`, and `<id>` with the values from your task log.
 
 ### Step 1 — Research
 
+Clear the chat and run `/task-research` — it brings the `Task Researcher` helper with it:
+
 ```text
 /task-research topic=Task <NN> for work item <id>, slug <slug>
 
@@ -143,6 +145,8 @@ implement yet.
 
 ### Step 2 — Plan
 
+Clear the chat and run `/task-plan` — it brings the `Task Planner` helper with it:
+
 ```text
 /task-plan research=.copilot-tracking/research/<date>/<slug>-research.md
 
@@ -168,6 +172,8 @@ Do not implement yet.
 **Then:** open the plan (and the planning log’s discrepancy section), read them, and confirm the Plan gate in [`task-log.md`](task-log.md) — fill the **Plan** column with your initials + date. That marks “I’ve read the plan and it’s good enough to implement from.” **Copy the plan path down** — the next command needs it.
 
 ### Step 3 — Implement
+
+Clear the chat and run `/task-implement` — it brings the `Task Implementor` helper with it:
 
 ```text
 /task-implement plan=.copilot-tracking/plans/<date>/<slug>-plan.instructions.md phaseStop=true
@@ -197,6 +203,8 @@ task's scope and the accepted PRD.
 **Then:** check the code runs, open the change record, read it, and confirm the Implement gate in [`task-log.md`](task-log.md) — fill the **Implement** column with your initials + date. That marks “I’ve checked what changed and it stays inside this task.”
 
 ### Step 4 — Review
+
+Clear the chat and run `/task-review` — it brings the `Task Reviewer` helper with it:
 
 ```text
 /task-review plan=.copilot-tracking/plans/<date>/<slug>-plan.instructions.md

@@ -84,7 +84,7 @@ Work top to bottom. Record what happened in [`setup-confirmation.md`](setup-conf
 
 **HVE Core - All** is the full bundle and is what this kit assumes. There is also a smaller **HVE Core** package. Install one or the other, never both.
 
-If the customer's policy blocks marketplace extensions — which happens more often than you would like — HVE Core ships an installer skill for clone-based adoption. Ask any helper:
+If the customer's policy blocks marketplace extensions — which happens more often than you would like — HVE Core ships an installer skill for clone-based adoption. Use the **default Copilot Chat** (any helper works) and paste:
 
 ```text
 Help me customize hve-core installation for this repository.
@@ -137,6 +137,8 @@ Stages 4 and 5 work entirely through MCP tools, so the relevant MCP server has t
 Customer tenants frequently require an access request for this. Start it now; Stage 4 is blocked without it.
 
 ### 4.7 Configure Git
+
+Clear the chat and run `/git-setup` — the command carries its own Git setup helper, so you do not need the mode dropdown:
 
 ```text
 /git-setup

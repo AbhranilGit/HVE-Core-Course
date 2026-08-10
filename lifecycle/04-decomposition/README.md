@@ -42,6 +42,8 @@ Use whatever they already use. Introducing a second tracker for the duration of 
 
 ## 4. Propose the backlog
 
+Clear the chat. `/ado-discover-work-items` brings the `ADO Backlog Manager` helper with it (or pick that helper from the mode dropdown). For GitHub or Jira, use the equivalent helper and command from the table in section 2.
+
 ```text
 /ado-discover-work-items project=<their-project> documents=docs/prds/<name>.md
 
@@ -87,6 +89,8 @@ The customer's check is different from yours and more important: they are lookin
 
 ## 6. Apply the approved plan
 
+Stay with `ADO Backlog Manager` (or clear the chat and run `/ado-update-wit-items`, which brings that helper with it). For GitHub or Jira, use the apply command from the table in section 2.
+
 ```text
 /ado-update-wit-items
 
@@ -108,7 +112,7 @@ Leave them open. Stage 6 closes each one as its task is built and reviewed, with
 
 ### No tracker access yet?
 
-If access is still pending — and in Stage 1 you noted that it often is — do not let it block you. Use the default Copilot Chat:
+If access is still pending — and in Stage 1 you noted that it often is — do not let it block you. Use the **default Copilot Chat**:
 
 ```text
 Read the PRD in docs/prds/ and docs/decisions/ from the workspace.

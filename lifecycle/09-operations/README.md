@@ -82,7 +82,7 @@ docs/operations/runbook.md
 
 ## B. Check it against the real repository
 
-Clear the chat and run:
+Clear the chat and run `/doc-ops-update` — it brings the `Doc Ops` helper with it:
 
 ```text
 /doc-ops-update scope=docs
@@ -101,6 +101,8 @@ Doing this yourself proves nothing. You already know the answers.
 ## C. Write the handover document
 
 The runbook says how to operate the system. The handover document says everything else the customer needs and cannot reconstruct from the repository.
+
+Use the **default Copilot Chat** (not `Doc Ops`) and paste:
 
 ```text
 Write a handover document for this engagement.
@@ -181,7 +183,7 @@ If a criterion is not met, say so plainly. An engagement that closes with a docu
 
 ## F. When something breaks later
 
-You may not be there, but the customer will be. HVE Core has a command for working an incident:
+You may not be there, but the customer will be. HVE Core has a command for working an incident. Clear the chat and run `/incident-response` — it brings the incident-response helper with it:
 
 ```text
 /incident-response severity=3 phase=triage

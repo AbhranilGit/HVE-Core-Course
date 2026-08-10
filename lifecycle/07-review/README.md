@@ -90,7 +90,7 @@ Demonstrate against the review file, criterion by criterion, rather than showing
 
 ## B. Is the code sound, and does it fit?
 
-Clear the chat and run:
+Clear the chat and run `/code-review-full` — it brings the `Code Review Full` helper with it:
 
 ```text
 /code-review-full story=<work-item-id>
@@ -104,7 +104,7 @@ It writes to `.copilot-tracking/reviews/code-reviews/<branch>/`, as `review.md` 
 
 The standards half only works as well as the conventions you gave it. If `.github/copilot-instructions.md` does not describe how this codebase actually writes things, you will get generic advice that the customer's engineers will reject in review. Go and fix the instructions file rather than arguing with the output.
 
-Then commit a summary. In the same chat:
+Then commit a summary. Stay in the same `Code Review Full` chat (or use the **default Copilot Chat** with the review output still available) and paste:
 
 ```text
 Write the merged findings to docs/reviews/code-review.md, one row per finding
@@ -134,6 +134,8 @@ That separation in the last instruction saves an argument. Findings in code you 
 
 **Not optional here.** If section 6 of your [engagement brief](../00-engagement/engagement-brief.md) says the system handles personal data, credentials, payments, health records, or anything a customer security team would care about, this runs — and `/code-review-full` does not cover it.
 
+Clear the chat and run `/security-review` — it brings the `Security Reviewer` helper with it:
+
 ```text
 /security-review mode=audit
 ```
@@ -152,7 +154,7 @@ Where Stage 2 produced a threat model from `Security Planner`, review against it
 > line at the top of the file saying exactly what it is and what it is not, and
 > route anything real through their actual security process.
 
-Commit what it found to `docs/reviews/security-review.md` in the same shape as the code review summary.
+Commit what it found to `docs/reviews/security-review.md` in the same shape as the code review summary — stay in the `Security Reviewer` chat, or use the **default Copilot Chat** with the findings still available.
 
 ---
 

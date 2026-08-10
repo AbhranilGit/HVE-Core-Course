@@ -38,7 +38,7 @@ This stage has two parts. Do **A** first, then **B**.
 
 Do **not** use `BRD Builder` or any of the task helpers for this part.
 
-## 4. Paste this prompt
+## 4. Paste this prompt into `PRD Builder`
 
 ```text
 Create a Product Requirements Document (PRD) for the first version of the
@@ -92,7 +92,7 @@ Run this after the PRD exists.
 
 **Early on it will ask where the finished record should go. Answer `docs/decisions/`.** That is the location this kit uses and the one the helper recommends. While you are still talking it keeps a draft under `.copilot-tracking/adrs/<topic>-draft.md` and moves it into place at the end.
 
-## 7. Paste this prompt
+## 7. Paste this prompt into `ADR Creation`
 
 ```text
 Create decision records (ADRs) for the first version of this product.

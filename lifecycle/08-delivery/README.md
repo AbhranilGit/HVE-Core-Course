@@ -43,7 +43,7 @@ Whatever you use, put the engagement name in the annotated tag message. Two year
 
 ## A. Write the release evidence
 
-Use the default Copilot Chat.
+Use the **default Copilot Chat**.
 
 ```text
 Create a release evidence record for version v0.1.0.
@@ -87,7 +87,7 @@ Read it. Any unticked box is a decision to make before releasing, and on custome
 
 ## B. Open the pull request
 
-For Azure DevOps, use the tracker's own command — it discovers the related work items and suggests reviewers from the code's history, which saves you guessing at who should look at it:
+For Azure DevOps, use the tracker's own command — `/ado-create-pull-request` brings the `ADO Backlog Manager` helper with it, and it discovers the related work items and suggests reviewers from the code's history, which saves you guessing at who should look at it:
 
 ```text
 /ado-create-pull-request
@@ -120,7 +120,7 @@ Use the current branch and its real commits; do not invent history.
 Do not merge and do not tag in this step.
 ```
 
-On GitHub, use `/pull-request branch=origin/main createPullRequest=true` with the same body. Leave `createPullRequest` off if you would rather draft the description and open it yourself.
+On GitHub, use `/pull-request branch=origin/main createPullRequest=true` with the same body — that command carries the GitHub pull-request helper. Leave `createPullRequest` off if you would rather draft the description and open it yourself.
 
 **You should see:** a pull request with linked work items. Note the URL.
 
@@ -163,6 +163,8 @@ If their pipeline runs builds on the pull request, `/ado-get-build-info` pulls t
 ## D. Merge, tag, and write the release notes
 
 Only after their approvals are in and their checks are green.
+
+Clear the chat and run `/git-merge` — the command carries its own merge helper, so you do not need the mode dropdown:
 
 ```text
 /git-merge
