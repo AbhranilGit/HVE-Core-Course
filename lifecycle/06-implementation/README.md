@@ -139,7 +139,7 @@ Stay inside this one task's scope. Do not write production code. Do not plan or
 implement yet.
 ```
 
-**Then:** open the research file it names, read it, and confirm the Research gate in [`task-log.md`](task-log.md). **Copy the path down** — the next command needs it.
+**Then:** open the research file it names, read it, and confirm the Research gate in [`task-log.md`](task-log.md) — in that task’s row, fill the **Research** column (typically your initials + date). That marks “I’ve read the research and it’s good enough to plan from.” You only tick a gate after you’ve opened and read that phase’s file. **Copy the path down** — the next command needs it.
 
 ### Step 2 — Plan
 
@@ -165,7 +165,7 @@ Do not implement yet.
 
 `Task Planner` runs a `Plan Validator` over its own work and records what that found in a **planning log**, under `.copilot-tracking/plans/logs/`. Read the discrepancy section of that log — it is where the real problems surface, and the planner will have already reworked the plan in response to the serious ones.
 
-**Then:** confirm the Plan gate in [`task-log.md`](task-log.md), and copy the plan path down.
+**Then:** open the plan (and the planning log’s discrepancy section), read them, and confirm the Plan gate in [`task-log.md`](task-log.md) — fill the **Plan** column with your initials + date. That marks “I’ve read the plan and it’s good enough to implement from.” **Copy the plan path down** — the next command needs it.
 
 ### Step 3 — Implement
 
@@ -194,7 +194,7 @@ task's scope and the accepted PRD.
 
 `phaseStop=true` makes it pause after each phase of the plan so you can look at what it did before it carries on. Drop it if you would rather it run straight through, but the pause is the cheapest place to catch a wrong turn.
 
-**Then:** check the code runs, and confirm the Implement gate in [`task-log.md`](task-log.md).
+**Then:** check the code runs, open the change record, read it, and confirm the Implement gate in [`task-log.md`](task-log.md) — fill the **Implement** column with your initials + date. That marks “I’ve checked what changed and it stays inside this task.”
 
 ### Step 4 — Review
 
@@ -225,7 +225,7 @@ stop rather than starting another task.
 
 `Task Reviewer` finishes with an **overall status** of Complete, Needs Rework, or Blocked, plus a count of critical and major findings. A task is only done when the status is Complete — or when you have read a Needs Rework verdict and consciously accepted what it found.
 
-**Then:** confirm the Review gate in [`task-log.md`](task-log.md).
+**Then:** open the review log, read the overall status and acceptance evidence, and confirm the Review gate in [`task-log.md`](task-log.md) — fill the **Review** column with your initials + date. That marks “tests passed (or I consciously accepted Needs Rework) and every acceptance criterion is evidenced.”
 
 ### Step 5 — Close the work item
 
@@ -253,6 +253,8 @@ after I have gone, without the conversation I had while building it.
 Do not include .copilot-tracking paths in the comment — summarize the evidence
 instead. Do not close any other item. Do not edit application code.
 ```
+
+**Then:** confirm the Closed gate in [`task-log.md`](task-log.md) — fill the **Closed** column with your initials + date. That marks “the work item is closed and the comment records how each acceptance criterion was met.”
 
 **Do not start the next task until the current one's tests have passed and its work item is closed.**
 

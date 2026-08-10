@@ -11,8 +11,7 @@ One or two sentences. What should be true when this is done that is not true now
 
 ## Acceptance criteria
 
-Each line must be checkable by someone who did not write the code. Keep the PRD
-criterion id so the trail back to `docs/prds/` survives.
+Each line must be checkable by someone who did not write the code. Keep the PRD criterion id so the trail back to `docs/prds/` survives.
 
 - [ ] `AC-xxx` —
 - [ ] `AC-xxx` —
@@ -27,5 +26,4 @@ Anything a reader might reasonably assume is included but is not.
 
 ## Notes for whoever maintains this
 
-Anything about the existing code this touches that the next person would want to
-know. Leave blank if there is nothing.
+Anything about the existing code this touches that the next person would want to know. Leave blank if there is nothing.
